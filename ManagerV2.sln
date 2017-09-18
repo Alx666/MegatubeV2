@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerV2", "ManagerV2\ManagerV2.csproj", "{4BD7CC7F-4886-4E83-BE38-5C17363D87B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegatubeV2", "MegatubeV2\MegatubeV2.csproj", "{5178993B-1F4D-4183-99C2-CE35664C1026}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4BD7CC7F-4886-4E83-BE38-5C17363D87B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BD7CC7F-4886-4E83-BE38-5C17363D87B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BD7CC7F-4886-4E83-BE38-5C17363D87B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BD7CC7F-4886-4E83-BE38-5C17363D87B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5178993B-1F4D-4183-99C2-CE35664C1026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5178993B-1F4D-4183-99C2-CE35664C1026}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
