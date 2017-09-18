@@ -140,23 +140,107 @@
                     <ul class="side-menu m-t-2">
                         <li class="Dashboards">
                             <a href="#" title="Dashboards">
-                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Folder</span><i class="fa arrow"></i>
+                                <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Registry</span><i class="fa arrow"></i>
                             </a>
                             <ul>
+                                <li class='active'>                                    
+                                    <a href="@Url.Action("Index", "Users")">
+                                        <span class="nav-label">Users</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
                                 <li class='active'>
-                                    <a href="#">
-                                        <span class="nav-label">Starter HTML/CSS</span>
+                                    <a href="@Url.Action("Index", "ViewChannels")">
+                                        <span class="nav-label">Channels</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class='active'>
+                                    <a href="@Url.Action("Index", "Alerts")">
+                                        <span class="nav-label">Alerts</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class='active'>
+                                    <a href="@Url.Action("Index", "Payments")">
+                                        <span class="nav-label">Payments</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        
+                        <li class="Dashboards">
+                            <a href="#" title="Dashboards">
+                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li class='active'>
+                                    <a href="#">
+                                        <span class="nav-label">Load</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="Dashboards">
+                            <a href="#" title="Dashboards">
+                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li class='active'>
+                                    <a href="#">
+                                        <span class="nav-label">Load</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
                         <li>
+                            <a href="#" title="Apps">
+                                <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <span class="nav-label">Dumps</span> <i class="fa arrow"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><span class="nav-label">Channels</span></a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><span class="nav-label">Referenced Channels</span></a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><span class="nav-label">Unreferenced Channels</span></a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><span class="nav-label">Uploaded Files</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+                        @*<li>
                             <a href="#" title="Page">
                                 <i class="fa fa-lg fa-file-o fa-fw"></i><span class="nav-label">Page</span>
                                 <span class="pull-right label label-primary label-outline text-uppercase">New</span>
                             </a>
-                        </li>
-                        <li>
+                        </li>*@
+                        @*<li>
                             <a href="#" title="Apps">
                                 <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Levels</span> <i class="fa arrow"></i>
                             </a>
@@ -172,7 +256,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                        </li>*@
                     </ul>
                     <!-- END Tree  -->
                     <div class="sidebar-default-visible"><hr></div>
@@ -244,6 +328,7 @@
     <script src="assets/javascript/app/rightSidebar.js"></script>
     <script src="assets/javascript/app/sidebar.js"></script>
     <script src="assets/javascript/app/main.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 
