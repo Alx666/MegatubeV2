@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MegatubeV2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accreditation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ChannelId" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentId" Type="int" />
+          <Property Name="GrossAmmount" Type="money" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" Nullable="false" />
+          <Property Name="DateTo" Type="datetime" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+          <Property Name="OwnerId" Type="int" />
+          <Property Name="RecruiterId" Type="int" />
+          <Property Name="PercentOwner" Type="float" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="float" Nullable="false" />
+          <Property Name="PercentMegatube" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Network">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Partnership">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="NetworkId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="PaymentType" Type="tinyint" Nullable="false" />
+          <Property Name="DateFrom" Type="date" Nullable="false" />
+          <Property Name="DateTo" Type="date" Nullable="false" />
+          <Property Name="Receipt" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Skype" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="BirthPlace" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyKind" Type="nvarchar" MaxLength="50" />
+          <Property Name="IBAN" Type="nvarchar" MaxLength="128" />
+          <Property Name="PIVAorVAT" Type="nvarchar" MaxLength="128" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="256" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMethod" Type="smallint" />
+          <Property Name="BICSWIFT" Type="nvarchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="FiscalAdministratorId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewChannel">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="RegistrationDate" />
+            <PropertyRef Name="PercentMegatube" />
+            <PropertyRef Name="PercentOwner" />
+            <PropertyRef Name="PercentRecruiter" />
+            <PropertyRef Name="OwnerName" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+          <Property Name="PercentMegatube" Type="float" Nullable="false" />
+          <Property Name="PercentOwner" Type="float" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="float" Nullable="false" />
+          <Property Name="OwnerId" Type="int" />
+          <Property Name="OwnerName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="RecruiterId" Type="int" />
+          <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
+        </EntityType>
+        <Association Name="FK_Accreditation_ToChannel">
+          <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToPayment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelOwner_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelRecruiter_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="RecruiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToNetwork">
+          <End Role="Network" Type="Self.Network" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Network">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="NetworkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="FiscalAdministratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MegatubeV2ModelStoreContainer">
+          <EntitySet Name="Accreditation" EntityType="Self.Accreditation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Network" EntityType="Self.Network" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partnership" EntityType="Self.Partnership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewChannel" EntityType="Self.ViewChannel" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewChannel].[Id] AS [Id], 
+    [ViewChannel].[Name] AS [Name], 
+    [ViewChannel].[RegistrationDate] AS [RegistrationDate], 
+    [ViewChannel].[PercentMegatube] AS [PercentMegatube], 
+    [ViewChannel].[PercentOwner] AS [PercentOwner], 
+    [ViewChannel].[PercentRecruiter] AS [PercentRecruiter], 
+    [ViewChannel].[OwnerId] AS [OwnerId], 
+    [ViewChannel].[OwnerName] AS [OwnerName], 
+    [ViewChannel].[RecruiterId] AS [RecruiterId], 
+    [ViewChannel].[RecruiterName] AS [RecruiterName]
+    FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="Accreditation" EntitySet="Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToPayment" Association="Self.FK_Accreditation_ToPayment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Accreditation" EntitySet="Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToUser" Association="Self.FK_Accreditation_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Accreditation" EntitySet="Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelOwner_ToUser" Association="Self.FK_ChannelOwner_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Channel" EntitySet="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelRecruiter_ToUser" Association="Self.FK_ChannelRecruiter_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Channel" EntitySet="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToNetwork" Association="Self.FK_Partnership_ToNetwork">
+            <End Role="Network" EntitySet="Network" />
+            <End Role="Partnership" EntitySet="Partnership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToRole" Association="Self.FK_Partnership_ToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Partnership" EntitySet="Partnership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToUser" Association="Self.FK_Partnership_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Partnership" EntitySet="Partnership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToUser" Association="Self.FK_Payment_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToUser" Association="Self.FK_User_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MegatubeV2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accreditation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ChannelId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentId" Type="Int32" />
+          <Property Name="GrossAmmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Accreditation" ToRole="Channel" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Accreditation_ToPayment" FromRole="Accreditation" ToRole="Payment" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Accreditation_ToUser" FromRole="Accreditation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OwnerId" Type="Int32" />
+          <Property Name="RecruiterId" Type="Int32" />
+          <Property Name="PercentOwner" Type="Double" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
+          <Property Name="PercentMegatube" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Network">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToNetwork" FromRole="Network" ToRole="Partnership" />
+        </EntityType>
+        <EntityType Name="Partnership">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="NetworkId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Network" Relationship="Self.FK_Partnership_ToNetwork" FromRole="Partnership" ToRole="Network" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Partnership_ToRole" FromRole="Partnership" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Partnership_ToUser" FromRole="Partnership" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentType" Type="Byte" Nullable="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Receipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Payment_ToUser" FromRole="Payment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToRole" FromRole="Role" ToRole="Partnership" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Skype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="BirthPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyKind" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IBAN" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PIVAorVAT" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullAddress" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMethod" Type="Int16" />
+          <Property Name="BICSWIFT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FiscalAdministratorId" Type="Int32" />
+          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
+          <NavigationProperty Name="Channels" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="Channels1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToUser" FromRole="User" ToRole="Partnership" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_ToUser" FromRole="User" ToRole="Payment" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_User_ToUser" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User2" Relationship="Self.FK_User_ToUser" FromRole="User1" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ViewChannel">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="RegistrationDate" />
+            <PropertyRef Name="PercentMegatube" />
+            <PropertyRef Name="PercentOwner" />
+            <PropertyRef Name="PercentRecruiter" />
+            <PropertyRef Name="OwnerName" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PercentMegatube" Type="Double" Nullable="false" />
+          <Property Name="PercentOwner" Type="Double" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" />
+          <Property Name="OwnerName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RecruiterId" Type="Int32" />
+          <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Accreditation_ToChannel">
+          <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToPayment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelOwner_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelRecruiter_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="RecruiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToNetwork">
+          <End Role="Network" Type="Self.Network" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Network">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="NetworkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partnership_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="FiscalAdministratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MegatubeV2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accreditations" EntityType="Self.Accreditation" />
+          <EntitySet Name="Channels" EntityType="Self.Channel" />
+          <EntitySet Name="Networks" EntityType="Self.Network" />
+          <EntitySet Name="Partnerships" EntityType="Self.Partnership" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ViewChannels" EntityType="Self.ViewChannel" />
+          <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
+            <End Role="Channel" EntitySet="Channels" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToPayment" Association="Self.FK_Accreditation_ToPayment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToUser" Association="Self.FK_Accreditation_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelOwner_ToUser" Association="Self.FK_ChannelOwner_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Channel" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelRecruiter_ToUser" Association="Self.FK_ChannelRecruiter_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Channel" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToNetwork" Association="Self.FK_Partnership_ToNetwork">
+            <End Role="Network" EntitySet="Networks" />
+            <End Role="Partnership" EntitySet="Partnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToRole" Association="Self.FK_Partnership_ToRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Partnership" EntitySet="Partnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partnership_ToUser" Association="Self.FK_Partnership_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Partnership" EntitySet="Partnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToUser" Association="Self.FK_Payment_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToUser" Association="Self.FK_User_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User1" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MegatubeV2ModelStoreContainer" CdmEntityContainer="MegatubeV2Entities">
+          <EntitySetMapping Name="Accreditations">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Accreditation">
+              <MappingFragment StoreEntitySet="Accreditation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="GrossAmmount" ColumnName="GrossAmmount" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
+                <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
+                <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Networks">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Network">
+              <MappingFragment StoreEntitySet="Network">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partnerships">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Partnership">
+              <MappingFragment StoreEntitySet="Partnership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="Receipt" ColumnName="Receipt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MegatubeV2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MegatubeV2Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Skype" ColumnName="Skype" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyKind" ColumnName="CompanyKind" />
+                <ScalarProperty Name="IBAN" ColumnName="IBAN" />
+                <ScalarProperty Name="PIVAorVAT" ColumnName="PIVAorVAT" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="BICSWIFT" ColumnName="BICSWIFT" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="FiscalAdministratorId" ColumnName="FiscalAdministratorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewChannels">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannel">
+              <MappingFragment StoreEntitySet="ViewChannel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
+                <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
+                <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
