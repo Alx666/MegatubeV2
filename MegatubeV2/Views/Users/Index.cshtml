@@ -4,12 +4,22 @@
     ViewBag.Title = "Index";
 }
 
+<script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+
+    $(document).ready(function () {
+        $('#userTable').DataTable();
+    });
+</script>
+
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" id="userTable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.EMail)
@@ -62,3 +72,4 @@
     }
 
 </table>
+
