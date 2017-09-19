@@ -2,7 +2,7 @@
 
     Dictionary<String, String[]> MenuDict = new Dictionary<string, string[]>();
 
-    MenuDict.Add("Uno", new string[] { "ViewChannels", "Users" });
+    MenuDict.Add("Uno", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
     MenuDict.Add("Due", new string[] { "PagD1", "PagD2" });
 
     String activeChildClasses = "active expanded nested-active";
@@ -151,7 +151,7 @@
                         @{
                             foreach (KeyValuePair<string, string[]> entry in MenuDict)
                             {
-                                <li class="Dashboards @if (currentAction == "Index") { Html.Raw(activeParentClasses); }">
+                                <li class="Dashboards @if (entry.Value.Contains(currentController)) { @activeParentClasses }">
                                     <a href="#" title="Dashboards">
                                         <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">@entry.Key</span><i class="fa arrow"></i>
                                     </a>
@@ -159,7 +159,7 @@
                                         @{
                                             foreach (string pageName in entry.Value)
                                             {
-                                                <li class="@if (currentController == pageName){ @Html.Raw(activeChildClasses);}">
+                                                <li class="@if (currentController == pageName){ @activeChildClasses}">
                                                     <a href="@Url.Action("Index", pageName)">
                                                         <span class="nav-label">@pageName</span>
                                                     </a>
