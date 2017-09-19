@@ -1,4 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+
+    Dictionary<String, String[]> MenuDict = new Dictionary<string, string[]>();
+
+    MenuDict.Add("Uno", new string[] { "ViewChannels", "Users" });
+    MenuDict.Add("Due", new string[] { "PagD1", "PagD2" });
+
+    String activeChildClasses = "active expanded nested-active";
+    String activeParentClasses = "nested-active primary-submenu has-submenu expanded";
+
+    var rd = HttpContext.Current.Request.RequestContext.RouteData;
+    string currentAction = rd.GetRequiredString("action");
+    string currentController = rd.GetRequiredString("controller");
+    //string currentArea = rd.Values["area"] as string;
+
+
+
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <!-- START Head -->
 <head>
@@ -40,15 +59,6 @@
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="atom.xml">
     <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-83862026-1', 'auto');
-      ga('send', 'pageview');
-    </script>
     <!-- jekyll settings -->
     <script>
         var ASSET_PATH_BASE = '';
@@ -138,33 +148,56 @@
                 <div class="sidebar-content">
                     <!-- START Tree -->
                     <ul class="side-menu m-t-2">
+                        @{
+                            foreach (KeyValuePair<string, string[]> entry in MenuDict)
+                            {
+                                <li class="Dashboards @if (currentAction == "Index") { Html.Raw(activeParentClasses); }">
+                                    <a href="#" title="Dashboards">
+                                        <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">@entry.Key</span><i class="fa arrow"></i>
+                                    </a>
+                                    <ul>
+                                        @{
+                                            foreach (string pageName in entry.Value)
+                                            {
+                                                <li class="@if (currentController == pageName){ @Html.Raw(activeChildClasses);}">
+                                                    <a href="@Url.Action("Index", pageName)">
+                                                        <span class="nav-label">@pageName</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        
                         <li class="Dashboards">
                             <a href="#" title="Dashboards">
                                 <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Registry</span><i class="fa arrow"></i>
                             </a>
                             <ul>
-                                <li class='active'>                                    
+                                <li>                                    
                                     <a href="@Url.Action("Index", "Users")">
                                         <span class="nav-label">Users</span>
                                     </a>
                                 </li>
                             </ul>
                             <ul>
-                                <li class='active'>
+                                <li>
                                     <a href="@Url.Action("Index", "ViewChannels")">
                                         <span class="nav-label">Channels</span>
                                     </a>
                                 </li>
                             </ul>
                             <ul>
-                                <li class='active'>
+                                <li>
                                     <a href="@Url.Action("Index", "Alerts")">
                                         <span class="nav-label">Alerts</span>
                                     </a>
                                 </li>
                             </ul>
                             <ul>
-                                <li class='active'>
+                                <li>
                                     <a href="@Url.Action("Index", "Payments")">
                                         <span class="nav-label">Payments</span>
                                     </a>
