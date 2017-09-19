@@ -145,7 +145,7 @@
     <Compile Include="Channel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ViewChannelsController.cs" />
@@ -262,6 +262,7 @@
     <Content Include="assets\javascript\app\rightSidebar.js" />
     <Content Include="assets\javascript\app\sidebar.js" />
     <Content Include="assets\stylesheets\app.css" />
+    <Content Include="assets\stylesheets\app.min.e0bb64e7.css" />
     <Content Include="assets\stylesheets\bootstrap.css" />
     <Content Include="assets\stylesheets\plugins.css" />
     <Content Include="assets\vendor\css\lib.min.css" />
@@ -345,20 +346,22 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ViewChannels\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Payments\Create.cshtml" />
     <Content Include="Views\Payments\Delete.cshtml" />
     <Content Include="Views\Payments\Details.cshtml" />
     <Content Include="Views\Payments\Edit.cshtml" />
     <Content Include="Views\Payments\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
