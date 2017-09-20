@@ -268,6 +268,7 @@
     <Content Include="assets\stylesheets\app.css" />
     <Content Include="assets\stylesheets\app.min.e0bb64e7.css" />
     <Content Include="assets\stylesheets\bootstrap.css" />
+    <Content Include="assets\stylesheets\custom.css" />
     <Content Include="assets\stylesheets\plugins.css" />
     <Content Include="assets\vendor\css\lib.min.css" />
     <Content Include="assets\vendor\fonts\fontawesome-webfont.svg" />
@@ -277,6 +278,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -324,6 +326,9 @@
     <Content Include="MegatubeV2Model.edmx.diagram">
       <DependentUpon>MegatubeV2Model.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -370,13 +375,13 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
