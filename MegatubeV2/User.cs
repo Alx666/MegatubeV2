@@ -23,6 +23,8 @@ namespace MegatubeV2
             this.Partnerships = new HashSet<Partnership>();
             this.Payments = new HashSet<Payment>();
             this.User1 = new HashSet<User>();
+            this.NotesCreated = new HashSet<Note>();
+            this.NotesReceived = new HashSet<Note>();
         }
     
         public int Id { get; set; }
@@ -58,5 +60,9 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> User1 { get; set; }
         public virtual User User2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Note> NotesCreated { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Note> NotesReceived { get; set; }
     }
 }

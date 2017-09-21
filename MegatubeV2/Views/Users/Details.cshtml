@@ -81,118 +81,13 @@
 
             <div class="highcharts-basic-column m-t-2"></div>
         </div>
-        <!-- END ROW Report Statisticts & Latest Transactions -->
-        <!-- START ROW Latest Comments & Most Viewed -->
         <div class="row m-t-3">
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4 col-xs-6">
-                        <h5 class="m-b-0 m-t-0 f-w-300">Latest Comments</h5>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-offset-2 col-sm-offset-4 col-md-offset-4 text-right">
-                        <button type="button" class="btn btn-sm btn-default">See All Comments<i class="fa m-l-1 fa-angle-right"></i> </button>
-                    </div>
-                </div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th class="small text-muted text-uppercase">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="media media-auto">
-                                    <div class="media-left">
-                                        <a href="javascript: void(0)">
-                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/kiwiupover/128.jpg" alt="Avatar">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <span class="media-heading text-white">Ruthie Hirthe</span>
-                                        <br>
-                                        <span class="media-heading">
-                                            <span>on Jun 16, 2015 </span> on <a href="#"><span>Games</span></a>
-                                        </span>
-                                        <p class="m-t-2 m-b-0"><span>Odio ducimus quia maiores ut sint minima. Sit nemo provident voluptatem aperiam. Ut recusandae quia odio dolores voluptas. </span></p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="media media-auto">
-                                    <div class="media-left">
-                                        <a href="javascript: void(0)">
-                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/marshallchen_/128.jpg" alt="Avatar">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <span class="media-heading text-white">Rollin Bradtke</span>
-                                        <br>
-                                        <span class="media-heading">
-                                            <span>on Apr 22, 2016 </span> on <a href="#"><span>Books</span></a>
-                                        </span>
-                                        <p class="m-t-2 m-b-0"><span>Similique tempora id consequatur voluptatem. Aut porro eos et unde corporis ea et consequatur cumque. Aut ut id. Itaque ut saepe dolorem odit. </span></p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media media-auto">
-                                    <div class="media-left">
-                                        <a href="javascript: void(0)">
-                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/danro/128.jpg" alt="Avatar">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <span class="media-heading text-white">Antwon Rippin</span>
-                                        <br>
-                                        <span class="media-heading">
-                                            <span>on Jan 17, 2012 </span> on <a href="#"><span>Toys</span></a>
-                                        </span>
-                                        <p class="m-t-2 m-b-0"><span>Est expedita dolorem reiciendis. Quis aut voluptatem laudantium praesentium iste. Est vel autem nostrum aut. Repellendus sed doloribus soluta doloremque itaque tempora doloribus enim. </span></p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="media media-auto">
-                                    <div class="media-left">
-                                        <a href="javascript: void(0)">
-                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/rdsaunders/128.jpg" alt="Avatar">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <span class="media-heading text-white">Rex O&apos;Hara</span>
-                                        <br>
-                                        <span class="media-heading">
-                                            <span>on Jul 30, 2013 </span> on <a href="#"><span>Kids</span></a>
-                                        </span>
-                                        <p class="m-t-2"><span>Voluptatum placeat enim. Et et ut. Eligendi sed quia illum provident. Consequatur sed dolorem numquam voluptatem. </span></p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            
+                                   
             @{
+                Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
                 Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
             }
-
-
-            <!-- END ROW Report Statisticts & Latest Transactions -->
-
-        </div>
-        <!-- END EDIT CONTENT -->
+        </div>        
     </div>
 </div>
 <!-- END EDIT CONTENT -->

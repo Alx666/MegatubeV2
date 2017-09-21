@@ -171,6 +171,9 @@
     <Compile Include="Network.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Note.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Partnership.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
@@ -378,6 +381,7 @@
     <Content Include="Views\Csv\Index.cshtml" />
     <Content Include="Views\_PartialAccreditations.cshtml" />
     <Content Include="Views\_PartialPayments.cshtml" />
+    <Content Include="Views\_PartialNotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

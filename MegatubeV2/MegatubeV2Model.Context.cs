@@ -27,12 +27,13 @@ namespace MegatubeV2
     
         public virtual DbSet<Accreditation> Accreditations { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
-        public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<Partnership> Partnerships { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ViewChannel> ViewChannels { get; set; }
+        public virtual DbSet<Network> Networks { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
     }
 }
