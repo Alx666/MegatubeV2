@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MegatubeV2.Accreditation>
+
+<div class="col-lg-6">
+    <div class="row">
+        <!-- START Most Viewed -->
+        <div class="col-md-4 col-sm-4 col-xs-6">
+            <h5 class="m-b-0 m-t-0 f-w-300">Accreditations</h5>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-offset-2 col-sm-offset-4 col-md-offset-4 text-right">
+            <button type="button" class="btn btn-sm btn-default">See All<i class="fa m-l-1 fa-angle-right"></i> </button>
+        </div>
+    </div>
+    <table class="table m-t-2">
+        <thead>
+            <tr>
+                <th class="small text-muted text-uppercase">
+                    <strong>Type</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Amount</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Reason</strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                    foreach (var item in Model)
+                    {                                                    
+                        <tr>
+                            <td class="v-a-m">
+                                <div class="media media-auto">
+                                    <div class="media-left">
+                                        <a href="javascript: void(0)">
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-square fa-stack-2x text-gray-light"></i>
+                                                <i class="fa fa-circle fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="media-body media-middle">
+                                        <span class="media-heading text-white">@item.Type</span>
+                                        <br>
+                                        <span class="media-heading">
+                                            <span>@item.DateFrom.ToShortDateString() to @item.DateTo.ToShortDateString()</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="v-a-m">
+                                <span class="text-white">@item.GrossAmmount</span>
+                                <br> Views
+                            </td>
+                            <td class="v-a-m">
+                                <i class="fa fa-circle text-success m-r-1"></i><span class="text-white">@item.Reason</span>
+                            </td>
+                        </tr>
+                }
+             }
+        </tbody>
+    </table>
+
+</div>

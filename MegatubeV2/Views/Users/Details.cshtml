@@ -3,8 +3,205 @@
 @{
     ViewBag.Title = "Details";
 }
+<!-- START EDIT CONTENT -->
+<div class="row">
+    <div class="col-lg-12">
+        <!-- START ROWs #1 -->
+        <div class="row m-t-1">
+            
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross Earnings<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">
+                            IDR 10,215,845
+                        </h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">33,87%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">128,980</h2>
+                        <i class="fa fa-fw fa-caret-down text-danger"></i> <span class="text-danger m-r-1">33,87%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
 
-<h2>Details</h2>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Net To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- END ROWs #1 -->
+        <!-- START ROW Report Statisticts & Latest Transactions -->
+        <div class="row m-t-3">
+            <div class="col-lg-6">
+                <!-- START Header -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <h5 class="m-b-0 m-t-0 f-w-300">Report Statisticts</h5> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
+                        <div class="btn-group" role="group" aria-label="...">
+                            @*<button type="button" class="btn btn-sm btn-default">Items Sold</button>
+                            <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
+                        </div>
+                    </div>
+                </div>
+                <!-- END Header -->
+                <!-- START Chart Higcharts -->
+                <div class="highcharts-basic-column m-t-2"></div>
+                <!-- END Chart Higcharts -->
+            </div>            
+            
+            @{
+                Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
+             }
+
+            <div class="highcharts-basic-column m-t-2"></div>
+        </div>
+        <!-- END ROW Report Statisticts & Latest Transactions -->
+        <!-- START ROW Latest Comments & Most Viewed -->
+        <div class="row m-t-3">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <h5 class="m-b-0 m-t-0 f-w-300">Latest Comments</h5>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-offset-2 col-sm-offset-4 col-md-offset-4 text-right">
+                        <button type="button" class="btn btn-sm btn-default">See All Comments<i class="fa m-l-1 fa-angle-right"></i> </button>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="small text-muted text-uppercase">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="media media-auto">
+                                    <div class="media-left">
+                                        <a href="javascript: void(0)">
+                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/kiwiupover/128.jpg" alt="Avatar">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-white">Ruthie Hirthe</span>
+                                        <br>
+                                        <span class="media-heading">
+                                            <span>on Jun 16, 2015 </span> on <a href="#"><span>Games</span></a>
+                                        </span>
+                                        <p class="m-t-2 m-b-0"><span>Odio ducimus quia maiores ut sint minima. Sit nemo provident voluptatem aperiam. Ut recusandae quia odio dolores voluptas. </span></p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="media media-auto">
+                                    <div class="media-left">
+                                        <a href="javascript: void(0)">
+                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/marshallchen_/128.jpg" alt="Avatar">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-white">Rollin Bradtke</span>
+                                        <br>
+                                        <span class="media-heading">
+                                            <span>on Apr 22, 2016 </span> on <a href="#"><span>Books</span></a>
+                                        </span>
+                                        <p class="m-t-2 m-b-0"><span>Similique tempora id consequatur voluptatem. Aut porro eos et unde corporis ea et consequatur cumque. Aut ut id. Itaque ut saepe dolorem odit. </span></p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media media-auto">
+                                    <div class="media-left">
+                                        <a href="javascript: void(0)">
+                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/danro/128.jpg" alt="Avatar">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-white">Antwon Rippin</span>
+                                        <br>
+                                        <span class="media-heading">
+                                            <span>on Jan 17, 2012 </span> on <a href="#"><span>Toys</span></a>
+                                        </span>
+                                        <p class="m-t-2 m-b-0"><span>Est expedita dolorem reiciendis. Quis aut voluptatem laudantium praesentium iste. Est vel autem nostrum aut. Repellendus sed doloribus soluta doloremque itaque tempora doloribus enim. </span></p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="media media-auto">
+                                    <div class="media-left">
+                                        <a href="javascript: void(0)">
+                                            <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/rdsaunders/128.jpg" alt="Avatar">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-white">Rex O&apos;Hara</span>
+                                        <br>
+                                        <span class="media-heading">
+                                            <span>on Jul 30, 2013 </span> on <a href="#"><span>Kids</span></a>
+                                        </span>
+                                        <p class="m-t-2"><span>Voluptatum placeat enim. Et et ut. Eligendi sed quia illum provident. Consequatur sed dolorem numquam voluptatem. </span></p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+            @{
+                Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
+            }
+
+
+            <!-- END ROW Report Statisticts & Latest Transactions -->
+
+        </div>
+        <!-- END EDIT CONTENT -->
+    </div>
+</div>
+<!-- END EDIT CONTENT -->
+<script src="~/assets/vendor/js/highstock.min.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts-settings.js"></script>
+
+
+@*<h2>Details</h2>
 
 <div>
     <h4>User</h4>
@@ -159,4 +356,6 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
+
+
