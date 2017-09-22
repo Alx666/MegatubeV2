@@ -39,21 +39,21 @@
     <link rel="stylesheet" href="~/assets/stylesheets/plugins.css">
     <!-- endbuild -->
     <!-- START Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/assets/images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/assets/images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/assets/images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/assets/images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/images/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/images/favicons/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="assets/images/favicons/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="~/assets/images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!-- END Favicon -->
     <!-- RSS -->
@@ -67,7 +67,7 @@
 <!-- END Head -->
 
 <body class="">
-    <script src="assets/vendor/js/lib.min.js"></script>
+    <script src="~/assets/vendor/js/lib.min.js"></script>
     <div class="main-wrap">
         <nav class="navigation">
             <!-- START Navbar -->
@@ -76,7 +76,7 @@
 
                     <div class="navbar-header">
                         <a class="current navbar-brand" href="starter.html">
-                            <img alt="Spin Logo Inverted" class="h-20" src="assets/images/spin-logo-inverted-2X.png">
+                            <img alt="Spin Logo Inverted" class="h-20" src="~/assets/images/spin-logo-inverted-2X.png">
                         </a>
                         <button class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
                             <i class="fa fa-fw fa-user text-white"></i>
@@ -136,14 +136,14 @@
             <!-- START Sidebars -->
             <aside class="navbar-default sidebar">
                 <div class="sidebar-overlay-head">
-                    <img src="assets/images/spin-logo-inverted.png" alt="Logo" />
+                    <img src="~/assets/images/spin-logo-inverted.png" alt="Logo" />
                     <a href="javascript:void(0)" class="sidebar-switch action-sidebar-close">
                         <i class="fa fa-times"></i>
                     </a>
                 </div>
                 <div class="sidebar-logo">
-                    <img class="logo-default" src="assets/images/spin-logo-big-inverse-2X.png" alt="Logo" width="53">
-                    <img class="logo-slim" src="assets/images/spin-logo-slim.png" alt="Logo">
+                    <img class="logo-default" src="~/assets/images/spin-logo-big-inverse-2X.png" alt="Logo" width="53">
+                    <img class="logo-slim" src="~/assets/images/spin-logo-slim.png" alt="Logo">
                 </div>
                 <div class="sidebar-content">
                     <!-- START Tree -->
@@ -170,68 +170,6 @@
                                 </li>
                             }
                         }
-                        
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Registry</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li>                                    
-                                    <a href="@Url.Action("Index", "Users")">
-                                        <span class="nav-label">Users</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "ViewChannels")">
-                                        <span class="nav-label">Channels</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Alerts")">
-                                        <span class="nav-label">Alerts</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Payments")">
-                                        <span class="nav-label">Payments</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li class='active'>
-                                    <a href="#">
-                                        <span class="nav-label">Load</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li class='active'>
-                                    <a href="#">
-                                        <span class="nav-label">Load</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-
                         <li>
                             <a href="#" title="Apps">
                                 <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>
@@ -354,7 +292,7 @@
         </footer>
         <!-- END Footer -->
     </div>
-    <link rel="stylesheet" href="assets/vendor/css/lib.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/css/lib.min.css">
     <!-- JS -->
     <script src="~/assets/javascript/app/helpers.js"></script>
     <script src="~/assets/javascript/app/layoutControl.js"></script>
