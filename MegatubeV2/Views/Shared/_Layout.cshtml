@@ -1,9 +1,15 @@
 ﻿@{ 
 
     Dictionary<String, String[]> MenuDict = new Dictionary<string, string[]>();
+    Dictionary<String, String> NamesDict = new Dictionary<string, string>();
 
-    MenuDict.Add("Uno", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
-    MenuDict.Add("Due", new string[] { "PagD1", "PagD2" });
+    MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
+
+    //relationship between controller and text to show in the menu
+    NamesDict.Add("Users", "Utenti");
+    NamesDict.Add("ViewChannels", "Canali");
+    NamesDict.Add("Alerts", "Notifiche");
+    NamesDict.Add("Payments", "Pagamenti");
 
     String activeChildClasses = "active expanded nested-active";
     String activeParentClasses = "nested-active primary-submenu has-submenu expanded";
@@ -25,7 +31,7 @@
     <!-- Enable responsiveness on mobile devices-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>
-        SPIN | Starter HTML/CSS
+        Megatube | Manager
     </title>
     <!--START Loader -->
     <style>
@@ -161,15 +167,15 @@
                                             {
                                                 <li class="@if (currentController == pageName){ @activeChildClasses}">
                                                     <a href="@Url.Action("Index", pageName)">
-                                                        <span class="nav-label">@pageName</span>
+                                                        <span class="nav-label">@NamesDict[pageName]</span>
                                                     </a>
                                                 </li>
                                             }
-                                        }
+                                                                }
                                     </ul>
                                 </li>
                             }
-                        }
+                                                        }
                         <li>
                             <a href="#" title="Apps">
                                 <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>
