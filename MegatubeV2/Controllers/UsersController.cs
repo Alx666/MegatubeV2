@@ -29,10 +29,13 @@ namespace MegatubeV2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Notes = db.ViewNotes.Where(x => x.Subject == user.Id).ToList();
             return View(user);
         }
 

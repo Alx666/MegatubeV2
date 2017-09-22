@@ -27,6 +27,7 @@
         <AssociationConnector Association="MegatubeV2Model.FK_Partnership_ToNetwork" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserAuthor" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserSubject" />
+        <EntityTypeShape EntityType="MegatubeV2Model.ViewNote" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

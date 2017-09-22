@@ -136,6 +136,26 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="RecruiterId" Type="int" />
           <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewNotes">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Subject" />
+            <PropertyRef Name="Author" />
+            <PropertyRef Name="Text" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="AuthorName" />
+            <PropertyRef Name="SubjectName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Author" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="AuthorName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="SubjectName" Type="nvarchar" MaxLength="101" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Accreditation_ToChannel">
           <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
           <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
@@ -303,6 +323,17 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
     [ViewChannel].[RecruiterId] AS [RecruiterId], 
     [ViewChannel].[RecruiterName] AS [RecruiterName]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewNotes" EntityType="Self.ViewNotes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewNotes].[Id] AS [Id], 
+    [ViewNotes].[Subject] AS [Subject], 
+    [ViewNotes].[Author] AS [Author], 
+    [ViewNotes].[Text] AS [Text], 
+    [ViewNotes].[Date] AS [Date], 
+    [ViewNotes].[AuthorName] AS [AuthorName], 
+    [ViewNotes].[SubjectName] AS [SubjectName]
+    FROM [dbo].[ViewNotes] AS [ViewNotes]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
             <End Role="Channel" EntitySet="Channel" />
@@ -657,6 +688,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <End Role="User" EntitySet="Users" />
             <End Role="Note" EntitySet="Notes" />
           </AssociationSet>
+          <EntitySet Name="ViewNotes" EntityType="MegatubeV2Model.ViewNote" />
         </EntityContainer>
         <EntityType Name="Network">
           <Key>
@@ -714,6 +746,24 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ViewNote">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Subject" />
+            <PropertyRef Name="Author" />
+            <PropertyRef Name="Text" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="AuthorName" />
+            <PropertyRef Name="SubjectName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -847,6 +897,19 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewNotes">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewNote">
+              <MappingFragment StoreEntitySet="ViewNotes">
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

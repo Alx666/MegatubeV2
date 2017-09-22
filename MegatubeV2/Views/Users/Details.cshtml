@@ -1,6 +1,7 @@
 ﻿@model MegatubeV2.User
 
 @{
+    
     ViewBag.Title = "Details";
 }
 <!-- START EDIT CONTENT -->
@@ -84,7 +85,7 @@
         <div class="row m-t-3">
                                    
             @{
-                Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
+                Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
                 Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
             }
         </div>        

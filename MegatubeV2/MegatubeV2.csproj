@@ -193,6 +193,9 @@
     <Compile Include="ViewChannel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewNote.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\images\favicons\android-icon-144x144.png" />
