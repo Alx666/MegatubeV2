@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MegatubeV2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MegatubeV2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accreditation">
           <Key>
             <PropertyRef Name="Id" />
@@ -38,6 +38,16 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Partnership">
           <Key>
@@ -126,6 +136,26 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="RecruiterId" Type="int" />
           <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewNotes">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Subject" />
+            <PropertyRef Name="Author" />
+            <PropertyRef Name="Text" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="AuthorName" />
+            <PropertyRef Name="SubjectName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Author" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="AuthorName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="SubjectName" Type="nvarchar" MaxLength="101" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Accreditation_ToChannel">
           <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
           <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
@@ -183,6 +213,30 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             </Principal>
             <Dependent Role="Channel">
               <PropertyRef Name="RecruiterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_ToUserAuthor">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_ToUserSubject">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,6 +304,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <EntitySet Name="Accreditation" EntityType="Self.Accreditation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Network" EntityType="Self.Network" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partnership" EntityType="Self.Partnership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
@@ -268,6 +323,17 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
     [ViewChannel].[RecruiterId] AS [RecruiterId], 
     [ViewChannel].[RecruiterName] AS [RecruiterName]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewNotes" EntityType="Self.ViewNotes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewNotes].[Id] AS [Id], 
+    [ViewNotes].[Subject] AS [Subject], 
+    [ViewNotes].[Author] AS [Author], 
+    [ViewNotes].[Text] AS [Text], 
+    [ViewNotes].[Date] AS [Date], 
+    [ViewNotes].[AuthorName] AS [AuthorName], 
+    [ViewNotes].[SubjectName] AS [SubjectName]
+    FROM [dbo].[ViewNotes] AS [ViewNotes]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
             <End Role="Channel" EntitySet="Channel" />
@@ -288,6 +354,14 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <AssociationSet Name="FK_ChannelRecruiter_ToUser" Association="Self.FK_ChannelRecruiter_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Channel" EntitySet="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_ToUserAuthor" Association="Self.FK_Note_ToUserAuthor">
+            <End Role="User" EntitySet="User" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_ToUserSubject" Association="Self.FK_Note_ToUserSubject">
+            <End Role="User" EntitySet="User" />
+            <End Role="Note" EntitySet="Note" />
           </AssociationSet>
           <AssociationSet Name="FK_Partnership_ToNetwork" Association="Self.FK_Partnership_ToNetwork">
             <End Role="Network" EntitySet="Network" />
@@ -310,8 +384,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <End Role="User1" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MegatubeV2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -348,14 +421,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <NavigationProperty Name="User" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
         </EntityType>
-        <EntityType Name="Network">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToNetwork" FromRole="Network" ToRole="Partnership" />
-        </EntityType>
         <EntityType Name="Partnership">
           <Key>
             <PropertyRef Name="UserId" />
@@ -365,9 +430,9 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="NetworkId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Network" Relationship="Self.FK_Partnership_ToNetwork" FromRole="Partnership" ToRole="Network" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Partnership_ToRole" FromRole="Partnership" ToRole="Role" />
           <NavigationProperty Name="User" Relationship="Self.FK_Partnership_ToUser" FromRole="Partnership" ToRole="User" />
+          <NavigationProperty Name="Network" Relationship="MegatubeV2Model.FK_Partnership_ToNetwork" FromRole="Partnership" ToRole="Network" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -432,6 +497,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_ToUser" FromRole="User" ToRole="Payment" />
           <NavigationProperty Name="User1" Relationship="Self.FK_User_ToUser" FromRole="User" ToRole="User1" />
           <NavigationProperty Name="User2" Relationship="Self.FK_User_ToUser" FromRole="User1" ToRole="User" />
+          <NavigationProperty Name="NotesCreated" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="User" ToRole="Note" />
+          <NavigationProperty Name="NotesReceived" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="User" ToRole="Note" />
         </EntityType>
         <EntityType Name="ViewChannel">
           <Key>
@@ -514,18 +581,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Partnership_ToNetwork">
-          <End Role="Network" Type="Self.Network" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Network">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="NetworkId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Partnership_ToRole">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
@@ -577,7 +632,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
         <EntityContainer Name="MegatubeV2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accreditations" EntityType="Self.Accreditation" />
           <EntitySet Name="Channels" EntityType="Self.Channel" />
-          <EntitySet Name="Networks" EntityType="Self.Network" />
           <EntitySet Name="Partnerships" EntityType="Self.Partnership" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -604,10 +658,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <End Role="User" EntitySet="Users" />
             <End Role="Channel" EntitySet="Channels" />
           </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToNetwork" Association="Self.FK_Partnership_ToNetwork">
-            <End Role="Network" EntitySet="Networks" />
-            <End Role="Partnership" EntitySet="Partnerships" />
-          </AssociationSet>
           <AssociationSet Name="FK_Partnership_ToRole" Association="Self.FK_Partnership_ToRole">
             <End Role="Role" EntitySet="Roles" />
             <End Role="Partnership" EntitySet="Partnerships" />
@@ -624,7 +674,96 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <End Role="User" EntitySet="Users" />
             <End Role="User1" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Networks" EntityType="MegatubeV2Model.Network" />
+          <EntitySet Name="Notes" EntityType="MegatubeV2Model.Note" />
+          <AssociationSet Name="FK_Partnership_ToNetwork" Association="MegatubeV2Model.FK_Partnership_ToNetwork">
+            <End Role="Network" EntitySet="Networks" />
+            <End Role="Partnership" EntitySet="Partnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_ToUserAuthor" Association="MegatubeV2Model.FK_Note_ToUserAuthor">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_ToUserSubject" Association="MegatubeV2Model.FK_Note_ToUserSubject">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <EntitySet Name="ViewNotes" EntityType="MegatubeV2Model.ViewNote" />
         </EntityContainer>
+        <EntityType Name="Network">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Partnerships" Relationship="MegatubeV2Model.FK_Partnership_ToNetwork" FromRole="Network" ToRole="Partnership" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Author" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="Note" ToRole="User" />
+          <NavigationProperty Name="Subject" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="Note" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Partnership_ToNetwork">
+          <End Type="MegatubeV2Model.Network" Role="Network" Multiplicity="1" />
+          <End Type="MegatubeV2Model.Partnership" Role="Partnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Network">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partnership">
+              <PropertyRef Name="NetworkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_ToUserAuthor">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="1" />
+          <End Type="MegatubeV2Model.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_ToUserSubject">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="1" />
+          <End Type="MegatubeV2Model.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ViewNote">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Subject" />
+            <PropertyRef Name="Author" />
+            <PropertyRef Name="Text" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="AuthorName" />
+            <PropertyRef Name="SubjectName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -657,14 +796,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
                 <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
                 <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
                 <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Networks">
-            <EntityTypeMapping TypeName="MegatubeV2Model.Network">
-              <MappingFragment StoreEntitySet="Network">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -748,6 +879,38 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
                 <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
                 <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
                 <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Networks">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Network">
+              <MappingFragment StoreEntitySet="Network">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewNotes">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewNote">
+              <MappingFragment StoreEntitySet="ViewNotes">
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,7 +18,7 @@ namespace MegatubeV2.Controllers
         public ActionResult Index()
         {
             var users = db.Users.Include(u => u.User2);
-            return View(users.ToList());
+            return View(users.OrderBy(x => x.LastName).ToList());
         }
 
         // GET: Users/Details/5
@@ -29,10 +29,13 @@ namespace MegatubeV2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Notes = db.ViewNotes.Where(x => x.Subject == user.Id).ToList();
             return View(user);
         }
 

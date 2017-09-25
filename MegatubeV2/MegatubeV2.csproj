@@ -171,6 +171,9 @@
     <Compile Include="Network.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Note.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Partnership.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
@@ -188,6 +191,9 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewChannel.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNote.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -256,22 +262,36 @@
     <Content Include="assets\images\spin-logo-inverted.png" />
     <Content Include="assets\images\spin-logo-normal.png" />
     <Content Include="assets\images\spin-logo-slim.png" />
+    <Content Include="assets\javascript\app.min.13a3a368.js" />
     <Content Include="assets\javascript\app\faker.js" />
     <Content Include="assets\javascript\app\helpers.js" />
     <Content Include="assets\javascript\app\layoutControl.js" />
     <Content Include="assets\javascript\app\main.js" />
     <Content Include="assets\javascript\app\rightSidebar.js" />
     <Content Include="assets\javascript\app\sidebar.js" />
+    <Content Include="assets\javascript\highchart-themes\analytics-theme.js" />
+    <Content Include="assets\javascript\highchart-themes\highcharts&amp;highstock-theme.js" />
+    <Content Include="assets\javascript\highchart-themes\highcharts-settings.js" />
+    <Content Include="assets\javascript\highchart-themes\highstock-settings.js" />
+    <Content Include="assets\javascript\highchart-themes\stock-theme.js" />
+    <Content Include="assets\javascript\plugins-init.js" />
+    <Content Include="assets\javascript\switchery-settings.js" />
     <Content Include="assets\stylesheets\app.css" />
     <Content Include="assets\stylesheets\app.min.e0bb64e7.css" />
     <Content Include="assets\stylesheets\bootstrap.css" />
+    <Content Include="assets\stylesheets\custom.css" />
     <Content Include="assets\stylesheets\plugins.css" />
     <Content Include="assets\vendor\css\lib.min.css" />
     <Content Include="assets\vendor\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\vendor\js\dataTables.bootstrap.min.js" />
+    <Content Include="assets\vendor\js\highcharts-more.min.js" />
+    <Content Include="assets\vendor\js\highstock.min.js" />
+    <Content Include="assets\vendor\js\jquery.dataTables.min.js" />
     <Content Include="assets\vendor\js\lib.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -319,6 +339,9 @@
     <Content Include="MegatubeV2Model.edmx.diagram">
       <DependentUpon>MegatubeV2Model.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -359,19 +382,22 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Csv\Index.cshtml" />
+    <Content Include="Views\_PartialAccreditations.cshtml" />
+    <Content Include="Views\_PartialPayments.cshtml" />
+    <Content Include="Views\_PartialNotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

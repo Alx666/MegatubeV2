@@ -1,10 +1,102 @@
 ﻿@model MegatubeV2.User
 
 @{
+    
     ViewBag.Title = "Details";
 }
+<!-- START EDIT CONTENT -->
+<div class="row">
+    <div class="col-lg-12">
+        <!-- START ROWs #1 -->
+        <div class="row m-t-1">
+            
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross Earnings<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">
+                            IDR 10,215,845
+                        </h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">33,87%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">128,980</h2>
+                        <i class="fa fa-fw fa-caret-down text-danger"></i> <span class="text-danger m-r-1">33,87%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
 
-<h2>Details</h2>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Gross To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="panel panel-default b-a-0 bg-gray-dark">
+                    <div class="panel-heading">Total Net To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-body">
+                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
+                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- END ROWs #1 -->
+        <!-- START ROW Report Statisticts & Latest Transactions -->
+        <div class="row m-t-3">
+            <div class="col-lg-6">
+                <!-- START Header -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <h5 class="m-b-0 m-t-0 f-w-300">Report Statisticts</h5> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
+                        <div class="btn-group" role="group" aria-label="...">
+                            @*<button type="button" class="btn btn-sm btn-default">Items Sold</button>
+                            <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
+                        </div>
+                    </div>
+                </div>
+                <!-- END Header -->
+                <!-- START Chart Higcharts -->
+                <div class="highcharts-basic-column m-t-2"></div>
+                <!-- END Chart Higcharts -->
+            </div>            
+            
+            @{
+                Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
+             }
+
+            <div class="highcharts-basic-column m-t-2"></div>
+        </div>
+        <div class="row m-t-3">
+                                   
+            @{
+                Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
+                Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
+            }
+        </div>        
+    </div>
+</div>
+<!-- END EDIT CONTENT -->
+<script src="~/assets/vendor/js/highstock.min.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts-settings.js"></script>
+
+@*<h2>Details</h2>
 
 <div>
     <h4>User</h4>
@@ -159,4 +251,6 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
+
+

@@ -12,14 +12,15 @@ namespace MegatubeV2
     using System;
     using System.Collections.Generic;
     
-    public partial class Partnership
+    public partial class Note
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
-        public int RoleId { get; set; }
-        public int NetworkId { get; set; }
+        public int AuthorId { get; set; }
+        public string Text { get; set; }
+        public System.DateTime Date { get; set; }
     
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
-        public virtual Network Network { get; set; }
+        public virtual User Author { get; set; }
+        public virtual User Subject { get; set; }
     }
 }

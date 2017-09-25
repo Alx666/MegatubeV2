@@ -1,22 +1,54 @@
 ﻿
 @{
-    Layout = null;
+
 }
 
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "m-t-3", id = "loginform" }))
+@using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadChannelsForm" }))
 {
     <div class="form-group">
-        <input class="form-control" placeholder="Enter a Username or Email..." name="username">
+        <div class="col-lg-4">
+            <input class="form-control" type="file" name="channelsFile" size="40" placeholder="Load Channels" />
+        </div>
+        <div class="col-lg-4">
+            <input class="form-control" type="text" name="channelsConversion" size="40" placeholder="Dollar To Euro Change" />
+        </div>
+        <div class="col-lg-4">
+            <a href="javasctipt:{}" onclick="document.getElementById('uploadChannelsForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
+        </div>                      
     </div>
-    <div class="form-group">
-        <input class="form-control" placeholder="Your Password..." name="password">
-    </div>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"> Remember Password?
-        </label>
-    </div>
-
-    <a href="javasctipt:{}" onclick="document.getElementById('loginform').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Login</a>
 }
+    
+@using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadMonetaryDataForm" }))
+{
+    <div class="form-group">
+        <div class="col-lg-4">
+            <input class="form-control" type="file" name="channelsFile" size="40" placeholder="Load Channels" />
+        </div>
+        <div class="col-lg-4">
+            <input class="form-control" type="text" name="channelsConversion" size="40" placeholder="Dollar To Euro Change" />
+        </div>
+        <div class="col-lg-4">
+            <a href="javasctipt:{}" onclick="document.getElementById('uploadMonetaryDataForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadSuperchatForm" }))
+{
+    <div class="form-group">
+        <div class="col-lg-4">
+            <input class="form-control" type="file" name="channelsFile" size="40" placeholder="Load Channels" />
+        </div>
+        <div class="col-lg-4">
+            <input class="form-control" type="text" name="channelsConversion" size="40" placeholder="Dollar To Euro Change" />
+        </div>
+        <div class="col-lg-4">
+            <a href="javasctipt:{}" onclick="document.getElementById('uploadSuperchatForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
+        </div>
+    </div>
+}
+
+
+
+ 

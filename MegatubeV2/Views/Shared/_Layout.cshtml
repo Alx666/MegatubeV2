@@ -19,10 +19,8 @@
     string currentController = rd.GetRequiredString("controller");
     //string currentArea = rd.Values["area"] as string;
 
-
-
-
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- START Head -->
@@ -31,7 +29,7 @@
     <!-- Enable responsiveness on mobile devices-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>
-        Megatube | Manager
+        Megatube Manager
     </title>
     <!--START Loader -->
     <style>
@@ -43,6 +41,7 @@
     <link rel="stylesheet" href="~/assets/stylesheets/bootstrap.css">
     <link rel="stylesheet" href="~/assets/stylesheets/app.css">
     <link rel="stylesheet" href="~/assets/stylesheets/plugins.css">
+    <link rel="stylesheet" href="~/assets/stylesheets/custom.css">
     <!-- endbuild -->
     <!-- START Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="~/assets/images/favicons/apple-icon-57x57.png">
@@ -72,7 +71,26 @@
 </head>
 <!-- END Head -->
 
-<body class="">
+<body class="loader">
+        <div id="initial-loader">
+        <div>
+            <div class="initial-loader-top">
+                <img class="initial-loader-logo" src="~/assets/images/spin-logo-inverted.png" alt="Loader">
+                <div class="loader loader--style1">
+                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewbox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+                    <g>
+                        <path fill="#2d2d2d" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
+                        <path fill="#2c97de" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z" />
+                    </g>
+                </svg>
+                </div>
+            </div>
+            <div class="initial-loader-bottom">
+                Loading. Please Wait. <i class="fa fa-cricle" style="opacity: 0"></i>
+            </div>
+        </div>
+    </div>
+
     <script src="~/assets/vendor/js/lib.min.js"></script>
     <div class="main-wrap">
         <nav class="navigation">
@@ -91,7 +109,6 @@
                             <i class="fa fa-fw fa-bars text-white"></i>
                         </button>
                     </div>
-
                     <div class="collapse navbar-collapse" id="navbar">
 
                         <!-- START Search Mobile -->
@@ -175,7 +192,70 @@
                                     </ul>
                                 </li>
                             }
-                                                        }
+                        }
+                        
+                        <li class="Dashboards">
+                            <a href="#" title="Dashboards">
+                                <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Registry</span><i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li>                                    
+                                    <a href="@Url.Action("Index", "Users")">
+                                        <span class="nav-label">Users</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "ViewChannels")">
+                                        <span class="nav-label">Channels</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "Alerts")">
+                                        <span class="nav-label">Alerts</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "Payments")">
+                                        <span class="nav-label">Payments</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="Dashboards">
+                            <a href="#" title="Dashboards">
+                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "Csv")">
+                                        <span class="nav-label">Load</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="Dashboards">
+                            <a href="#" title="Dashboards">
+                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
+                            </a>
+                            <ul>
+                                <li class='active'>
+                                    <a href="#">
+                                        <span class="nav-label">Load</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+>>>>>>> 0a0493de38b256c35373df2a4aada39362e477be
                         <li>
                             <a href="#" title="Apps">
                                 <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>
@@ -248,7 +328,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header m-t-0">
-                                <h3 class="m-t-0">Starter HTML/CSS</h3>
+                                <h3 class="m-t-0">Megatube Manager</h3>
                             </div>
                         </div>
                     </div>
@@ -261,7 +341,7 @@
                     <div class="row">
                         <div class="col-lg-12 sub-navbar-column">
                             <div class="sub-navbar-header">
-                                <h3>Starter HTML/CSS</h3>
+                                <h3 id="LayoutTitle">Megatube Manager</h3>
                             </div>
                             <ol class="breadcrumb navbar-text navbar-right no-bg">
                                 <li class="current-parent">
@@ -284,7 +364,7 @@
 
             <div class="container">
                 <!-- START Content -->
-                @RenderBody();
+                @RenderBody()
                 <!-- END Content -->
             </div>
         </div>
@@ -292,11 +372,31 @@
         <footer>
             <div class="container-fluid">
                 <p class="text-gray-dark">
-                    © 2016 - Your Company Name
+                    © 2016 - Megatube
                 </p>
             </div>
         </footer>
         <!-- END Footer -->
+        <script>
+                // Hide loader
+                (function () {
+                    var bodyElement = document.querySelector('body');
+                    bodyElement.classList.add('loading');
+
+                    document.addEventListener('readystatechange', function () {
+                        if (document.readyState === 'complete') {
+                            var bodyElement = document.querySelector('body');
+                            var loaderElement = document.querySelector('#initial-loader');
+
+                            bodyElement.classList.add('loaded');
+                            setTimeout(function () {
+                                bodyElement.removeChild(loaderElement);
+                                bodyElement.classList.remove('loading', 'loaded');
+                            }, 200);
+                        }
+                    });
+                })();
+        </script>
     </div>
     <link rel="stylesheet" href="~/assets/vendor/css/lib.min.css">
     <!-- JS -->
