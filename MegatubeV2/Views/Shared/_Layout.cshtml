@@ -6,10 +6,10 @@
     MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
 
     //relationship between controller and text to show in the menu
-    NamesDict.Add("Users", "Utenti");
-    NamesDict.Add("ViewChannels", "Canali");
-    NamesDict.Add("Alerts", "Notifiche");
-    NamesDict.Add("Payments", "Pagamenti");
+    NamesDict.Add("Users", "Users");
+    NamesDict.Add("ViewChannels", "Channels");
+    NamesDict.Add("Alerts", "Alerts");
+    NamesDict.Add("Payments", "Payments");
 
     String activeChildClasses = "active expanded nested-active";
     String activeParentClasses = "nested-active primary-submenu has-submenu expanded";
@@ -228,34 +228,6 @@
                             </ul>
                         </li>
                         
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Csv")">
-                                        <span class="nav-label">Load</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa  fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Data</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li class='active'>
-                                    <a href="#">
-                                        <span class="nav-label">Load</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-
->>>>>>> 0a0493de38b256c35373df2a4aada39362e477be
                         <li>
                             <a href="#" title="Apps">
                                 <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>

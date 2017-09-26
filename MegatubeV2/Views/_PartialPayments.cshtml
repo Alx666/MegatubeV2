@@ -10,7 +10,7 @@
             <button type="button" class="btn btn-sm btn-default">See All<i class="fa m-l-1 fa-angle-right"></i> </button>
         </div>
     </div>
-    <table class="table m-t-2">
+    <table class="table table-condensed table-hover table-striped" id="paymentsTable">
         <thead>
             <tr>
                 <th class="small text-muted text-uppercase">
@@ -116,3 +116,15 @@
 }
 
 </table>*@
+
+<script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+
+    $(document).ready(function () {
+        $('#paymentsTable').DataTable({
+            "pageLength": 5
+        });
+    });
+</script>

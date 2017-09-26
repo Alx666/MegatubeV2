@@ -9,11 +9,12 @@
             <button type="button" class="btn btn-sm btn-default">See All<i class="fa m-l-1 fa-angle-right"></i> </button>
         </div>
     </div>
-    <table class="table table-hover">
+    <table class="table table-condensed table-hover table-striped" id="notesTable">
         <thead>
             <tr>
-                <th class="small text-muted text-uppercase">
-                </th>
+                <th class="small text-muted text-uppercase">Date</th>
+                <th class="small text-muted text-uppercase">Author</th>
+                <th class="small text-muted"></th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,11 @@
                 foreach(var item in Model)
                 {
                     <tr>
+                        <td>
+                            <span class="media-heading">
+                             <span>@item.Date.ToShortDateString()</span>
+                            </span>
+                        </td>
                         <td>
                             <div class="media media-auto">
                                 <div class="media-left">
@@ -30,13 +36,12 @@
                                 </div>
                                 <div class="media-body">
                                     <span class="media-heading text-white">@item.AuthorName</span>
-                                    <br>
-                                    <span class="media-heading">
-                                        <span>on @item.Date.ToShortDateString()</span>
-                                    </span>
-                                    <p class="m-t-2 m-b-0"><span>@item.Text</span></p>
+                                    <p class="m-t-2 m-b-0"><span id="txt_@item.Id">@item.Text</span></p>
                                 </div>
                             </div>
+                        </td>
+                        <td nowrap="nowrap">
+                            <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="#" data-noteid="note_@item.Id"><i class="glyphicon glyphicon-pencil"></i></a> <a title="Delete" class="btn btn-default text-primary btn-sm action-button deleteNote" href="#" data-noteid="note_@item.Id"><i class="glyphicon glyphicon-trash"></i></a>
                         </td>
                     </tr>
                 }
@@ -46,4 +51,68 @@
 
         </tbody>
     </table>
+    <div class="row align-right">
+        <button id="addNote" type="button" class="btn btn-info">Add a note</button>
+    </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post">
+                <input type="hidden" id="noteModalId" name="noteModalId" />
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#xD7;</span></button>
+                    <h4 class="modal-title" id="noteModalLabel"></h4>
+                </div>
+                <div class="modal-body" style="min-height:140px">
+                    <div class="form-group">
+                        <label for="noteModalText" class="col-sm-3 control-label">Text</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="5" id="noteModalText" name="noteModalText"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+
+    $(document).ready(function () {
+        $('#notesTable').DataTable({
+            "pageLength": 5
+        });
+
+        $("#addNote").click(function myfunction() {
+            $("#noteModalId").val(0);
+            $("#noteModalLabel").html("Create a note");
+            $("#noteModalText").val("");
+            $('#noteModal').modal('show');
+        });
+
+        $(".editNote").click(function myfunction() {
+            var noteId = $(this).data("noteid").replace("note_", "");
+            $("#noteModalId").val(noteId);
+            $("#noteModalLabel").html("Edit note");
+            $("#noteModalText").val($("#txt_" + noteId).html());
+            $('#noteModal').modal('show');
+        });
+
+        $(".deleteNote").click(function myfunction() {
+            var noteId = $(this).data("noteid").replace("note_", "");
+            $("#noteModalId").val(noteId);
+            $("#noteModalLabel").html("Are you sure to delete this note?");
+            $("#noteModalText").val($("#txt_" + noteId).html());
+            $('#noteModal').modal('show');
+        });
+    });
+</script>
