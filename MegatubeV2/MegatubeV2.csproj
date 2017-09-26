@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -146,6 +147,7 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChannelsController.cs" />
     <Compile Include="Controllers\CsvController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -385,6 +387,7 @@
     <Content Include="Views\_PartialAccreditations.cshtml" />
     <Content Include="Views\_PartialPayments.cshtml" />
     <Content Include="Views\_PartialNotes.cshtml" />
+    <Content Include="Views\Channels\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
