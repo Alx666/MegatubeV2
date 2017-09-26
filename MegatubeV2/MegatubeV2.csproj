@@ -152,6 +152,9 @@
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ViewChannelsController.cs" />
+    <Compile Include="DataFile.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

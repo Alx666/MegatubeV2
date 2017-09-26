@@ -36,5 +36,6 @@ namespace MegatubeV2
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<ViewNote> ViewNotes { get; set; }
+        public virtual DbSet<DataFile> DataFiles { get; set; }
     }
 }

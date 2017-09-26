@@ -4,7 +4,7 @@
 }
 
 
-@using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadChannelsForm" }))
+@using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadForm" }))
 {
     <div class="form-group">
         <div class="col-lg-3">
@@ -24,7 +24,7 @@
             <input class="form-control" type="file" name="channelsFile" size="40" placeholder="Load Channels" />
         </div>        
         <div class="col-lg-3">
-            <a href="javasctipt:{}" onclick="document.getElementById('uploadChannelsForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
+            <a href="javasctipt:{}" onclick="document.getElementById('uploadForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
         </div>                      
     </div>
 }
