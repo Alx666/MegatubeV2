@@ -140,6 +140,7 @@
     <Compile Include="Accreditation.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Content Include="App_Code\SmartParser.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
