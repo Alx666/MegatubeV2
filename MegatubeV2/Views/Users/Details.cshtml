@@ -1,7 +1,7 @@
 ﻿@model MegatubeV2.User
 
 @{
-    
+
     ViewBag.Title = "Details";
 }
 <!-- START EDIT CONTENT -->
@@ -57,7 +57,7 @@
         <!-- END ROWs #1 -->
         <!-- START ROW Report Statisticts & Latest Transactions -->
         <div class="row m-t-3">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <!-- START Header -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-6">
@@ -76,6 +76,164 @@
                 <!-- END Chart Higcharts -->
             </div>            
             
+            <div class="col-lg-6">
+                <h4>User</h4>
+                <hr />
+                <dl class="dl-horizontal">                    
+                    <dt>
+                        @{ 
+                            var x = from p in Model.Payments group p by p.Date.Year into g select g;
+                        }
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Mobile)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Mobile)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EMail)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EMail)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Password)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Skype)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Skype)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BirthDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BirthDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BirthPlace)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BirthPlace)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyKind)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyKind)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IBAN)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.IBAN)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PIVAorVAT)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PIVAorVAT)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FullAddress)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FullAddress)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PostalCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PostalCode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PaymentMethod)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentMethod)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BICSWIFT)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BICSWIFT)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RegistrationDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RegistrationDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.User2.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.User2.Name)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+
             @{
                 Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
              }
@@ -96,161 +254,8 @@
 <script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
 <script src="~/assets/javascript/highchart-themes/highcharts-settings.js"></script>
 
-@*<h2>Details</h2>
+<h2>Details</h2>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EMail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EMail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Skype)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Skype)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthPlace)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthPlace)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompanyName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyKind)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompanyKind)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IBAN)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IBAN)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PIVAorVAT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PIVAorVAT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FullAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostalCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentMethod)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentMethod)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BICSWIFT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BICSWIFT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User2.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User2.Name)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
 
 
