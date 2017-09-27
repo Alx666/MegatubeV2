@@ -28,6 +28,8 @@ namespace MegatubeV2
         public double PercentOwner { get; set; }
         public double PercentRecruiter { get; set; }
         public double PercentMegatube { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime LatestActivity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }

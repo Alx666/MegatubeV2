@@ -31,6 +31,8 @@
           <Property Name="PercentOwner" Type="float" Nullable="false" />
           <Property Name="PercentRecruiter" Type="float" Nullable="false" />
           <Property Name="PercentMegatube" Type="float" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LatestActivity" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="DataFile">
           <Key>
@@ -430,6 +432,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
           <NavigationProperty Name="User" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="Partnership">
           <Key>
@@ -808,6 +812,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="MegatubeV2Model.Channel">
               <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
