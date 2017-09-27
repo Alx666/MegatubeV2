@@ -51,7 +51,7 @@
 
         </tbody>
     </table>
-    <div class="row align-right">
+    <div class="row text-right">
         <button id="addNote" type="button" class="btn btn-info">Add a note</button>
     </div>
 </div>
@@ -75,7 +75,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="noteModalButSave">Save changes</button>
+                    <button type="button" class="btn btn-danger" id="noteModalButDelete">Delete note</button>
                 </div>
             </form>
         </div>
@@ -87,6 +88,12 @@
 
 <script language="javascript">
 
+    function loadModal(buttToShow,buttToHide,disableText){
+        $("#noteModalBut" + buttToShow).show();
+        $("#noteModalBut" + buttToHide).hide();
+        $("#noteModalText").prop('disabled', disableText);
+    }
+
     $(document).ready(function () {
         $('#notesTable').DataTable({
             "pageLength": 5
@@ -96,6 +103,7 @@
             $("#noteModalId").val(0);
             $("#noteModalLabel").html("Create a note");
             $("#noteModalText").val("");
+            loadModal("Save", "Delete", false);
             $('#noteModal').modal('show');
         });
 
@@ -104,6 +112,7 @@
             $("#noteModalId").val(noteId);
             $("#noteModalLabel").html("Edit note");
             $("#noteModalText").val($("#txt_" + noteId).html());
+            loadModal("Save", "Delete", false);
             $('#noteModal').modal('show');
         });
 
@@ -112,6 +121,7 @@
             $("#noteModalId").val(noteId);
             $("#noteModalLabel").html("Are you sure to delete this note?");
             $("#noteModalText").val($("#txt_" + noteId).html());
+            loadModal("Delete", "Save", true);
             $('#noteModal').modal('show');
         });
     });
