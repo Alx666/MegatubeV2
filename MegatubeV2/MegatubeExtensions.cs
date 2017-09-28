@@ -11,7 +11,7 @@ namespace MegatubeV2
         {
             try
             {
-                return s.Trim().Substring(0, Math.Min(0, s.Length));
+                return s.Trim().Substring(0, Math.Min(50,s.Length));
             }
             catch (Exception)
             {
