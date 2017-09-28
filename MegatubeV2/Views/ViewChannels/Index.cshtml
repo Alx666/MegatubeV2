@@ -49,6 +49,12 @@
                 @Html.DisplayNameFor(model => model.PercentMegatube)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LatestActivity)
+            </th>
+            <th>
 
             </th>
         </tr>
@@ -60,7 +66,15 @@
                 <td>
                     @{
                         string sUrl = "https://www.youtube.com/channel/UC" + item.Id;
-                        <a href="@sUrl" target="_blank">@item.Id</a>
+
+                        if (item.IsActive)
+                        {
+                            <a href="@sUrl" target="_blank">@item.Id</a>
+                        }
+                        else
+                        {
+                            <a href="@sUrl" target="_blank" class="text-gray-dark">@item.Id</a>
+                        }
                     }
                 </td>
                 <td class="text-mint-green">
@@ -83,6 +97,19 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PercentMegatube)
+                </td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        <p>Active</p>
+                    }
+                    else
+                    {
+                        <p>M.I.A.</p>
+                    }                    
+                </td>
+                <td>
+                    @item.LatestActivity.ToShortDateString()
                 </td>
                 <td nowrap="nowrap">
                     <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit",new { Id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>

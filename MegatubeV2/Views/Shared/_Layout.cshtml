@@ -308,6 +308,7 @@
             </div>
             <!-- END Sub-Navbar with Header only-->
             <!-- START Sub-Navbar with Header and Breadcrumbs-->
+
             <div class="sub-navbar sub-navbar__header-breadcrumbs">
                 <div class="container">
                     <div class="row">
@@ -321,10 +322,25 @@
                                         <i class="fa fa-fw fa-home"></i>
                                     </a>
                                 </li>
+                                
+                                @{
+
+                                    string bcPath;
+
+                                    try
+                                    {
+                                        bcPath = NamesDict[currentController];
+                                    }
+                                    catch(Exception)
+                                    {
+                                        bcPath = "";
+                                    }
+                                 }
+
                                 <li>
-                                    <a href="@Url.Action("Index", currentController)">@NamesDict[currentController]</a>
+                                    <a href="@Url.Action("Index", currentController)">@bcPath</a>
                                 </li>
-                                <li class="active">Starter HTML/CSS</li>
+                                <li class="active">Placeholder Text</li>
                             </ol>
                         </div>
                     </div>

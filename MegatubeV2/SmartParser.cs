@@ -66,6 +66,14 @@ namespace MegatubeV2
             throw new EndOfStreamException("Could not locate the header before the end of the stream");
         }
 
+        public IEnumerable<T> ReadAllLines()
+        {
+            while (!EndOfSection)
+            {
+                yield return this.ReadLine();
+            }
+        }
+
         public T ReadLine()
         {            
             T item = new T();

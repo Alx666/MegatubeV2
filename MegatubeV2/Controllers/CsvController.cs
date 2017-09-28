@@ -19,7 +19,7 @@ namespace MegatubeV2.Controllers
 
         //YouTube_id0iPcHVVMh4ASTXBUYkOA_Ecommerce_paid_features_M_20170801_20170831_v1-0
         //YouTube_id0iPcHVVMh4ASTXBUYkOA_M_20170801_20170831_videoclaim_rawdata_v1-0
-        public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro)
+        public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro = 0f)
         {
             //Handle 3 possible scenarios
             //- Update channel informations (activity, displayname and new channel creation)

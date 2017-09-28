@@ -24,5 +24,7 @@ namespace MegatubeV2
         public string OwnerName { get; set; }
         public Nullable<int> RecruiterId { get; set; }
         public string RecruiterName { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime LatestActivity { get; set; }
     }
 }

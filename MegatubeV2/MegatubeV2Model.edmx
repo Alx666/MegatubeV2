@@ -135,6 +135,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <PropertyRef Name="PercentOwner" />
             <PropertyRef Name="PercentRecruiter" />
             <PropertyRef Name="OwnerName" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="LatestActivity" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -146,6 +148,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="OwnerName" Type="nvarchar" MaxLength="101" Nullable="false" />
           <Property Name="RecruiterId" Type="int" />
           <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LatestActivity" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -333,7 +337,9 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
     [ViewChannel].[OwnerId] AS [OwnerId], 
     [ViewChannel].[OwnerName] AS [OwnerName], 
     [ViewChannel].[RecruiterId] AS [RecruiterId], 
-    [ViewChannel].[RecruiterName] AS [RecruiterName]
+    [ViewChannel].[RecruiterName] AS [RecruiterName], 
+    [ViewChannel].[IsActive] AS [IsActive], 
+    [ViewChannel].[LatestActivity] AS [LatestActivity]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ViewNotes" EntityType="Self.ViewNotes" store:Type="Views" store:Schema="dbo">
@@ -523,6 +529,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <PropertyRef Name="PercentOwner" />
             <PropertyRef Name="PercentRecruiter" />
             <PropertyRef Name="OwnerName" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="LatestActivity" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -534,6 +542,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="OwnerName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecruiterId" Type="Int32" />
           <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="FK_Accreditation_ToChannel">
           <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
@@ -895,6 +905,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="ViewChannels">
             <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannel">
               <MappingFragment StoreEntitySet="ViewChannel">
+                <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />

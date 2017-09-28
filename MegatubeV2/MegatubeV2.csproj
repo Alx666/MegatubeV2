@@ -140,11 +140,13 @@
     <Compile Include="Accreditation.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\OperationSuperChat.cs" />
-    <Compile Include="App_Code\SmartParser.cs" />
-    <Compile Include="App_Code\OperationSelector.cs" />
-    <Compile Include="App_Code\IOperation.cs" />
-    <Compile Include="App_Code\OperationUpdateChannels.cs" />
+    <Compile Include="CsvVideo.cs" />
+    <Compile Include="MegatubeExtensions.cs" />
+    <Compile Include="OperationSuperChat.cs" />
+    <Compile Include="SmartParser.cs" />
+    <Compile Include="OperationSelector.cs" />
+    <Compile Include="IOperation.cs" />
+    <Compile Include="OperationUpdateChannels.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
