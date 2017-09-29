@@ -17,22 +17,21 @@ namespace MegatubeV2.Controllers
             return View();
         }
 
-        //YouTube_id0iPcHVVMh4ASTXBUYkOA_Ecommerce_paid_features_M_20170801_20170831_v1-0
-        //YouTube_id0iPcHVVMh4ASTXBUYkOA_M_20170801_20170831_videoclaim_rawdata_v1-0
         public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro = 0f)
         {
-            //Handle 3 possible scenarios
-            //- Update channel informations (activity, displayname and new channel creation)
-            //- Create Accreditations for channel traffic
-            //- Create Accreditations for Superchat traffic
-            IOperation operation = OperationSelector.Select(file, dollarToEuro, db);
+            try
+            {
+                IOperation operation = OperationSelector.Select(file, dollarToEuro, db);
 
+                operation.Execute();
 
-
-            operation.Execute();
-
-     
-            return null;
+                return RedirectToAction(operation.ReturnActionName, operation.ReturnControllerName, operation.ReturnRouteValues);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
         }
 
         protected override void Dispose(bool disposing)

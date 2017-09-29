@@ -4,15 +4,16 @@ using System.Linq;
 using System.Web;
 using MegatubeV2.Csv;
 using System.IO;
+using System.Web.Mvc;
 
 namespace MegatubeV2
 {
     internal class OperationUpdateChannels : IOperation
     {
-        private HttpPostedFileBase file;
-        private MegatubeV2Entities db;
-        private DateTime fileStartDate;
-        private DateTime fileEndDate;
+        private HttpPostedFileBase  file;
+        private MegatubeV2Entities  db;
+        private DateTime            fileStartDate;
+        private DateTime            fileEndDate;
         
 
         public OperationUpdateChannels(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
@@ -22,6 +23,10 @@ namespace MegatubeV2
             this.fileStartDate  = startDate;
             this.fileEndDate    = endDate;
         }
+
+        public string ReturnActionName      => "Index";
+        public string ReturnControllerName  => "ViewChannels";
+        public object ReturnRouteValues     => new { referenced = false, active = true };
 
         public void Execute()
         {
@@ -91,8 +96,8 @@ namespace MegatubeV2
                     }
                 }
 
+                db.DataFiles.Add(new DataFile(file.FileName, DateTime.Now, 1));
                 db.Channels.AddRange(newChannels);
-
                 db.SaveChanges();
             }
             

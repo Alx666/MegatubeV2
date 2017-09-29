@@ -134,7 +134,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <PropertyRef Name="PercentMegatube" />
             <PropertyRef Name="PercentOwner" />
             <PropertyRef Name="PercentRecruiter" />
-            <PropertyRef Name="OwnerName" />
             <PropertyRef Name="IsActive" />
             <PropertyRef Name="LatestActivity" />
           </Key>
@@ -145,7 +144,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="PercentOwner" Type="float" Nullable="false" />
           <Property Name="PercentRecruiter" Type="float" Nullable="false" />
           <Property Name="OwnerId" Type="int" />
-          <Property Name="OwnerName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="OwnerName" Type="nvarchar" MaxLength="101" />
           <Property Name="RecruiterId" Type="int" />
           <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -520,31 +519,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="NotesCreated" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="NotesReceived" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="User" ToRole="Note" />
         </EntityType>
-        <EntityType Name="ViewChannel">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="RegistrationDate" />
-            <PropertyRef Name="PercentMegatube" />
-            <PropertyRef Name="PercentOwner" />
-            <PropertyRef Name="PercentRecruiter" />
-            <PropertyRef Name="OwnerName" />
-            <PropertyRef Name="IsActive" />
-            <PropertyRef Name="LatestActivity" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PercentMegatube" Type="Double" Nullable="false" />
-          <Property Name="PercentOwner" Type="Double" Nullable="false" />
-          <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
-          <Property Name="OwnerId" Type="Int32" />
-          <Property Name="OwnerName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecruiterId" Type="Int32" />
-          <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
         <Association Name="FK_Accreditation_ToChannel">
           <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
           <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
@@ -661,7 +635,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="ViewChannels" EntityType="Self.ViewChannel" />
           <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Accreditation" EntitySet="Accreditations" />
@@ -714,6 +687,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </AssociationSet>
           <EntitySet Name="ViewNotes" EntityType="MegatubeV2Model.ViewNote" />
           <EntitySet Name="DataFiles" EntityType="MegatubeV2Model.DataFile" />
+          <EntitySet Name="ViewChannels" EntityType="MegatubeV2Model.ViewChannel" />
         </EntityContainer>
         <EntityType Name="Network">
           <Key>
@@ -797,6 +771,30 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UploadDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FileType" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewChannel">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="RegistrationDate" />
+            <PropertyRef Name="PercentMegatube" />
+            <PropertyRef Name="PercentOwner" />
+            <PropertyRef Name="PercentRecruiter" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="LatestActivity" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PercentMegatube" Type="Double" Nullable="false" />
+          <Property Name="PercentOwner" Type="Double" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" />
+          <Property Name="OwnerName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="RecruiterId" Type="Int32" />
+          <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -902,24 +900,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ViewChannels">
-            <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannel">
-              <MappingFragment StoreEntitySet="ViewChannel">
-                <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
-                <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
-                <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
-                <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
-                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
-                <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Networks">
             <EntityTypeMapping TypeName="MegatubeV2Model.Network">
               <MappingFragment StoreEntitySet="Network">
@@ -957,6 +937,24 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
               <MappingFragment StoreEntitySet="DataFile">
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewChannels">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannel">
+              <MappingFragment StoreEntitySet="ViewChannel">
+                <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
+                <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
+                <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

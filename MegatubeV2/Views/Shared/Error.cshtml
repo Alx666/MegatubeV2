@@ -6,8 +6,11 @@
 </head>
 <body>
     <hgroup>
-        <h1>Error.</h1>
-        <h2>Some custom error message</h2>
+        <h1>Error.</h1>     
+        @{
+            string errorText = ViewBag.ErrorMessage ?? "Error";
+         }
+        <h2>@errorText</h2>
     </hgroup>
 </body>
 </html>

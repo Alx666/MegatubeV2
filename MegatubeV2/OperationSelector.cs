@@ -26,7 +26,6 @@ namespace MegatubeV2
 
             if (isSuperChat && record == null)
             {
-                //return new OperationSuperChat(file, dollarToEuro, db, fileStartDate, fileEndDate);
                 throw new NotImplementedException();
             }
             else if (record == null && !isSuperChat)
@@ -35,7 +34,7 @@ namespace MegatubeV2
             }
             else if (record != null && !isSuperChat)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("Data Upload Not Implemented");
             }
             else
             {

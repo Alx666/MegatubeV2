@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="CsvVideo.cs" />
     <Compile Include="MegatubeExtensions.cs" />
+    <Compile Include="Models\DataFile.cs" />
     <Compile Include="OperationSuperChat.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
@@ -401,7 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.woff" />
