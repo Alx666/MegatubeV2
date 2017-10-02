@@ -14,28 +14,20 @@ namespace MegatubeV2
 {
     public class SmartParser<T> where T : new()
     {
-        private static char[] separator;
+        private static char[]   separator;
+        private static Regex    regex;
 
-        private StreamReader reader;
+        private StreamReader            reader;
         private Dictionary<string, int> indices;
-        private List<Mapping> mapping;
-        private static Regex regex;
-        private string currentLine;
+        private List<Mapping>           mapping;
+        private string                  currentLine;
 
-        public bool EndOfSection
-        {
-            get
-            {
-                return reader.EndOfStream || string.IsNullOrEmpty(currentLine);
-            }
-        }
+        public bool EndOfSection => reader.EndOfStream || string.IsNullOrEmpty(currentLine);
 
         static SmartParser()
         {
             separator   = new char[] { ',' };
-
-            regex = new Regex("(?<=^|,)(\"(?:[^\"]+|\"\")*\"|[^,]*)(?:$|)");
-            
+            regex       = new Regex("(?<=^|,)(\"(?:[^\"]+|\"\")*\"|[^,]*)(?:$|)");            
         }
 
         public SmartParser(StreamReader sr)
@@ -44,10 +36,7 @@ namespace MegatubeV2
             mapping = new List<Mapping>();
         }
 
-        public SmartParser(StreamReader sr, string header) : this(sr)
-        {
-            this.SeekSection(header);
-        }
+        public SmartParser(StreamReader sr, string header) : this(sr) => this.SeekSection(header);
 
         public void SeekSection(string header)
         {
@@ -57,7 +46,7 @@ namespace MegatubeV2
 
                 if (currentLine == header)
                 {
-                    indices = regex.Matches(currentLine).Cast<Match>().Select((s, i) => new { s.Value, i }).ToDictionary(k => k.Value, k => k.i);
+                    indices     = regex.Matches(currentLine).Cast<Match>().Select((s, i) => new { s.Value, i }).ToDictionary(k => k.Value, k => k.i);
                     currentLine = reader.ReadLine();
                     return;
                 }
@@ -111,12 +100,9 @@ namespace MegatubeV2
             return item;
         }
 
-        public void Map<K>(string field, Action<T, K> setter)
-        {
-            mapping.Add(new Mapping(field, Type.GetTypeCode(typeof(K)), setter));
-        }
+        public void Map<K>(string field, Action<T, K> setter) => mapping.Add(new Mapping(field, Type.GetTypeCode(typeof(K)), setter));
 
-        
+
         private struct Mapping
         {
             public Mapping(string field, TypeCode code, object action)
