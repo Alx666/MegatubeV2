@@ -1,9 +1,4 @@
 ﻿
-@{
-
-}
-
-
 @using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadForm", enctype="multipart/form-data" }))
 {
     <div class="form-group">        
@@ -17,6 +12,45 @@
             <a href="javasctipt:{}" onclick="document.getElementById('uploadForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
         </div>                      
     </div>
+
+    <h>Latest Files</h>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    File Name
+                </th>
+                <th>
+                    Upload Date
+                </th>
+                <th>
+                    Processing Type
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+                @{ 
+                    foreach (var item in ViewBag.LatestDatafiles)
+                    {
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.UploadDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.FileType
+                            </td>
+                        </tr>
+                    }
+                }            
+        </tbody>
+    </table>
+
+
+
 }
     
 

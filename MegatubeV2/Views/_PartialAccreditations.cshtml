@@ -26,36 +26,36 @@
         </thead>
         <tbody>
             @{
-                    foreach (var item in Model)
-                    {                                                    
-                        <tr>
-                            <td class="v-a-m">
-                                <div class="media media-auto">
-                                    <div class="media-left">
-                                        <a href="javascript: void(0)">
-                                            <span class="fa-stack fa-lg">
-                                                <i class="fa fa-square fa-stack-2x text-gray-light"></i>
-                                                <i class="fa fa-circle fa-stack-1x fa-inverse"></i>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="media-body media-middle">
-                                        <span class="media-heading text-white">@item.Type</span>
-                                        <br>
-                                        <span class="media-heading">
-                                            <span>@item.DateFrom.ToShortDateString() to @item.DateTo.ToShortDateString()</span>
+                foreach (var item in Model)
+                {                                                    
+                    <tr>
+                        <td class="v-a-m">
+                            <div class="media media-auto">
+                                <div class="media-left">
+                                    <a href="javascript: void(0)">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-square fa-stack-2x text-gray-light"></i>
+                                            <i class="fa fa-circle fa-stack-1x fa-inverse"></i>
                                         </span>
-                                    </div>
+                                    </a>
                                 </div>
-                            </td>
-                            <td class="v-a-m">
-                                <span class="text-white">@item.GrossAmmount</span>
-                                <br> Views
-                            </td>
-                            <td class="v-a-m">
-                                <i class="fa fa-circle text-success m-r-1"></i><span class="text-white">@item.Reason</span>
-                            </td>
-                        </tr>
+                                <div class="media-body media-middle">
+                                    <span class="media-heading text-white">@item.Type</span>
+                                    <br>
+                                    <span class="media-heading">
+                                        <span>@item.DateFrom.ToShortDateString() to @item.DateTo.ToShortDateString()</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="v-a-m">
+                            <span class="text-white">@item.GrossAmmount</span>
+                            <br> Views
+                        </td>
+                        <td class="v-a-m">
+                            <i class="fa fa-circle text-success m-r-1"></i><span class="text-white">@item.Reason</span>
+                        </td>
+                    </tr>
                 }
              }
         </tbody>

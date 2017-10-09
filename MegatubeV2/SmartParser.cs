@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 //__makeref
 //__refvalue
 //(T) Convert.ChangeType(value, typeof(T));
+//https://www.dotnetperls.com/levenshtein for automatic mapping?? :D
 namespace MegatubeV2
 {
     public class SmartParser<T> where T : new()

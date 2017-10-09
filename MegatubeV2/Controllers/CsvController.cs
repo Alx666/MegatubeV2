@@ -14,6 +14,10 @@ namespace MegatubeV2.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.LatestDatafiles = (from d in db.DataFiles select d).OrderByDescending(x => x.UploadDate).Take(3);
+
+            
+            
             return View();
         }
 
