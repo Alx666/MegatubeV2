@@ -2,14 +2,22 @@
 
     Dictionary<String, String[]> MenuDict = new Dictionary<string, string[]>();
     Dictionary<String, String> NamesDict = new Dictionary<string, string>();
+    Dictionary<String, String> IcoDict = new Dictionary<string, string>();
+
 
     MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
+    IcoDict.Add("Menu", "fa-folder-open-o");
 
     //relationship between controller and text to show in the menu
     NamesDict.Add("Users", "Users");
     NamesDict.Add("ViewChannels", "Channels");
     NamesDict.Add("Alerts", "Alerts");
     NamesDict.Add("Payments", "Payments");
+
+    MenuDict.Add("Utilities", new string[] { "Csv" });
+    IcoDict.Add("Utilities", "fa-files-o");
+
+    NamesDict.Add("Csv", "Upload");
 
     String activeChildClasses = "active expanded nested-active";
     String activeParentClasses = "nested-active primary-submenu has-submenu expanded";
@@ -19,7 +27,7 @@
     string currentController = rd.GetRequiredString("controller");
     //string currentArea = rd.Values["area"] as string;
 
-}
+            }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -176,7 +184,7 @@
                             {
                                 <li class="Dashboards @if (entry.Value.Contains(currentController)) { @activeParentClasses }">
                                     <a href="#" title="Dashboards">
-                                        <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">@entry.Key</span><i class="fa arrow"></i>
+                                        <i class="fa @IcoDict[entry.Key] fa-lg fa-fw"></i><span class="nav-label">@entry.Key</span><i class="fa arrow"></i>
                                     </a>
                                     <ul>
                                         @{
@@ -188,81 +196,12 @@
                                                     </a>
                                                 </li>
                                             }
-                                                                }
+    }
                                     </ul>
                                 </li>
                             }
                         }
                         
-                        <li class="Dashboards">
-                            <a href="#" title="Dashboards">
-                                <i class="fa fa-folder-open-o fa-lg fa-fw"></i><span class="nav-label">Registry</span><i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li>                                    
-                                    <a href="@Url.Action("Index", "Users")">
-                                        <span class="nav-label">Users</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "ViewChannels")">
-                                        <span class="nav-label">Channels</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Alerts")">
-                                        <span class="nav-label">Alerts</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Payments")">
-                                        <span class="nav-label">Payments</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <li>
-                            <a href="#" title="Apps">
-                                <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Utilities</span> <i class="fa arrow"></i>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <span class="nav-label">Dumps</span> <i class="fa arrow"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#"><span class="nav-label">Channels</span></a>
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
-                                            <a href="#"><span class="nav-label">Referenced Channels</span></a>
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
-                                            <a href="#"><span class="nav-label">Unreferenced Channels</span></a>
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li>
-                                            <a href="#"><span class="nav-label">Uploaded Files</span></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-
-
                         @*<li>
                             <a href="#" title="Page">
                                 <i class="fa fa-lg fa-file-o fa-fw"></i><span class="nav-label">Page</span>
