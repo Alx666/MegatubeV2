@@ -57,7 +57,7 @@
         <!-- END ROWs #1 -->
         <!-- START ROW Report Statisticts & Latest Transactions -->
         <div class="row m-t-3">
-            <div class="col-lg-12">
+            <div class="col-lg-12 m-b-3">
                 <!-- START Header -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-6">
@@ -78,8 +78,11 @@
             
             <div class="col-lg-6">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
                         <h5 class="m-b-0 m-t-0 f-w-300">Contact Informations</h5>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sm-6 text-right">
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
                     </div>
                 </div>
                 <table class="table table-condensed table-hover table-striped">
@@ -286,6 +289,12 @@
 <script src="~/assets/vendor/js/highstock.min.js"></script>
 <script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
 <script src="~/assets/javascript/highchart-themes/highcharts-settings.js"></script>
+<script language="javascript">
+    $(document).ready(function () {
+        $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</li>');
+
+    });
+</script>
 
 
 

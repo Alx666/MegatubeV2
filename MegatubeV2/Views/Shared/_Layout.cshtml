@@ -255,9 +255,9 @@
                             <div class="sub-navbar-header">
                                 <h3 id="LayoutTitle">Megatube Manager</h3>
                             </div>
-                            <ol class="breadcrumb navbar-text navbar-right no-bg">
+                            <ol class="breadcrumb navbar-text navbar-right no-bg" id="breadCrumbOl">
                                 <li class="current-parent">
-                                    <a class="current-parent" href="index.html">
+                                    <a class="current-parent" href="~/Users">
                                         <i class="fa fa-fw fa-home"></i>
                                     </a>
                                 </li>
@@ -277,9 +277,16 @@
                                  }
 
                                 <li>
+                                    @if (currentAction != "Index")
+                                    {
                                     <a href="@Url.Action("Index", currentController)">@bcPath</a>
+                                    }
+                                    else
+                                    {
+                                        @bcPath
+                                    }
                                 </li>
-                                <li class="active">Placeholder Text</li>
+                                
                             </ol>
                         </div>
                     </div>

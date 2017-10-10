@@ -176,3 +176,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+
+<script language="javascript">
+    $(document).ready(function () {
+        $('#breadCrumbOl').append('<li><a href="@Url.Action("Details", new { Id = Model.Id })">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</a></li>');
+        $('#breadCrumbOl').append('<li class="active">Edit</li>');
+
+    });
+</script>
