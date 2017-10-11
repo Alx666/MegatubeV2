@@ -3,3 +3,46 @@
 .dataTables_filter {
     text-align: right;
 }
+
+/*--------------------  Blocco pagination ------------------------*/
+
+.pagination {
+    margin: 0 0 19px 0;
+}
+
+/*--------------------  ViewChannels  ----------------------------*/
+
+table#userTable td {/* stesso ide della tabella users*/
+    height: 50px;
+}
+
+
+/*--------------------  Colori ------------------------*/
+
+/*--  Classi generiche
+a {
+    color: #990000;
+}
+a:hover, a:focus {
+    color: #ff0000;
+}
+ --*/
+
+/*--  menu
+
+.navigation .sidebar ul.side-menu li ul li.active > a:hover, .navigation .sidebar ul.side-menu li ul li.active > a {
+    box-shadow: 3px 0 0 0 #990000 inset, 0px -1px 0px 0px #1A1A1A inset, 0px 1px 0px 0px transparent inset;
+}
+ --*/
+
+/*--  pagination
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    background-color: #990000;
+    border-color: #990000;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: #990000;
+}
+    --*/

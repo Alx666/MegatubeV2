@@ -273,16 +273,18 @@
                 
                 Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
              }
-
             <div class="highcharts-basic-column m-t-2"></div>
         </div>
-        <div class="row m-t-3">
-                                   
+        <div class="row m-t-3">        
             @{
                 Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
+            }
+        </div>
+        <div class="row m-t-3">
+            @{
                 Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
             }
-        </div>        
+        </div>  
     </div>
 </div>
 <!-- END EDIT CONTENT -->
