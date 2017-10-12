@@ -61,7 +61,7 @@
                 <!-- START Header -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-6">
-                        <h5 class="m-b-0 m-t-0 f-w-300">Report Statisticts</h5> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
+                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                         <div class="btn-group" role="group" aria-label="...">
@@ -79,19 +79,21 @@
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                        <h5 class="m-b-0 m-t-0 f-w-300">Contact Informations</h5>
+                        <h2 class="m-b-2 m-t-0 f-w-300">Contact Informations</h2>
                     </div>
                     <div class="col-md-6 col-sm-6 col-sm-6 text-right">
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+
+                        <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>                        
+                        
                     </div>
                 </div>
-                <table class="table table-condensed table-hover table-striped">
+                <table id="userDetailsTable" class="table table-condensed table-hover table-striped">
                     <tbody>
                         <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.Name)
                             </td>
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.Name)
                             </td>
                         </tr>
@@ -101,7 +103,7 @@
                                 @Html.DisplayNameFor(model => model.LastName)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.LastName)
                             </td>
                         </tr>
@@ -111,7 +113,7 @@
                                 @Html.DisplayNameFor(model => model.Mobile)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.Mobile)
                             </td>
                         </tr>
@@ -121,7 +123,7 @@
                                 @Html.DisplayNameFor(model => model.EMail)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.EMail)
                             </td>
                         </tr>
@@ -131,7 +133,7 @@
                                 @Html.DisplayNameFor(model => model.Password)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.Password)
                             </td>
                         </tr>
@@ -141,7 +143,7 @@
                                 @Html.DisplayNameFor(model => model.Skype)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.Skype)
                             </td>
                         </tr>
@@ -151,7 +153,7 @@
                                 @Html.DisplayNameFor(model => model.BirthDate)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.BirthDate)
                             </td>
                         </tr>
@@ -161,7 +163,7 @@
                                 @Html.DisplayNameFor(model => model.BirthPlace)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.BirthPlace)
                             </td>
                         </tr>
@@ -171,7 +173,7 @@
                                 @Html.DisplayNameFor(model => model.CompanyName)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.CompanyName)
                             </td>
                         </tr>
@@ -181,7 +183,7 @@
                                 @Html.DisplayNameFor(model => model.CompanyKind)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.CompanyKind)
                             </td>
                         </tr>
@@ -191,7 +193,7 @@
                                 @Html.DisplayNameFor(model => model.IBAN)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.IBAN)
                             </td>
                         </tr>
@@ -201,7 +203,7 @@
                                 @Html.DisplayNameFor(model => model.PIVAorVAT)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.PIVAorVAT)
                             </td>
                         </tr>
@@ -211,7 +213,7 @@
                                 @Html.DisplayNameFor(model => model.FullAddress)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.FullAddress)
                             </td>
                         </tr>
@@ -221,7 +223,7 @@
                                 @Html.DisplayNameFor(model => model.PostalCode)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.PostalCode)
                             </td>
                         </tr>
@@ -231,7 +233,7 @@
                                 @Html.DisplayNameFor(model => model.PaymentMethod)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.PaymentMethod)
                             </td>
                         </tr>
@@ -241,7 +243,7 @@
                                 @Html.DisplayNameFor(model => model.BICSWIFT)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.BICSWIFT)
                             </td>
                         </tr>
@@ -251,7 +253,7 @@
                                 @Html.DisplayNameFor(model => model.RegistrationDate)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.RegistrationDate)
                             </td>
                         </tr>
@@ -261,7 +263,7 @@
                                 @Html.DisplayNameFor(model => model.User2.Name)
                             </td>
 
-                            <td>
+                            <td class="userDetails">
                                 @Html.DisplayFor(model => model.User2.Name)
                             </td>
                         </tr>

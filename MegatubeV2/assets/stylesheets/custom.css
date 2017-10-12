@@ -16,8 +16,25 @@ table#userTable td {/* stesso ide della tabella users*/
     height: 50px;
 }
 
+/*--------------------  Datatables  ----------------------------*/
+.dataTables_length select{
+    margin: 0 10px;
+}
+.dataTables_filter input.form-control.input-sm {
+    height: 27px;
+    line-height: 27px;
+    margin-left: 13px;
+}
 
 /*--------------------  Colori ------------------------*/
+
+body {
+    color: #888888;
+}
+
+table#userDetailsTable td.userDetails {
+    color: #eeeeee;
+}
 
 /*--  Classi generiche
 a {
@@ -27,15 +44,13 @@ a:hover, a:focus {
     color: #ff0000;
 }
  --*/
-
-/*--  menu
+    /*--  menu
 
 .navigation .sidebar ul.side-menu li ul li.active > a:hover, .navigation .sidebar ul.side-menu li ul li.active > a {
     box-shadow: 3px 0 0 0 #990000 inset, 0px -1px 0px 0px #1A1A1A inset, 0px 1px 0px 0px transparent inset;
 }
  --*/
-
-/*--  pagination
+    /*--  pagination
 
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
     background-color: #990000;
