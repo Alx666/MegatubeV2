@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegatubeV2", "MegatubeV2\MegatubeV2.csproj", "{5178993B-1F4D-4183-99C2-CE35664C1026}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvProcessing", "CsvProcessing\CsvProcessing.csproj", "{0FA135E8-C80D-46F6-927E-D768CE2EB05E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9EEAE79-2D52-4EEF-8AC7-5CB856A3E6D3}
 	EndGlobalSection
 EndGlobal

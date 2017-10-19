@@ -142,8 +142,10 @@
     </Compile>
     <Compile Include="CsvVideo.cs" />
     <Compile Include="MegatubeExtensions.cs" />
+    <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\DataFile.cs" />
     <Compile Include="OperationSuperChat.cs" />
+    <Compile Include="OperationUpdateCredits.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
     <Compile Include="IOperation.cs" />

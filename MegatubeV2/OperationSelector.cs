@@ -26,19 +26,19 @@ namespace MegatubeV2
 
             if (isSuperChat && record == null)
             {
-                throw new NotImplementedException();
+                return new OperationSuperChat(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }
             else if (record == null && !isSuperChat)
             {
-                return new OperationUpdateChannels(file, dollarToEuro, db, fileStartDate, fileEndDate);
+                return new OperationUpdateChannels(file, db, fileStartDate, fileEndDate);
             }
-            else if (record != null && !isSuperChat)
+            else if (record != null && !isSuperChat && record.FileType == 1)
             {
-                throw new NotImplementedException("Data Upload Not Implemented");
+                return new OperationUpdateCredits(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }
             else
             {
-                throw new Exception("Me la vedo poi");
+                throw new Exception("Could not deduce the correct processing for the uploaded file");
             }
 
         }

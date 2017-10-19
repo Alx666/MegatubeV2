@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MegatubeV2.Csv;
 using System.IO;
 using System.Web.Mvc;
 
@@ -13,15 +12,15 @@ namespace MegatubeV2
         private HttpPostedFileBase  file;
         private MegatubeV2Entities  db;
         private DateTime            fileStartDate;
-        private DateTime            fileEndDate;
+        private DateTime            fileEndDate;       
         
 
-        public OperationUpdateChannels(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
+        public OperationUpdateChannels(HttpPostedFileBase file, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
         {
             this.file           = file;
             this.db             = db;
             this.fileStartDate  = startDate;
-            this.fileEndDate    = endDate;
+            this.fileEndDate    = endDate;            
         }
 
         public string ReturnActionName      => "Index";
@@ -41,7 +40,7 @@ namespace MegatubeV2
             using (StreamReader sr = new StreamReader(file.InputStream))
             {
                 SmartParser<CsvVideo> parser = new SmartParser<CsvVideo>(sr, "Video ID,Content Type,Policy,Video Title,Video Duration (sec),Username,Uploader,Channel Display Name,Channel ID,Claim Type,Claim Origin,Multiple Claims?,Category,Asset ID,Asset Labels,Asset Channel ID,Custom ID,Owned Views,Owned Views : Watch Page,Owned Views : Embedded Player,Owned Views : Channel Page,Owned Views : Live,Owned Views : On Demand,Owned Views : Ad-Enabled,Owned Views : Ad-Requested,YouTube Revenue Split : AdSense Served YouTube Sold,YouTube Revenue Split : DoubleClick Served YouTube Sold,YouTube Revenue Split : DoubleClick Served Partner Sold,YouTube Revenue Split : Partner Served Partner Sold,YouTube Revenue Split,Partner Revenue : AdSense Served YouTube Sold,Partner Revenue : DoubleClick Served YouTube Sold,Partner Revenue : DoubleClick Served Partner Sold,Partner Revenue : Partner Served Partner Sold,Partner Revenue,Estimated RPM");
-
+                
                 parser.Map<string>("Video ID",              (r, v) => r.VideoId = v);
                 parser.Map<string>("Channel ID",            (r, v) => r.ChannelID = v);
                 parser.Map<string>("Asset Channel ID",      (r, v) => r.AssetChannelId = v);
