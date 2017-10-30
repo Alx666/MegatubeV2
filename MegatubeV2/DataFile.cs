@@ -17,6 +17,12 @@ namespace MegatubeV2
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime UploadDate { get; set; }
-        public byte FileType { get; set; }
+        public byte ProcessingType { get; set; }
+        public Nullable<int> UnactiveChannels { get; set; }
+        public Nullable<int> NewChannels { get; set; }
+        public Nullable<decimal> TrafficIncomeTotal { get; set; }
+        public Nullable<decimal> TrafficIncomeNetwork { get; set; }
+        public Nullable<int> TotalChannels { get; set; }
+        public Nullable<double> DollarToEuroConv { get; set; }
     }
 }

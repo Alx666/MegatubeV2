@@ -7,11 +7,14 @@ namespace MegatubeV2
 {
     public partial class DataFile
     {
-        public DataFile(string fileName, DateTime date, byte filetype)
+        public DataFile(string fileName, DateTime date, ProcessingType eType, int newChannels, int totalChannels, int unactiveChannels)
         {
-            this.Name = fileName;
-            this.UploadDate = date;
-            this.FileType = filetype;
+            this.Name               = fileName;
+            this.UploadDate         = date;
+            this.ProcessingType     = (byte)eType;
+            this.NewChannels        = newChannels;
+            this.UnactiveChannels   = unactiveChannels;
+            this.TotalChannels      = totalChannels;
         }
 
         public DataFile()

@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<DataFile>
+
 @using (Html.BeginForm("UploadChannels", "Csv", FormMethod.Post, new { @class = "m-t-3", id = "uploadForm", enctype="multipart/form-data" }))
 {
     <div class="form-group">        
@@ -18,43 +19,120 @@
             <h2 class="m-b-2 m-t-0 f-w-300">Latest Files</h2>
         </div>
     </div>
-    <table class="table table-condensed table-hover table-striped">
+
+
+    <script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#userTable').DataTable();
+        });
+    </script>
+
+
+    <table class="table table-condensed table-hover table-striped" id="userTable">
         <thead>
             <tr>
-                <th>
-                    File Name
+                <th class="small text-muted text-uppercase">
+                    <strong>
+                        File Name
+                    </strong>
                 </th>
-                <th>
-                    Upload Date
+                <th class="small text-muted text-uppercase">
+                    <strong>Upload Date</strong>
                 </th>
-                <th>
-                    Processing Type
+                <th class="small text-muted text-uppercase">
+                    <strong>New Channels</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Unactive Channels</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Total Channels</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Conversion Rate</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Network Traffic Performance (€)</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Network Traffic Total (€)</strong>
+                </th>
+                <th class="small text-muted text-uppercase">
+                    <strong>Processing Type</strong>
                 </th>
             </tr>
         </thead>
-
         <tbody>
-                @{ 
-                    foreach (var item in ViewBag.LatestDatafiles)
-                    {
-                        <tr>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.UploadDate.ToShortDateString()
-                            </td>
-                            <td>
-                                @item.FileType
-                            </td>
-                        </tr>
-                    }
-                }            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.UploadDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @item.NewChannels
+                    </td>
+                    <td>
+                        @item.UnactiveChannels
+                    </td>
+                    <td>
+                        @item.TotalChannels
+                    </td>
+                    <td>
+                        @{
+                            string conversionRate = item.DollarToEuroConv.HasValue ? item.DollarToEuroConv.Value.ToString("0.0000") : "-";
+                        }
+
+                        @conversionRate
+                    </td>
+                    <td>
+                        @{ 
+                            string trafficIncomeNet = item.TrafficIncomeNetwork.HasValue ? item.TrafficIncomeNetwork.Value.ToString("0.00") : "-";
+                        }
+
+                        @trafficIncomeNet
+                    </td>
+                    <td>
+                        @{
+                            string trafficIncomeTot = item.TrafficIncomeTotal.HasValue ? item.TrafficIncomeTotal.Value.ToString("0.00") : "-";
+                        }
+
+                        @trafficIncomeTot
+                    </td>
+                    <td>
+                        @{
+                            string procType;
+
+                            if (item.ProcessingType == (byte)ProcessingType.ChannelListUpdate)
+                            {
+                                procType = "Channel List Update";
+                            }
+                            else if (item.ProcessingType == (byte)ProcessingType.SuperChatRevenueUpdate)
+                            {
+                                procType = "SuperChat Revenues Update";
+                            }
+                            else if (item.ProcessingType == (byte)ProcessingType.TrafficRevenueUpdate)
+                            {
+                                procType = "Traffic Revenues Update";
+                            }
+                            else
+                            {
+                                procType = "Unknow Processing Type";
+                            }
+                         }            
+                        
+                        @procType
+                    </td>
+                </tr>
+                            }
         </tbody>
-    </table>
-
-
-
+    </table>    
 }
     
 

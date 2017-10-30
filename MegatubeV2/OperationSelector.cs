@@ -32,7 +32,7 @@ namespace MegatubeV2
             {
                 return new OperationUpdateChannels(file, db, fileStartDate, fileEndDate);
             }
-            else if (record != null && !isSuperChat && record.FileType == 1)
+            else if (record != null && !isSuperChat && ((ProcessingType)record.ProcessingType) == ProcessingType.ChannelListUpdate)
             {
                 return new OperationUpdateCredits(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }

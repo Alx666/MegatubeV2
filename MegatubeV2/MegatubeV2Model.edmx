@@ -18,6 +18,7 @@
           <Property Name="DateFrom" Type="datetime" Nullable="false" />
           <Property Name="DateTo" Type="datetime" Nullable="false" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="SubType" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -41,7 +42,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UploadDate" Type="datetime" Nullable="false" />
-          <Property Name="FileType" Type="tinyint" Nullable="false" />
+          <Property Name="ProcessingType" Type="tinyint" Nullable="false" />
+          <Property Name="UnactiveChannels" Type="int" />
+          <Property Name="NewChannels" Type="int" />
+          <Property Name="TrafficIncomeTotal" Type="money" />
+          <Property Name="TrafficIncomeNetwork" Type="money" />
+          <Property Name="TotalChannels" Type="int" />
+          <Property Name="DollarToEuroConv" Type="float" />
         </EntityType>
         <EntityType Name="Network">
           <Key>
@@ -421,6 +428,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Channel" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Accreditation" ToRole="Channel" />
           <NavigationProperty Name="Payment" Relationship="Self.FK_Accreditation_ToPayment" FromRole="Accreditation" ToRole="Payment" />
           <NavigationProperty Name="User" Relationship="Self.FK_Accreditation_ToUser" FromRole="Accreditation" ToRole="User" />
+          <Property Name="SubType" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -770,7 +778,13 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UploadDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FileType" Type="Byte" Nullable="false" />
+          <Property Name="ProcessingType" Type="Byte" Nullable="false" />
+          <Property Name="UnactiveChannels" Type="Int32" />
+          <Property Name="NewChannels" Type="Int32" />
+          <Property Name="TrafficIncomeTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TrafficIncomeNetwork" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalChannels" Type="Int32" />
+          <Property Name="DollarToEuroConv" Type="Double" />
         </EntityType>
         <EntityType Name="ViewChannel">
           <Key>
@@ -805,6 +819,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Accreditations">
             <EntityTypeMapping TypeName="MegatubeV2Model.Accreditation">
               <MappingFragment StoreEntitySet="Accreditation">
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
@@ -935,7 +950,13 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="DataFiles">
             <EntityTypeMapping TypeName="MegatubeV2Model.DataFile">
               <MappingFragment StoreEntitySet="DataFile">
-                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="DollarToEuroConv" ColumnName="DollarToEuroConv" />
+                <ScalarProperty Name="TotalChannels" ColumnName="TotalChannels" />
+                <ScalarProperty Name="TrafficIncomeNetwork" ColumnName="TrafficIncomeNetwork" />
+                <ScalarProperty Name="TrafficIncomeTotal" ColumnName="TrafficIncomeTotal" />
+                <ScalarProperty Name="NewChannels" ColumnName="NewChannels" />
+                <ScalarProperty Name="UnactiveChannels" ColumnName="UnactiveChannels" />
+                <ScalarProperty Name="ProcessingType" ColumnName="ProcessingType" />
                 <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

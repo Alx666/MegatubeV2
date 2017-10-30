@@ -13,10 +13,8 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         public ActionResult Index()
-        {
-            ViewBag.LatestDatafiles = db.DataFiles.OrderByDescending(x => x.UploadDate).Take(3);
-            
-            return View();
+        {                        
+            return View(db.DataFiles.OrderByDescending(x => x.UploadDate));
         }
 
         public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro = 0f)

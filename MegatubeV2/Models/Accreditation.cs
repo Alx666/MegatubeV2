@@ -19,6 +19,7 @@ namespace MegatubeV2
             this.DateTo = dateTo;
             this.GrossAmmount = grossAmount;
             this.Type = maintype;
+            this.SubType = subType;
         }
 
         public Accreditation(string channelId, int iUserId, DateTime dateFrom, DateTime dateTo, decimal grossAmount, byte maintype, byte subType)

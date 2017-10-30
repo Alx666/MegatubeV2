@@ -30,7 +30,7 @@ namespace MegatubeV2
         public void Execute()
         {
             //Get all active channels
-            IEnumerable<Channel> activeChannels = db.Channels.Where(c => c.IsActive);
+            IEnumerable<Channel> activeChannels = db.Channels.ToList();
 
             //Classify them and disable all
             var allChannels = activeChannels.ToDictionary(k => k.Id, k => k);
@@ -94,9 +94,11 @@ namespace MegatubeV2
                         newChannels.Add(newOne);
                     }
                 }
-
-                db.DataFiles.Add(new DataFile(file.FileName, DateTime.Now, 1));
+                
                 db.Channels.AddRange(newChannels);
+                db.SaveChanges();
+
+                db.DataFiles.Add(new DataFile(file.FileName, DateTime.Now, ProcessingType.ChannelListUpdate, newChannels.Count, db.Channels.Count(), db.Channels.Where(x => !x.IsActive).Count()));
                 db.SaveChanges();
             }
             

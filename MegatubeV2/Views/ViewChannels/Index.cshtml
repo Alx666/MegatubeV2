@@ -17,9 +17,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
@@ -94,8 +91,8 @@
                     @Html.DisplayFor(modelItem => item.PercentMegatube)
                 </td>
                 <td nowrap="nowrap">
-                    <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit",new { Id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a title="Details" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Details",new { Id = item.Id })"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                    <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit","Channels",new { Id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                    @*<a title="Details" class="btn btn-default text-danger btn-sm action-button" href=""><i class="glyphicon glyphicon-arrow-right"></i></a>*@
                 </td>
             </tr>
         }
