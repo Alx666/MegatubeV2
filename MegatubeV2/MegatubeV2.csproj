@@ -299,6 +299,7 @@
     <Content Include="assets\stylesheets\plugins.css" />
     <Content Include="assets\vendor\css\lib.min.css" />
     <Content Include="assets\vendor\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\vendor\js\chartist.min.js" />
     <Content Include="assets\vendor\js\dataTables.bootstrap.min.js" />
     <Content Include="assets\vendor\js\highcharts-more.min.js" />
     <Content Include="assets\vendor\js\highstock.min.js" />

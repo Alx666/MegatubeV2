@@ -9,7 +9,7 @@
 
 <div class="row m-t-1">
     <div class="col-lg-6">
-        <div class="highcharts-basic-pie m-t-2"></div>
+        <div id="chartist-simple-pie-chart" class="highcharts-basic-pie m-t-2"></div>
     </div>
     <div class="col-lg-6">
         @using (Html.BeginForm())
@@ -87,11 +87,50 @@
 
 <!-- END EDIT CONTENT -->
 <script src="~/assets/vendor/js/highstock.min.js"></script>
+<script src="~/assets/vendor/js/chartist.min.js"></script>
 <script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
-<script src="~/assets/javascript/highchart-themes/highcharts-settings.js"></script>
+
 <script language="javascript">
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Name)</li>');
+
+        @{
+            string pieCharSeriesString = "";
+            string pieCharLabelsString = "";
+            if (Model.PercentOwner != 0)
+            {
+                pieCharSeriesString += Model.PercentOwner.ToString().Replace(',', '.');
+                pieCharLabelsString += "'Owner'";
+            }
+            if (Model.PercentRecruiter != 0)
+            {
+                pieCharSeriesString += ","+Model.PercentRecruiter.ToString().Replace(',', '.');
+                pieCharLabelsString += ",'Recruiter'";
+            }
+            if (Model.PercentMegatube != 0)
+            {
+                pieCharSeriesString += "," + Model.PercentMegatube.ToString().Replace(',', '.');
+                pieCharLabelsString += ",'Network'";
+            }
+
+
+        }
+
+        var labels = [@Html.Raw(pieCharLabelsString)];
+        var data = {
+            series: [@pieCharSeriesString],
+            
+        };
+
+        // Pie Chart with Custom Labels
+        var sum = function (a, b) { return a + b };
+
+        new Chartist.Pie('#chartist-simple-pie-chart', data, {
+            labelInterpolationFnc: function (value,idx) {
+                var percentage = Math.round(value / data.series.reduce(sum) * 100) + '%';
+                return labels[idx] + ': ' + percentage;
+            }
+        });
 
     });
 </script>
