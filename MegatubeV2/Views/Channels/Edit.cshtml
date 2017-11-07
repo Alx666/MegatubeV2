@@ -30,7 +30,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                         @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control percentage", id="ownerInput" } })
                         @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control percentage", id = "recruiterInput" } })
                         @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -70,29 +70,62 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control percentage", id = "networkInput" } })
                         @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" id="saveChannelButton" value="Save" class="btn btn-default" />
+                        <span id="channelErrMsg"></span>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+<div class="row m-t-3">
+    <div class="col-lg-12 m-b-3">
+        <!-- START Header -->
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-6">
+                <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
+                <div class="btn-group" role="group" aria-label="...">
+                    @*<button type="button" class="btn btn-sm btn-default">Items Sold</button>
+                        <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
+                </div>
+            </div>
+        </div>
+        <!-- END Header -->
+        <!-- START Chart Higcharts -->
+        <div class="highcharts-basic-column m-t-2"></div>
+        <!-- END Chart Higcharts -->
+    </div>
+</div>
 
-<!-- END EDIT CONTENT -->
-<script src="~/assets/vendor/js/highstock.min.js"></script>
-<script src="~/assets/vendor/js/chartist.min.js"></script>
-<script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
+    <!-- END EDIT CONTENT -->
+    <script src="~/assets/vendor/js/highstock.min.js"></script>
+    <script src="~/assets/vendor/js/chartist.min.js"></script>
+    <script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
 
-<script language="javascript">
+    <script language="javascript">
+    function checkPercent() {
+        if (parseInt($('#ownerInput').val()) + parseInt($('#recruiterInput').val()) + parseInt($('#networkInput').val()) != 100) {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').html("Check the percentage values the sum must be 100");
+            $('#channelErrMsg').show();
+
+        }
+        else {
+            $('#saveChannelButton').show();
+            $('#channelErrMsg').hide();
+        }
+    }
     $(document).ready(function () {
-        $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Name)</li>');
+        $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name)</li>');
 
         @{
             string pieCharSeriesString = "";
@@ -119,7 +152,7 @@
         var labels = [@Html.Raw(pieCharLabelsString)];
         var data = {
             series: [@pieCharSeriesString],
-            
+
         };
 
         // Pie Chart with Custom Labels
@@ -132,12 +165,82 @@
             }
         });
 
+        checkPercent();
+
+        $('.percentage').change(function () { checkPercent(); });
+
+        Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
+            $(this).highcharts({
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'transparent',
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Gross',
+                    data: [12.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+                }]
+            });
+        });
+
     });
-</script>
+    </script>
 
 
 
-        @*@using (Html.BeginForm())
+    @*@using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
@@ -210,6 +313,6 @@
             </div>
         }*@
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div>
+        @Html.ActionLink("Back to List", "../ViewChannels")
+    </div>
