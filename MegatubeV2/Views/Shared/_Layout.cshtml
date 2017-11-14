@@ -13,6 +13,7 @@
     NamesDict.Add("ViewChannels", "Channels");
     NamesDict.Add("Alerts", "Alerts");
     NamesDict.Add("Payments", "Payments");
+    NamesDict.Add("Channels", "Channels");
 
     MenuDict.Add("Utilities", new string[] { "Csv" });
     IcoDict.Add("Utilities", "fa-files-o");
@@ -265,26 +266,36 @@
                                 @{
 
                                     string bcPath;
+                                    string controllerURL;
 
                                     try
                                     {
                                         bcPath = NamesDict[currentController];
+                                        switch (currentController)
+                                        {
+                                            case "Channels"://the only case when it's different (until now... that's why I use a switch!)
+                                                controllerURL = "ViewChannels";
+                                                break;
+                                            default:
+                                                controllerURL = currentController;
+                                                break;
+                                        }
                                     }
                                     catch(Exception)
                                     {
-                                        bcPath = "";
+                                        controllerURL=bcPath = "";
                                     }
-                                 }
+                                            }
 
                                 <li>
                                     @if (currentAction != "Index")
-                                    {
-                                    <a href="@Url.Action("Index", currentController)">@bcPath</a>
+                                            {
+                                    <a href="@Url.Action("Index", controllerURL)">@bcPath</a>
                                     }
                                     else
                                     {
                                         @bcPath
-                                    }
+                                        }
                                 </li>
                                 
                             </ol>
@@ -313,20 +324,20 @@
                 // Hide loader
                 (function () {
                     var bodyElement = document.querySelector('body');
-                    bodyElement.classList.add('loading');
+                                        bodyElement.classList.add('loading');
 
                     document.addEventListener('readystatechange', function () {
-                        if (document.readyState === 'complete') {
-                            var bodyElement = document.querySelector('body');
-                            var loaderElement = document.querySelector('#initial-loader');
+                                            if (document.readyState === 'complete') {
+                                                var bodyElement = document.querySelector('body');
+                                                var loaderElement = document.querySelector('#initial-loader');
 
-                            bodyElement.classList.add('loaded');
-                            setTimeout(function () {
-                                bodyElement.removeChild(loaderElement);
-                                bodyElement.classList.remove('loading', 'loaded');
-                            }, 200);
-                        }
-                    });
+                                                bodyElement.classList.add('loaded');
+                                                setTimeout(function () {
+                                                    bodyElement.removeChild(loaderElement);
+                                                    bodyElement.classList.remove('loading', 'loaded');
+                                                }, 200);
+                                            }
+                                        });
                 })();
         </script>
     </div>

@@ -36,6 +36,17 @@ table#userDetailsTable td.userDetails {
     color: #eeeeee;
 }
 
+ol.breadcrumb li{
+    font-size:18px;
+}
+
+    ol.breadcrumb li.active {
+        color: #990000;
+        font-weight: bolder;
+    }
+
+
+
 /*--  Classi generiche
 a {
     color: #990000;

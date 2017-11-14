@@ -84,9 +84,13 @@
                     <div class="col-md-6 col-sm-6 col-sm-6 text-right">
 
                         <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>                        
-                        
+
                     </div>
                 </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" id="userTab" class="tabSwitch active"><a href="javascript: void(0)">User</a></li>
+                    <li role="presentation" id="tutorTab" class="tabSwitch"><a href="javascript: void(0)">Tutor</a></li>
+                </ul>
                 <table id="userDetailsTable" class="table table-condensed table-hover table-striped">
                     <tbody>
                         <tr>
@@ -125,16 +129,6 @@
 
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.EMail)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.Password)
-                            </td>
-
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Password)
                             </td>
                         </tr>
 
@@ -260,11 +254,184 @@
 
                         <tr>
                             <td>
-                                @Html.DisplayNameFor(model => model.User2.Name)
+                                @Html.DisplayNameFor(model => model.Administrator)
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.User2.Name)
+                                @Html.DisplayFor(model => model.Administrator)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table id="tutorDetailsTable" class="table table-condensed table-hover table-striped hidden">
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </td>
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.Name)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.LastName)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Mobile)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.Mobile)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EMail)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.EMail)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Skype)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.Skype)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.BirthDate)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.BirthDate)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.BirthPlace)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.BirthPlace)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.CompanyName)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.CompanyName)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.CompanyKind)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.CompanyKind)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.IBAN)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.IBAN)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.PIVAorVAT)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.PIVAorVAT)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.FullAddress)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.FullAddress)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.PostalCode)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.PostalCode)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.PaymentMethod)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.PaymentMethod)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.BICSWIFT)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.BICSWIFT)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.RegistrationDate)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.RegistrationDate)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Administrator)
+                            </td>
+
+                            <td class="userDetails">
+                                @Html.DisplayFor(model => model.Administrator)
                             </td>
                         </tr>
                     </tbody>
@@ -276,6 +443,91 @@
                 Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
              }
             <div class="highcharts-basic-column m-t-2"></div>
+        </div>
+        <div class="row m-t-3">        
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div><h2 class="m-b-2 m-t-0 f-w-300">User's channels</h2></div>
+                <table class="table table-condensed table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Channels
+                            </th>
+                            <th class="userDetails">
+                                Registration Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Nome canale
+                            </td>
+                            <td class="userDetails">
+                                01/01/1970
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nome canale
+                            </td>
+                            <td class="userDetails">
+                                01/01/1970
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nome canale
+                            </td>
+                            <td class="userDetails">
+                                01/01/1970
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div><h2 class="m-b-2 m-t-0 f-w-300">Recruited channels</h2></div>
+                    <table class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Channels
+                                </th>
+                                <th class="userDetails">
+                                    Owner
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Nome canale
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale
+                                </td>
+                                <td class="userDetails">
+                                   Nome utente
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
         <div class="row m-t-3">        
             @{
@@ -361,6 +613,20 @@
 
                 }]
             });
+        });
+
+        $('.tabSwitch').click(function () {
+            if ($(this).attr('id') == "userTab") {
+                $('#tutorTab').removeClass("active");
+                $('#userDetailsTable').removeClass("hidden");
+                $('#tutorDetailsTable').addClass("hidden");
+            }
+            else {
+                $('#userTab').removeClass("active");
+                $('#userDetailsTable').addClass("hidden");
+                $('#tutorDetailsTable').removeClass("hidden");
+            }
+            $(this).addClass("active");
         });
 
 

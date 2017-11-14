@@ -36,7 +36,9 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.OwnerId, "OwnerId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="OwnerId">
+                        <a class="" href="@Url.Action("Details","Users", new { id=Model.OwnerId })">Owner</a>
+                    </label>
                     <div class="col-md-10">
                         @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
@@ -44,7 +46,18 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label class="control-label col-md-2" for="RecruiterId">
+                        @if (Model.RecruiterId!=null)
+                        {
+                            <a class="" href="@Url.Action("Details","Users", new { id=Model.RecruiterId })">Recruiter</a>
+                        }
+                        else
+                        {
+                            @Html.Raw("Recruiter")
+                        }
+
+                    </label>
                     <div class="col-md-10">
                         @Html.DropDownList("RecruiterId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
@@ -105,6 +118,12 @@
         <!-- END Chart Higcharts -->
     </div>
 </div>
+<div class="row m-t-3">
+    @*{
+
+        Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
+    }*@
+</div>
 
     <!-- END EDIT CONTENT -->
     <script src="~/assets/vendor/js/highstock.min.js"></script>
@@ -115,7 +134,7 @@
     function checkPercent() {
         if (parseInt($('#ownerInput').val()) + parseInt($('#recruiterInput').val()) + parseInt($('#networkInput').val()) != 100) {
             $('#saveChannelButton').hide();
-            $('#channelErrMsg').html("Check the percentage values the sum must be 100");
+            $('#channelErrMsg').html("Check the percentage values: the sum must be 100");
             $('#channelErrMsg').show();
 
         }
