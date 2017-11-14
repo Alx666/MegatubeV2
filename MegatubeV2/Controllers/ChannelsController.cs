@@ -21,13 +21,21 @@ namespace MegatubeV2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Channel channel = db.Channels.Find(id);
+            channel.PercentMegatube *= 100d;
+            channel.PercentOwner *= 100d;
+            channel.PercentRecruiter *= 100d;
+
             if (channel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.OwnerId = new SelectList(db.Users, "Id", "Name", channel.OwnerId);
-            ViewBag.RecruiterId = new SelectList(db.Users, "Id", "Name", channel.RecruiterId);
+
+            var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+
+            ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
+            ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
             return View(channel);
         }
 
@@ -44,13 +52,14 @@ namespace MegatubeV2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.OwnerId = new SelectList(db.Users, "Id", "Name", channel.OwnerId);
-            ViewBag.RecruiterId = new SelectList(db.Users, "Id", "Name", channel.RecruiterId);
+
+            var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+
+            ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
+            ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
             return View(channel);
         }
-
   
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
