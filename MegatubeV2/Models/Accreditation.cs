@@ -43,6 +43,17 @@ namespace MegatubeV2
             yield return new Accreditation(c.Id, fileStartDate, fileStartDate, g.Sum(x => x.PartnerRevenue * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance);
         }
 
+        public static IEnumerable<Accreditation> Create(IGrouping<string, CsvPaidFeatures> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType)
+        {
+            yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileStartDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership);
+
+            if (c.RecruiterId != null)
+                yield return new Accreditation(c.Id, c.RecruiterId.Value, fileStartDate, fileStartDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentRecruiter * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Recruiting);
+
+
+            yield return new Accreditation(c.Id, fileStartDate, fileStartDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance);
+        }
+
         public enum AccreditationMainType : byte
         {
             Traffic,

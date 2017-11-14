@@ -26,7 +26,7 @@ namespace MegatubeV2
 
             if (isSuperChat && record == null)
             {
-                return new OperationSuperChat(file, dollarToEuro, db, fileStartDate, fileEndDate);
+                return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }
             else if (record == null && !isSuperChat)
             {

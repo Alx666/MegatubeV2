@@ -29,8 +29,8 @@ namespace MegatubeV2
         public System.DateTime DateTo { get; set; }
         public string Receipt { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
-        public virtual User User { get; set; }
     }
 }

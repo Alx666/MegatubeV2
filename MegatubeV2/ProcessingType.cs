@@ -9,6 +9,6 @@ namespace MegatubeV2
     {
         ChannelListUpdate = 0,
         TrafficRevenueUpdate = 1,
-        SuperChatRevenueUpdate = 2
+        PaidFeatures = 2
     }
 }

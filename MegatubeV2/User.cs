@@ -17,14 +17,14 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Accreditations = new HashSet<Accreditation>();
-            this.Channels = new HashSet<Channel>();
-            this.Channels1 = new HashSet<Channel>();
+            this.ChannelsOwned = new HashSet<Channel>();
+            this.ChannelsRecruited = new HashSet<Channel>();
             this.Partnerships = new HashSet<Partnership>();
             this.Payments = new HashSet<Payment>();
-            this.User1 = new HashSet<User>();
+            this.AdministratorOf = new HashSet<User>();
             this.NotesCreated = new HashSet<Note>();
             this.NotesReceived = new HashSet<Note>();
+            this.Accreditations = new HashSet<Accreditation>();
         }
     
         public int Id { get; set; }
@@ -48,21 +48,21 @@ namespace MegatubeV2
         public Nullable<int> FiscalAdministratorId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accreditation> Accreditations { get; set; }
+        public virtual ICollection<Channel> ChannelsOwned { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> Channels { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> Channels1 { get; set; }
+        public virtual ICollection<Channel> ChannelsRecruited { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partnership> Partnerships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> User1 { get; set; }
-        public virtual User User2 { get; set; }
+        public virtual ICollection<User> AdministratorOf { get; set; }
+        public virtual User Administrator { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> NotesCreated { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> NotesReceived { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accreditation> Accreditations { get; set; }
     }
 }

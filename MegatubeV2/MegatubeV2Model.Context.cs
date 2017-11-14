@@ -25,7 +25,6 @@ namespace MegatubeV2
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Accreditation> Accreditations { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<Partnership> Partnerships { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
@@ -37,5 +36,6 @@ namespace MegatubeV2
         public virtual DbSet<ViewNote> ViewNotes { get; set; }
         public virtual DbSet<DataFile> DataFiles { get; set; }
         public virtual DbSet<ViewChannel> ViewChannels { get; set; }
+        public virtual DbSet<Accreditation> Accreditations { get; set; }
     }
 }

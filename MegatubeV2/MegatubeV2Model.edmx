@@ -14,7 +14,6 @@
           <Property Name="ChannelId" Type="nvarchar" MaxLength="50" />
           <Property Name="PaymentId" Type="int" />
           <Property Name="GrossAmmount" Type="money" Nullable="false" />
-          <Property Name="Reason" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="DateFrom" Type="datetime" Nullable="false" />
           <Property Name="DateTo" Type="datetime" Nullable="false" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
@@ -412,24 +411,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MegatubeV2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Accreditation">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ChannelId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentId" Type="Int32" />
-          <Property Name="GrossAmmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Type" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Channel" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Accreditation" ToRole="Channel" />
-          <NavigationProperty Name="Payment" Relationship="Self.FK_Accreditation_ToPayment" FromRole="Accreditation" ToRole="Payment" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Accreditation_ToUser" FromRole="Accreditation" ToRole="User" />
-          <Property Name="SubType" Type="Byte" Nullable="false" />
-        </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
@@ -442,11 +423,11 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="PercentOwner" Type="Double" Nullable="false" />
           <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
           <Property Name="PercentMegatube" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
-          <NavigationProperty Name="User" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Recruiter" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
         </EntityType>
         <EntityType Name="Partnership">
           <Key>
@@ -473,8 +454,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Receipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
           <NavigationProperty Name="User" Relationship="Self.FK_Payment_ToUser" FromRole="Payment" ToRole="User" />
+          <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -517,52 +498,16 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="BICSWIFT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FiscalAdministratorId" Type="Int32" />
-          <NavigationProperty Name="Accreditations" Relationship="Self.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
-          <NavigationProperty Name="Channels" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty Name="Channels1" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="ChannelsOwned" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="ChannelsRecruited" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
           <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToUser" FromRole="User" ToRole="Partnership" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_ToUser" FromRole="User" ToRole="Payment" />
-          <NavigationProperty Name="User1" Relationship="Self.FK_User_ToUser" FromRole="User" ToRole="User1" />
-          <NavigationProperty Name="User2" Relationship="Self.FK_User_ToUser" FromRole="User1" ToRole="User" />
+          <NavigationProperty Name="AdministratorOf" Relationship="Self.FK_User_ToUser" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="Administrator" Relationship="Self.FK_User_ToUser" FromRole="User1" ToRole="User" />
           <NavigationProperty Name="NotesCreated" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="NotesReceived" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="User" ToRole="Note" />
+          <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
         </EntityType>
-        <Association Name="FK_Accreditation_ToChannel">
-          <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
-          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Channel">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Accreditation">
-              <PropertyRef Name="ChannelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Accreditation_ToPayment">
-          <End Role="Payment" Type="Self.Payment" Multiplicity="0..1" />
-          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Payment">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Accreditation">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Accreditation_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Accreditation" Type="Self.Accreditation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Accreditation">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ChannelOwner_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
@@ -636,25 +581,12 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MegatubeV2Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accreditations" EntityType="Self.Accreditation" />
           <EntitySet Name="Channels" EntityType="Self.Channel" />
           <EntitySet Name="Partnerships" EntityType="Self.Partnership" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_Accreditation_ToChannel" Association="Self.FK_Accreditation_ToChannel">
-            <End Role="Channel" EntitySet="Channels" />
-            <End Role="Accreditation" EntitySet="Accreditations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Accreditation_ToPayment" Association="Self.FK_Accreditation_ToPayment">
-            <End Role="Payment" EntitySet="Payments" />
-            <End Role="Accreditation" EntitySet="Accreditations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Accreditation_ToUser" Association="Self.FK_Accreditation_ToUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Accreditation" EntitySet="Accreditations" />
-          </AssociationSet>
           <AssociationSet Name="FK_ChannelOwner_ToUser" Association="Self.FK_ChannelOwner_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="Channel" EntitySet="Channels" />
@@ -696,6 +628,19 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySet Name="ViewNotes" EntityType="MegatubeV2Model.ViewNote" />
           <EntitySet Name="DataFiles" EntityType="MegatubeV2Model.DataFile" />
           <EntitySet Name="ViewChannels" EntityType="MegatubeV2Model.ViewChannel" />
+          <EntitySet Name="Accreditations" EntityType="MegatubeV2Model.Accreditation" />
+          <AssociationSet Name="FK_Accreditation_ToChannel" Association="MegatubeV2Model.FK_Accreditation_ToChannel">
+            <End Role="Channel" EntitySet="Channels" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToPayment" Association="MegatubeV2Model.FK_Accreditation_ToPayment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accreditation_ToUser" Association="MegatubeV2Model.FK_Accreditation_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Network">
           <Key>
@@ -810,28 +755,65 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="Accreditation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ChannelId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentId" Type="Int32" />
+          <Property Name="GrossAmmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
+          <Property Name="SubType" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Accreditation" ToRole="Channel" />
+          <NavigationProperty Name="Payment" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Accreditation" ToRole="Payment" />
+          <NavigationProperty Name="Beneficiary" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="Accreditation" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Accreditation_ToChannel">
+          <End Type="MegatubeV2Model.Channel" Role="Channel" Multiplicity="0..1" />
+          <End Type="MegatubeV2Model.Accreditation" Role="Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToPayment">
+          <End Type="MegatubeV2Model.Payment" Role="Payment" Multiplicity="0..1" />
+          <End Type="MegatubeV2Model.Accreditation" Role="Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accreditation_ToUser">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="1" />
+          <End Type="MegatubeV2Model.Accreditation" Role="Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accreditation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MegatubeV2ModelStoreContainer" CdmEntityContainer="MegatubeV2Entities">
-          <EntitySetMapping Name="Accreditations">
-            <EntityTypeMapping TypeName="MegatubeV2Model.Accreditation">
-              <MappingFragment StoreEntitySet="Accreditation">
-                <ScalarProperty Name="SubType" ColumnName="SubType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-                <ScalarProperty Name="GrossAmmount" ColumnName="GrossAmmount" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
-                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="MegatubeV2Model.Channel">
               <MappingFragment StoreEntitySet="Channel">
@@ -977,6 +959,21 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accreditations">
+            <EntityTypeMapping TypeName="MegatubeV2Model.Accreditation">
+              <MappingFragment StoreEntitySet="Accreditation">
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="GrossAmmount" ColumnName="GrossAmmount" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -17,7 +17,7 @@ namespace MegatubeV2.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.User2);
+            var users = db.Users.Include(u => u.Administrator);
             return View(users.OrderBy(x => x.LastName).ToList());
         }
 

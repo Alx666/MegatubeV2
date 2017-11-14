@@ -140,11 +140,13 @@
     <Compile Include="Accreditation.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
+    <Compile Include="IReferenceable.cs" />
     <Compile Include="MegatubeExtensions.cs" />
     <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\DataFile.cs" />
-    <Compile Include="OperationSuperChat.cs" />
+    <Compile Include="OperationUpdatePaidFeatures.cs" />
     <Compile Include="OperationUpdateCredits.cs" />
     <Compile Include="ProcessingType.cs" />
     <Compile Include="SmartParser.cs" />

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MegatubeV2
 {
-    public class CsvVideo
+    public class CsvVideo : IReferenceable
     {
         public string   VideoId             { get; set; }
         public string   ChannelID           { get; set; }

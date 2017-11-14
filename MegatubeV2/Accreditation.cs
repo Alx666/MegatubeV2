@@ -19,7 +19,6 @@ namespace MegatubeV2
         public string ChannelId { get; set; }
         public Nullable<int> PaymentId { get; set; }
         public decimal GrossAmmount { get; set; }
-        public string Reason { get; set; }
         public System.DateTime DateFrom { get; set; }
         public System.DateTime DateTo { get; set; }
         public byte Type { get; set; }
@@ -27,6 +26,6 @@ namespace MegatubeV2
     
         public virtual Channel Channel { get; set; }
         public virtual Payment Payment { get; set; }
-        public virtual User User { get; set; }
+        public virtual User Beneficiary { get; set; }
     }
 }
