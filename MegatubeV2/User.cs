@@ -25,6 +25,7 @@ namespace MegatubeV2
             this.NotesCreated = new HashSet<Note>();
             this.NotesReceived = new HashSet<Note>();
             this.Accreditations = new HashSet<Accreditation>();
+            this.PaymentAlerts = new HashSet<PaymentAlert>();
         }
     
         public int Id { get; set; }
@@ -64,5 +65,7 @@ namespace MegatubeV2
         public virtual ICollection<Note> NotesReceived { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
     }
 }

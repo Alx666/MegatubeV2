@@ -22,17 +22,26 @@ namespace MegatubeV2
             DateTime fileStartDate  = DateTime.ParseExact(matches[0].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
             DateTime fileEndDate    = DateTime.ParseExact(matches[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
             DataFile record         = db.DataFiles.Where(x => x.Name == file.FileName).FirstOrDefault();
-            bool isSuperChat        = file.FileName.Contains("Ecommerce_paid_features_M");
+            bool isPaidFeatures     = file.FileName.Contains("Ecommerce_paid_features_M");
 
-            if (isSuperChat && record == null)
+
+            if (isPaidFeatures)
+            {
+                if (record == null)
+                    return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
+                else
+                    throw new Exception("File already processed");
+            }
+
+            if (isPaidFeatures && record == null)
             {
                 return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }
-            else if (record == null && !isSuperChat)
+            else if (record == null && !isPaidFeatures)
             {
                 return new OperationUpdateChannels(file, db, fileStartDate, fileEndDate);
             }
-            else if (record != null && !isSuperChat && ((ProcessingType)record.ProcessingType) == ProcessingType.ChannelListUpdate)
+            else if (record != null && !isPaidFeatures && ((ProcessingType)record.ProcessingType) == ProcessingType.ChannelListUpdate)
             {
                 return new OperationUpdateCredits(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }

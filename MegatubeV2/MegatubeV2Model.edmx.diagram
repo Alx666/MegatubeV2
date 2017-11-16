@@ -29,6 +29,8 @@
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToChannel" />
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToPayment" />
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToUser" />
+        <EntityTypeShape EntityType="MegatubeV2Model.PaymentAlert" Width="1.5" PointX="3.375" PointY="15.5" />
+        <AssociationConnector Association="MegatubeV2Model.FK_PaymentAlert_ToUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

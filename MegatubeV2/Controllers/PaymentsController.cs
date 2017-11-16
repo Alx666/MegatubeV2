@@ -13,10 +13,13 @@ namespace MegatubeV2.Controllers
     public class PaymentsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
-
+        
         // GET: Payments
-        public ActionResult Index()
+        public ActionResult Index(DateTime? date = null)
         {
+            //var result = from p in db.Payments ord
+
+
             var payments = db.Payments.Include(p => p.User);
             return View(payments.ToList());
         }

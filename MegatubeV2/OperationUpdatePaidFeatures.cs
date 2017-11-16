@@ -43,12 +43,12 @@ namespace MegatubeV2
                 List<Channel> missingOwner = allChannels.Where(c => c.OwnerId == null).ToList();
 
                 //If there are unassociated channels rise error
-                //if (missingOwner.Count > 0)
-                //{
-                //    StringBuilder sb = new StringBuilder("Unassociated channels detected:");
-                //    missingOwner.ForEach(c => sb.AppendLine(c.Id));
-                //    throw new ApplicationException(sb.ToString());
-                //}
+                if (missingOwner.Count > 0)
+                {
+                    StringBuilder sb = new StringBuilder("Unassociated channels detected:");
+                    missingOwner.ForEach(c => sb.AppendLine(c.Id));
+                    throw new ApplicationException(sb.ToString());
+                }
 
                 SmartParser<CsvPaidFeatures> parser = new SmartParser<CsvPaidFeatures>(sr, "Date,Purchase Type,Refund/Chargeback,Country,Channel Name,Channel ID,Retail Price (USD),Total Tax (USD),Partner Earnings Fraction,Earnings (USD)");
                 parser.Map<DateTime>("Date",                        (r, v) => r.Date = v);

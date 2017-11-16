@@ -89,6 +89,17 @@
           <Property Name="DateTo" Type="date" Nullable="false" />
           <Property Name="Receipt" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="PaymentAlert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Gross" Type="money" Nullable="false" />
+          <Property Name="Net" Type="money" Nullable="false" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
@@ -308,6 +319,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentAlert_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PaymentAlert" Type="Self.PaymentAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentAlert">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="User1" Type="Self.User" Multiplicity="*" />
@@ -328,6 +351,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partnership" EntityType="Self.Partnership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentAlert" EntityType="Self.PaymentAlert" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -401,6 +425,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_Payment_ToUser" Association="Self.FK_Payment_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentAlert_ToUser" Association="Self.FK_PaymentAlert_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaymentAlert" EntitySet="PaymentAlert" />
           </AssociationSet>
           <AssociationSet Name="FK_User_ToUser" Association="Self.FK_User_ToUser">
             <End Role="User" EntitySet="User" />
@@ -507,6 +535,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="NotesCreated" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="NotesReceived" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
+          <NavigationProperty Name="PaymentAlerts" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="User" ToRole="PaymentAlert" />
         </EntityType>
         <Association Name="FK_ChannelOwner_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
@@ -640,6 +669,11 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_Accreditation_ToUser" Association="MegatubeV2Model.FK_Accreditation_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="Accreditation" EntitySet="Accreditations" />
+          </AssociationSet>
+          <EntitySet Name="PaymentAlerts" EntityType="MegatubeV2Model.PaymentAlert" />
+          <AssociationSet Name="FK_PaymentAlert_ToUser" Association="MegatubeV2Model.FK_PaymentAlert_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PaymentAlert" EntitySet="PaymentAlerts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Network">
@@ -804,6 +838,30 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Accreditation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PaymentAlert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Gross" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Net" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="PaymentAlert" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PaymentAlert_ToUser">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="1" />
+          <End Type="MegatubeV2Model.PaymentAlert" Role="PaymentAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentAlert">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -973,6 +1031,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="GrossAmmount" ColumnName="GrossAmmount" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentAlerts">
+            <EntityTypeMapping TypeName="MegatubeV2Model.PaymentAlert">
+              <MappingFragment StoreEntitySet="PaymentAlert">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Net" ColumnName="Net" />
+                <ScalarProperty Name="Gross" ColumnName="Gross" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
