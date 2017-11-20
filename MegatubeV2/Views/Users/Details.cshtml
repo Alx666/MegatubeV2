@@ -87,10 +87,13 @@
 
                     </div>
                 </div>
+                @if (Model.Administrator != null)
+                {
                 <ul class="nav nav-tabs">
                     <li role="presentation" id="userTab" class="tabSwitch active"><a href="javascript: void(0)">User</a></li>
-                    <li role="presentation" id="tutorTab" class="tabSwitch"><a href="javascript: void(0)">Tutor</a></li>
+                    <li role="presentation" id="tutorTab" class="tabSwitch"><a href="javascript: void(0)">Administrator</a></li>
                 </ul>
+                }
                 <table id="userDetailsTable" class="table table-condensed table-hover table-striped">
                     <tbody>
                         <tr>
@@ -258,12 +261,17 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator)
+                            @if (Model.Administrator != null)
+                            {
+                                @(Model.Administrator.Name + " " + Model.Administrator.LastName);
+                            }
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
+                @if (Model.Administrator != null)
+                {
                 <table id="tutorDetailsTable" class="table table-condensed table-hover table-striped hidden">
                     <tbody>
                         <tr>
@@ -271,7 +279,7 @@
                                 @Html.DisplayNameFor(model => model.Name)
                             </td>
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.Name)
+                                @Html.DisplayFor(model => model.Administrator.Name)
                             </td>
                         </tr>
 
@@ -281,7 +289,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.LastName)
+                                @Html.DisplayFor(model => model.Administrator.LastName)
                             </td>
                         </tr>
 
@@ -291,7 +299,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.Mobile)
+                                @Html.DisplayFor(model => model.Administrator.Mobile)
                             </td>
                         </tr>
 
@@ -301,7 +309,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.EMail)
+                                @Html.DisplayFor(model => model.Administrator.EMail)
                             </td>
                         </tr>
 
@@ -311,7 +319,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.Skype)
+                                @Html.DisplayFor(model => model.Administrator.Skype)
                             </td>
                         </tr>
 
@@ -321,7 +329,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.BirthDate)
+                                @Html.DisplayFor(model => model.Administrator.BirthDate)
                             </td>
                         </tr>
 
@@ -331,7 +339,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.BirthPlace)
+                                @Html.DisplayFor(model => model.Administrator.BirthPlace)
                             </td>
                         </tr>
 
@@ -341,7 +349,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.CompanyName)
+                                @Html.DisplayFor(model => model.Administrator.CompanyName)
                             </td>
                         </tr>
 
@@ -351,7 +359,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.CompanyKind)
+                                @Html.DisplayFor(model => model.Administrator.CompanyKind)
                             </td>
                         </tr>
 
@@ -361,7 +369,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.IBAN)
+                                @Html.DisplayFor(model => model.Administrator.IBAN)
                             </td>
                         </tr>
 
@@ -371,7 +379,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.PIVAorVAT)
+                                @Html.DisplayFor(model => model.Administrator.PIVAorVAT)
                             </td>
                         </tr>
 
@@ -381,7 +389,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.FullAddress)
+                                @Html.DisplayFor(model => model.Administrator.FullAddress)
                             </td>
                         </tr>
 
@@ -391,7 +399,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.PostalCode)
+                                @Html.DisplayFor(model => model.Administrator.PostalCode)
                             </td>
                         </tr>
 
@@ -401,7 +409,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.PaymentMethod)
+                                @Html.DisplayFor(model => model.Administrator.PaymentMethod)
                             </td>
                         </tr>
 
@@ -411,7 +419,7 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.BICSWIFT)
+                                @Html.DisplayFor(model => model.Administrator.BICSWIFT)
                             </td>
                         </tr>
 
@@ -421,21 +429,12 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.RegistrationDate)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.Administrator)
-                            </td>
-
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator)
+                                @Html.DisplayFor(model => model.Administrator.RegistrationDate)
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                }
         </div>
 
             @{
@@ -447,7 +446,7 @@
         <div class="row m-t-3">        
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <div><h2 class="m-b-2 m-t-0 f-w-300">User's channels</h2></div>
-                <table class="table table-condensed table-hover table-striped">
+                <table class="table table-condensed table-hover table-striped" id="userChannelsTable">
                     <thead>
                         <tr>
                             <th>
@@ -472,7 +471,7 @@
                                 Nome canale
                             </td>
                             <td class="userDetails">
-                                01/01/1970
+                                01/01/1971
                             </td>
                         </tr>
                         <tr>
@@ -480,7 +479,7 @@
                                 Nome canale
                             </td>
                             <td class="userDetails">
-                                01/01/1970
+                                01/01/1972
                             </td>
                         </tr>
                     </tbody>
@@ -489,7 +488,7 @@
             
             <div class="col-md-6 col-sm-6 col-xs-6">
                     <div><h2 class="m-b-2 m-t-0 f-w-300">Recruited channels</h2></div>
-                    <table class="table table-condensed table-hover table-striped">
+                    <table class="table table-condensed table-hover table-striped" id="userRecChannelsTable">
                         <thead>
                             <tr>
                                 <th>
@@ -503,7 +502,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    Nome canale
+                                    Nome canale 1
                                 </td>
                                 <td class="userDetails">
                                     Nome utente
@@ -511,7 +510,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Nome canale
+                                    Nome canale 2
                                 </td>
                                 <td class="userDetails">
                                     Nome utente
@@ -519,10 +518,42 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Nome canale
+                                    Nome canale 3
                                 </td>
                                 <td class="userDetails">
-                                   Nome utente
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale 4
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale 5
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale 6
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nome canale 7
+                                </td>
+                                <td class="userDetails">
+                                    Nome utente
                                 </td>
                             </tr>
                         </tbody>
@@ -548,6 +579,14 @@
 <script language="javascript">
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</li>');
+
+        $('#userChannelsTable').DataTable({
+            "pageLength": 5
+        });
+        $('#userRecChannelsTable').DataTable({
+            "pageLength": 5
+        });
+
 
         Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
             $(this).highcharts({

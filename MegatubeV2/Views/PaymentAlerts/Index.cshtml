@@ -2,51 +2,64 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
-<h2>Index</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Gross)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Net)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gross)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Net)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Pay", "Create", "Payments", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table class="table" id="alertsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gross)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Net)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gross)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Net)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                </td>
+                <td>
+                    @(item.User.LastName+" "+item.User.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Pay", "Create", "Payments", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+<script language="javascript">
+
+    $(document).ready(function () {
+        $('#alertsTable').DataTable({
+            "pageLength": 50
+        });
+    });
+</script>

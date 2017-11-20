@@ -5,13 +5,13 @@
     Dictionary<String, String> IcoDict = new Dictionary<string, string>();
 
 
-    MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "Alerts", "Payments" });
+    MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "PaymentAlerts", "Payments" });
     IcoDict.Add("Menu", "fa-folder-open-o");
 
     //relationship between controller and text to show in the menu
     NamesDict.Add("Users", "Users");
     NamesDict.Add("ViewChannels", "Channels");
-    NamesDict.Add("Alerts", "Alerts");
+    NamesDict.Add("PaymentAlerts", "Alerts");
     NamesDict.Add("Payments", "Payments");
     NamesDict.Add("Channels", "Channels");
 
@@ -101,6 +101,8 @@
     </div>
 
     <script src="~/assets/vendor/js/lib.min.js"></script>
+    <script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
     <div class="main-wrap">
         <nav class="navigation">
             <!-- START Navbar -->
