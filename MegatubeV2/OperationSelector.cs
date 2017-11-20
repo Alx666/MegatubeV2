@@ -24,15 +24,7 @@ namespace MegatubeV2
             DataFile record         = db.DataFiles.Where(x => x.Name == file.FileName).FirstOrDefault();
             bool isPaidFeatures     = file.FileName.Contains("Ecommerce_paid_features_M");
 
-
-            if (isPaidFeatures)
-            {
-                if (record == null)
-                    return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
-                else
-                    throw new Exception("File already processed");
-            }
-
+           
             if (isPaidFeatures && record == null)
             {
                 return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);

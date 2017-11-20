@@ -27,7 +27,7 @@ namespace MegatubeV2
         }
 
         public string ReturnActionName      => "Index";
-        public string ReturnControllerName  => "ViewChannels";
+        public string ReturnControllerName  => "PaymentAlerts";
         public object ReturnRouteValues     => new { referenced = false, active = true };
 
         public void Execute()
@@ -80,7 +80,8 @@ namespace MegatubeV2
                 db.DataFiles.Add(updateRecord);
 
                 db.SaveChanges();
-
+                db.UpdatePaymentAlerts();
+                db.SaveChanges();
             }
         }
     }
