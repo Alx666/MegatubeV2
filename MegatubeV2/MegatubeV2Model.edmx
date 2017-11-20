@@ -93,7 +93,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Gross" Type="money" Nullable="false" />
           <Property Name="Net" Type="money" Nullable="false" />
@@ -846,7 +846,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Gross" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Net" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
