@@ -48,7 +48,7 @@
                     @(item.User.LastName+" "+item.User.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Pay", "Create", "Payments", new { id = item.Id })
+                    @Html.ActionLink("Pay", "Create", "Payments", new { userId = item.UserId }, null)
                 </td>
             </tr>
         }

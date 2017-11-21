@@ -43,12 +43,12 @@ namespace MegatubeV2
                 List<Channel> missingOwner = allChannels.Where(c => c.OwnerId == null).ToList();
 
                 //If there are unassociated channels rise error
-                //if (missingOwner.Count > 0)
-                //{
-                //    StringBuilder sb = new StringBuilder("Unassociated channels detected:");
-                //    missingOwner.ForEach(c => sb.AppendLine(c.Id));
-                //    throw new ApplicationException(sb.ToString());
-                //}
+                if (missingOwner.Count > 0)
+                {
+                    StringBuilder sb = new StringBuilder("Unassociated channels detected:");
+                    missingOwner.ForEach(c => sb.AppendLine(c.Id));
+                    throw new ApplicationException(sb.ToString());
+                }
 
                 //Let's start with the parsing
                 SmartParser<CsvVideo> parser = new SmartParser<CsvVideo>(sr, "Video ID,Content Type,Policy,Video Title,Video Duration (sec),Username,Uploader,Channel Display Name,Channel ID,Claim Type,Claim Origin,Multiple Claims?,Category,Asset ID,Asset Labels,Asset Channel ID,Custom ID,Owned Views,Owned Views : Watch Page,Owned Views : Embedded Player,Owned Views : Channel Page,Owned Views : Live,Owned Views : On Demand,Owned Views : Ad-Enabled,Owned Views : Ad-Requested,YouTube Revenue Split : AdSense Served YouTube Sold,YouTube Revenue Split : DoubleClick Served YouTube Sold,YouTube Revenue Split : DoubleClick Served Partner Sold,YouTube Revenue Split : Partner Served Partner Sold,YouTube Revenue Split,Partner Revenue : AdSense Served YouTube Sold,Partner Revenue : DoubleClick Served YouTube Sold,Partner Revenue : DoubleClick Served Partner Sold,Partner Revenue : Partner Served Partner Sold,Partner Revenue,Estimated RPM");

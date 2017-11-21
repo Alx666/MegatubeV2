@@ -406,6 +406,7 @@
     <Content Include="Views\_PartialNotes.cshtml" />
     <Content Include="Views\Channels\Edit.cshtml" />
     <Content Include="Views\PaymentAlerts\Index.cshtml" />
+    <Content Include="Views\Payments\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

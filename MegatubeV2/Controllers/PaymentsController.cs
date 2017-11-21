@@ -18,8 +18,6 @@ namespace MegatubeV2.Controllers
         public ActionResult Index(DateTime? date = null)
         {
             //var result = from p in db.Payments ord
-
-
             var payments = db.Payments.Include(p => p.User);
             return View(payments.ToList());
         }
@@ -40,7 +38,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Create
-        public ActionResult Create()
+        public ActionResult Create(int userId)
         {
             ViewBag.UserId = new SelectList(db.Users, "Id", "Name");
             return View();
