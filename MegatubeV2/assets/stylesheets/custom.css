@@ -45,6 +45,9 @@ ol.breadcrumb li{
         font-weight: bolder;
     }
 
+#channelErrMsg{
+    color:#ff0000;
+}
 
 
 /*--  Classi generiche

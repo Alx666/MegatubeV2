@@ -136,13 +136,37 @@
             $('#saveChannelButton').hide();
             $('#channelErrMsg').html("Check the percentage values: the sum must be 100");
             $('#channelErrMsg').show();
+            return false;
+        }
+        return true;
+        //else {
+        //    $('#saveChannelButton').show();
+        //    $('#channelErrMsg').hide();
+        //}
+    }
+
+    function checkRecruiter() {
+        if (parseInt($("#RecruiterId").val()) == "0" && parseInt($('#recruiterInput').val())!=0) {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').html("You can't specify recruiter's percentage if no recruiter is selected");
+            $('#channelErrMsg').show();
+            return false;
 
         }
-        else {
+        return true;
+    }
+
+    function checkErrors() {
+        if (checkPercent() && checkRecruiter()) {
             $('#saveChannelButton').show();
             $('#channelErrMsg').hide();
         }
+        else {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').show();
+        }
     }
+
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name)</li>');
 
@@ -184,9 +208,10 @@
             }
         });
 
-        checkPercent();
+        checkErrors();
 
-        $('.percentage').change(function () { checkPercent(); });
+        $('.percentage').change(function () { checkErrors(); });
+        $('#RecruiterId').change(function () { checkErrors(); });
 
         Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
             $(this).highcharts({
