@@ -140,6 +140,10 @@
     <Compile Include="Accreditation.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Contract.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="MegatubeExtensions.cs" />
     <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\DataFile.cs" />
+    <Compile Include="Models\PaymentData.cs" />
     <Compile Include="OperationUpdatePaidFeatures.cs" />
     <Compile Include="OperationUpdateCredits.cs" />
     <Compile Include="PaymentAlert.cs">
@@ -407,6 +412,11 @@
     <Content Include="Views\Channels\Edit.cshtml" />
     <Content Include="Views\PaymentAlerts\Index.cshtml" />
     <Content Include="Views\Payments\Create.cshtml" />
+    <Content Include="Views\Contracts\Create.cshtml" />
+    <Content Include="Views\Contracts\Delete.cshtml" />
+    <Content Include="Views\Contracts\Details.cshtml" />
+    <Content Include="Views\Contracts\Edit.cshtml" />
+    <Content Include="Views\Contracts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

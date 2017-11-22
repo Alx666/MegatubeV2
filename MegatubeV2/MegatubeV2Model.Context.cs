@@ -38,5 +38,6 @@ namespace MegatubeV2
         public virtual DbSet<ViewChannel> ViewChannels { get; set; }
         public virtual DbSet<Accreditation> Accreditations { get; set; }
         public virtual DbSet<PaymentAlert> PaymentAlerts { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
     }
 }

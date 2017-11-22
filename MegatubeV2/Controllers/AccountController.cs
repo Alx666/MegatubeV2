@@ -15,9 +15,7 @@ namespace MegatubeV2.Controllers
         public ActionResult Index()
         {
             //ViewBag.ReturnUrl = returnUrl;
-
             return View();
-
         }
 
 
@@ -26,7 +24,16 @@ namespace MegatubeV2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string username, string password)
         {
-            return RedirectToAction("Index", "Users");
+            try
+            {
+                throw new Exception("Porcoddio");
+                return RedirectToAction("Index", "Users");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }                                    
         }
 
         protected override void Dispose(bool disposing)

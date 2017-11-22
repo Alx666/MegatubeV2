@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MegatubeV2;
+using MegatubeV2.Models;
 
 namespace MegatubeV2.Controllers
 {
@@ -40,8 +41,16 @@ namespace MegatubeV2.Controllers
         // GET: Payments/Create
         public ActionResult Create(int userId)
         {
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name");
-            return View();
+            User toPay = db.Users.Find(userId);
+            User admin = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
+
+            PaymentData p = new PaymentData();
+            p.User              = toPay;
+            p.Administrator     = admin;
+            p.Accreditations    = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+            p.Gross             = p.Accreditations.Sum(x => x.GrossAmmount);
+                        
+            return View(p);
         }
 
         // POST: Payments/Create
