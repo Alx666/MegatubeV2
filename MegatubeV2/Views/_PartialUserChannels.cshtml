@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MegatubeV2.Channel>
+
+<div class="col-md-6 col-sm-6 col-xs-6">
+    <div><h2 class="m-b-2 m-t-0 f-w-300">User's channels</h2></div>
+    <table class="table table-condensed table-hover table-striped" id="userChannelsTable">
+        <thead>
+            <tr>
+                <th>
+                    Channels
+                </th>
+                <th class="userDetails">
+                    Registration Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    var channel = item as Channel;
+                    <tr>
+                        <td class="v-a-m">
+                            <div class="media media-auto">
+                                <div class="media-body media-middle">
+                                    <span class="media-heading text-white"><a href="@Url.Action("Edit", "Channels", new { id = item.Id })">@item.Name</a></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="v-a-m">
+                            <span class="text-white">@item.RegistrationDate.ToShortDateString()</span>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
