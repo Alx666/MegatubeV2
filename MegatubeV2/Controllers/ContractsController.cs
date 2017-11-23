@@ -56,11 +56,14 @@ namespace MegatubeV2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Contract contract = db.Contracts.Find(id);
+
             if (contract == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
             return View(contract);
         }

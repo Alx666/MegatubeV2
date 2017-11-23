@@ -48,6 +48,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -147,6 +150,7 @@
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
+    <Compile Include="IPaymentMethod.cs" />
     <Compile Include="IReferenceable.cs" />
     <Compile Include="MegatubeExtensions.cs" />
     <Compile Include="Models\Accreditation.cs" />
@@ -158,6 +162,7 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ProcessingType.cs" />
+    <Compile Include="Receipt.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
     <Compile Include="IOperation.cs" />
@@ -333,6 +338,7 @@
       <DependentUpon>MegatubeV2Model.edmx</DependentUpon>
       <LastGenOutput>MegatubeV2Model.cs</LastGenOutput>
     </Content>
+    <Content Include="ReceiptForm.htm" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config" />

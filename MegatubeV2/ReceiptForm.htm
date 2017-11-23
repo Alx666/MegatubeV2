@@ -1,0 +1,86 @@
+﻿<table cellpadding="5" cellspacing="5" style="font-size: 8pt;" border="0">
+    <tr>
+        <td colspan="6"><h3>[Ricevuta]</h3></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Nome:</td>
+        <td colspan="3">[User.Name]</td>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Data:</td>
+        <td>[Payment.Date]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Cognome:</td>
+        <td colspan="3">[User.Surname]</td>
+        <td style="font-weight:bold;" bgcolor="#cccccc">N:</td>
+        <td>[Counter]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Residenza:</td>
+        <td colspan="3">[User.Residence]</td>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Data Di nascita:</td>
+        <td>[User.BirthDate]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Luogo Di nascita:</td>
+        <td colspan="5">[User.BirthPlace]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Cf:</td>
+        <td colspan="5">[User.Cf]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Cap:</td>
+        <td colspan="5">[User.PostalCode]</td>
+    </tr>
+</table>
+<br />
+
+<table cellpadding="5" cellspacing="5" style="width: 100%; font-size: 8pt;" border="0">
+    <tr>
+        <td colspan="6"><h3>Cliente</h3></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Nome:</td>
+        <td colspan="5">[Network.FiscalName]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Indirizzo:</td>
+        <td colspan="5">[Street]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">Città:</td>
+        <td colspan="5">[City]</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;" bgcolor="#cccccc">P.IVA:</td>
+        <td colspan="5">[PIVA]</td>
+    </tr>
+</table>
+<br />
+
+[ImportsRows]
+
+<table style="font-size: 8pt;" border="0.1" cellpadding="2">
+    <tr bgcolor="#333333">
+        <td colspan="6" style="font-size:0.1pt">_</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold; text-align: right;" colspan="5">Imponibile</td>
+        <td bgcolor="#cccccc">[Imponibile]</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:right;">[DescFormulaPagamento]</td>
+        <td bgcolor="#cccccc">[Ritenuta]</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold; text-align: right;" colspan="5">IVA</td>
+        <td bgcolor="#cccccc">€0.00</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold; text-align: right;" colspan="5">Totale Euro</td>
+        <td bgcolor="#cccccc">[TotaleEuro]</td>
+    </tr>
+</table>
+<br />
+<br />
+<h3>[Law]</h3>

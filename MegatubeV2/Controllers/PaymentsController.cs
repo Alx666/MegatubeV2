@@ -44,12 +44,16 @@ namespace MegatubeV2.Controllers
             User toPay = db.Users.Find(userId);
             User admin = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
 
-            PaymentData p = new PaymentData();
+            List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+
+            PaymentData p       = new PaymentData();
             p.User              = toPay;
             p.Administrator     = admin;
-            p.Accreditations    = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+            p.Accreditations    = accreditations;
             p.Gross             = p.Accreditations.Sum(x => x.GrossAmmount);
-                        
+            p.From              = accreditations.Min(x => x.DateFrom);
+            p.To                = accreditations.Max(x => x.DateTo);
+
             return View(p);
         }
 
@@ -58,46 +62,37 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,Amount,Date,PaymentType,DateFrom,DateTo,Receipt")] Payment payment)
+        public ActionResult Create(int userId, int receiptCounter)
         {
-            if (ModelState.IsValid)
-            {
-                db.Payments.Add(payment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            User toPay = db.Users.Find(userId);
+            User admin = toPay.Administrator ?? toPay;
 
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name", payment.UserId);
-            return View(payment);
+            List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+            Payment p                          = new Payment();
+            p.Id                               = db.Payments.Max(x => x.Id) + 1;
+            p.DateFrom                         = accreditations.Min(x => x.DateFrom);
+            p.DateTo                           = accreditations.Max(x => x.DateTo);
+            p.Amount                           = 0;                            //accreditations.Sum(x => x.GrossAmmount); //deve essere gia tassato?
+            p.UserId                           = toPay.Id;
+            p.PaymentType                      = (byte)admin.PaymentMethod;    //(devo pagare l'amministratore fiscale o l'utente?)
+
+            accreditations.ForEach(a => a.PaymentId = p.Id);
+
+            //Receipt receipt = new Receipt(accreditations);
+
+            throw new NotImplementedException();
+
+
+            return RedirectToAction("index", "PaymentAlerts");
         }
 
 
         // GET: Payments/Delete/5
         public ActionResult Revert(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Payment payment = db.Payments.Find(id);
-            //if (payment == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(payment);
-            throw new NotImplementedException();
-        }
-
-        // POST: Payments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            //Payment payment = db.Payments.Find(id);
-            //db.Payments.Remove(payment);
-            //db.SaveChanges();
-            //return RedirectToAction("Index");
-            throw new NotImplementedException();
+            Payment p = db.Payments.Find(id);
+            p.Accreditations.Clear();
+            return RedirectToAction("index", "Payments");
         }
 
         protected override void Dispose(bool disposing)

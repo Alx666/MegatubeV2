@@ -26,7 +26,6 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                throw new Exception("Porcoddio");
                 return RedirectToAction("Index", "Users");
             }
             catch(Exception ex)

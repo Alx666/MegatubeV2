@@ -1,80 +1,85 @@
 ﻿@model MegatubeV2.Models.PaymentData
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Payment</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            User Name
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                @{
+                    string Name = Model.User.Name + " " + Model.User.LastName;
+                }                
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
+            Payment Mode
             <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                Not Implemented
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            From
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                @Model.From
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            From
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                @Model.To
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PaymentType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateFrom, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateFrom, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateTo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateTo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateTo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Receipt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Receipt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Receipt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Reason
+                    </th>
+                    <th>
+                        Gross
+                    </th>
+                    <th>
+                        Net
+                    </th>
+                    <th>
+                        Date From
+                    </th>
+                    <th>
+                        Date To
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Accreditations)
+            {
+                <tr>
+                    <td>Not Implemented</td>
+                    <td>@item.GrossAmmount</td>
+                    <td>Not Implemented</td>
+                    <td>Not Implemented</td>
+                    <td>@item.DateFrom</td>
+                    <td>@item.DateTo</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="date" value="Make Payment" class="btn btn-default" />
+                <input type="submit" value="Make Payment" class="btn btn-default" />
             </div>
         </div>
     </div>
