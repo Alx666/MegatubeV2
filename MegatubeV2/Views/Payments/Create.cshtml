@@ -1,43 +1,49 @@
 ﻿@model MegatubeV2.Models.PaymentData
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { @class = "m-t-3", id = "paymentsCreate", enctype="multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4>Payment</h4>
         <hr />
-        <div class="form-group">
-            User Name
-            <div class="col-md-10">
-                @{
-                    string Name = Model.User.Name + " " + Model.User.LastName;
-                }                
+        <div class="form-group m-b-0">
+            <label class="col-xs-4 control-label">User</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">
+                    @{
+                        string Name = Model.User.Name + " " + Model.User.LastName;
+                        @Html.Raw(Name)
+                    }
+                </p>
+            </div>
+        </div>
+        <div class="form-group m-b-0">
+            <label class="col-xs-4 control-label">Payment mode</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">
+                    Not Implemented
+                </p>
+            </div>
+        </div>
+        <div class="form-group m-b-0">
+            <label class="col-xs-4 control-label">From</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">
+                    @Model.From
+                </p>
+            </div>
+        </div>
+        <div class="form-group m-b-0">
+            <label class="col-xs-4 control-label">To</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">
+                    @Model.To
+                </p>
             </div>
         </div>
 
-        <div class="form-group">
-            Payment Mode
-            <div class="col-md-10">
-                Not Implemented
-            </div>
-        </div>
-
-        <div class="form-group">
-            From
-            <div class="col-md-10">
-                @Model.From
-            </div>
-        </div>
-
-        <div class="form-group">
-            From
-            <div class="col-md-10">
-                @Model.To
-            </div>
-        </div>
-
-        <table>
+        <table class="table table-condensed table-hover table-striped" id="paymentCreateTable">
             <thead>
                 <tr>
                     <th>
@@ -68,23 +74,33 @@
                     <td>@item.GrossAmmount</td>
                     <td>Not Implemented</td>
                     <td>Not Implemented</td>
-                    <td>@item.DateFrom</td>
-                    <td>@item.DateTo</td>
+                    <td>@item.DateFrom.ToShortDateString()</td>
+                    <td>@item.DateTo.ToShortDateString()</td>
                 </tr>
             }
             </tbody>
         </table>
         
+        @{ 
+            DateTime currentDate = DateTime.Today;
+            string currentDateStr = currentDate.Year.ToString() + "-" + currentDate.Month.ToString() + "-" + currentDate.Day.ToString();
 
+        }
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="date" value="Make Payment" class="btn btn-default" />
-                <input type="submit" value="Make Payment" class="btn btn-default" />
+                <input type="hidden" name="userId" value="@Model.User.Id" />
+                <input type="text" name="receiptCounter" class="form-inline" style="width:60px" value="@Model.ReceiptCounter" />
+                <input type="date" value="@currentDateStr" class="btn btn-default" />
+                <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-default">Upload</a>
             </div>
         </div>
     </div>
-}
+  }
+<script language="javascript">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    $(document).ready(function () {
+        $('#paymentCreateTable').DataTable({
+            "pageLength": 50
+        });
+    });
+</script>
