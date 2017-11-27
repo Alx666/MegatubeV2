@@ -16,7 +16,7 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
         
         // GET: Payments
-        public ActionResult Index(DateTime? date = null)
+        public ActionResult Index()
         {
             //var result = from p in db.Payments ord
             var payments = db.Payments.Include(p => p.User);
@@ -46,6 +46,7 @@ namespace MegatubeV2.Controllers
 
             List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
 
+
             PaymentData p       = new PaymentData();
             p.User              = toPay;
             p.Administrator     = admin;
@@ -53,6 +54,8 @@ namespace MegatubeV2.Controllers
             p.Gross             = p.Accreditations.Sum(x => x.GrossAmmount);
             p.From              = accreditations.Min(x => x.DateFrom);
             p.To                = accreditations.Max(x => x.DateTo);
+            p.ReceiptCounter    = 666 + 1;
+            //p.ReceiptCounter    = (from payment in db.Payments where payment.UserId == toPay.Id select payment.).Max(x => x.i)
 
             return View(p);
         }
@@ -78,9 +81,9 @@ namespace MegatubeV2.Controllers
 
             accreditations.ForEach(a => a.PaymentId = p.Id);
 
-            //Receipt receipt = new Receipt(accreditations);
+            //Receipt receipt = new Receipt(admin, accreditations);
 
-            throw new NotImplementedException();
+            
 
 
             return RedirectToAction("index", "PaymentAlerts");
@@ -90,8 +93,11 @@ namespace MegatubeV2.Controllers
         // GET: Payments/Delete/5
         public ActionResult Revert(int? id)
         {
+            throw new NotImplementedException();
+
             Payment p = db.Payments.Find(id);
             p.Accreditations.Clear();
+            db.Payments.Remove(p);
             return RedirectToAction("index", "Payments");
         }
 

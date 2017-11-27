@@ -15,7 +15,7 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: ViewChannels
-        public ActionResult Index(bool referenced = true, bool active = true)
+        public ActionResult Index(bool referenced = true, bool active = false)
         {
             var res = (from c in db.ViewChannels
                       where ((referenced && c.OwnerId != null) || (!referenced && c.OwnerId == null)) && c.IsActive == active                      

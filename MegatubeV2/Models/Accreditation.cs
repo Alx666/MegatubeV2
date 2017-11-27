@@ -66,5 +66,27 @@ namespace MegatubeV2
             Recruiting,
             NetworkPerformance
         }
+
+        public static string AccreditationMainTypeText(AccreditationMainType type)
+        {
+            switch (type)
+            {
+                case AccreditationMainType.Traffic: return "Traffico su canale";
+                case AccreditationMainType.SuperChat: return "Accredito SuperChat";
+                default: throw new Exception("Unknow Accreditation Type");
+            }
+        }
+
+        public static string AccreditationSubTypeText(AccreditationSubType type)
+        {
+            switch (type)
+            {
+                case AccreditationSubType.Ownership: return "possesso canale";
+                case AccreditationSubType.Recruiting: return "canale reclutato";
+                case AccreditationSubType.NetworkPerformance: return "network performance";
+                default: throw new Exception("Unknow Accreditation Subtype");
+            }
+        }
+
     }
 }
