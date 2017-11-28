@@ -31,12 +31,12 @@ namespace MegatubeV2
 
             foreach (var item in credits)
             {
-                PaymentAlert p = new PaymentAlert();
-                p.CreationDate = DateTime.Now;
-                p.UpdateDate = DateTime.Now;
-                p.UserId = item.UserId;
-                p.Gross = item.Gross;
-                p.Net = p.Gross;
+                PaymentAlert p  = new PaymentAlert();
+                p.CreationDate  = DateTime.Now;
+                p.UpdateDate    = DateTime.Now;
+                p.UserId        = item.UserId;
+                p.Gross         = item.Gross;
+                p.Net           = p.Gross;
 
                 db.PaymentAlerts.Add(p);
             }

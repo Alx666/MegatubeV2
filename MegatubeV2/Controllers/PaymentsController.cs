@@ -43,27 +43,29 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                User toPay         = db.Users.Find(userId);
-                User admin         = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
-                int year           = DateTime.Now.Year;
-                Payment mostRecent = (from x in db.Payments
-                                      where x.Date.Year == year && x.UserId == admin.Id
-                                      orderby x.ReceiptCount descending
-                                      select x).FirstOrDefault();
-                int count          = mostRecent != null ? mostRecent.ReceiptCount + 1 : 1;
+                User toPay          = db.Users.Find(userId);
+                User admin          = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
+                int year            = DateTime.Now.Year;
+
+                Payment mostRecent  = (from x in db.Payments
+                                       where x.Date.Year == year && x.UserId == admin.Id
+                                       orderby x.ReceiptCount descending
+                                       select x).FirstOrDefault();
+
+                int count           = mostRecent != null ? mostRecent.ReceiptCount + 1 : 1;
 
                 List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
 
-                PaymentData p      = new PaymentData();
-                p.User             = toPay;
-                p.Administrator    = admin;
-                p.Accreditations   = accreditations;
-                p.Gross            = p.Accreditations.Sum(x => x.GrossAmmount);
-                p.Net              = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Gross);
-                p.From             = accreditations.Min(x => x.DateFrom);
-                p.To               = accreditations.Max(x => x.DateTo);
-                p.PaymentMode      = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ToString();
-                p.ReceiptCount     = count;
+                PaymentData p       = new PaymentData();
+                p.User              = toPay;
+                p.Administrator     = admin;
+                p.Accreditations    = accreditations;
+                p.Gross             = p.Accreditations.Sum(x => x.GrossAmmount);
+                p.Net               = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Gross);
+                p.From              = accreditations.Min(x => x.DateFrom);
+                p.To                = accreditations.Max(x => x.DateTo);
+                p.PaymentMode       = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ToString();
+                p.ReceiptCount      = count;
 
                 return View(p);
             }
@@ -72,7 +74,6 @@ namespace MegatubeV2.Controllers
                 ViewBag.ErrorMessage = ex.Message;
                 return View("Error");
             }
-
         }
 
         // POST: Payments/Create
@@ -84,21 +85,29 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                User toPay = db.Users.Find(userId);
-                User admin = toPay.Administrator ?? toPay;
+                User toPay          = db.Users.Find(userId);
+                User admin          = toPay.Administrator ?? toPay;
 
                 List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
-                Payment p       = new Payment();
-                p.Id            = db.Payments.Max(x => x.Id) + 1;
-                p.DateFrom      = accreditations.Min(x => x.DateFrom);
-                p.DateTo        = accreditations.Max(x => x.DateTo);
-                p.Amount        = 0;                            
-                p.UserId        = toPay.Id;
-                p.PaymentType   = (byte)admin.PaymentMethod;
 
+                Payment p           = new Payment();
+                p.Id                = db.Payments.Max(x => x.Id) + 1;
+                p.DateFrom          = accreditations.Min(x => x.DateFrom);
+                p.DateTo            = accreditations.Max(x => x.DateTo);
+                p.Amount            = accreditations.Sum(x => x.GrossAmmount);                            
+                p.UserId            = toPay.Id;
+                p.PaymentType       = (byte)admin.PaymentMethod;
                 accreditations.ForEach(a => a.PaymentId = p.Id);
 
-                //Receipt receipt = new Receipt(admin, accreditations);
+                db.Payments.Add(p);
+                PaymentAlert alert = (from a in db.PaymentAlerts
+                                      where a.UserId == toPay.Id
+                                      select a).SingleOrDefault();
+
+                if (alert != null)
+                    db.PaymentAlerts.Remove(alert);
+
+                db.SaveChanges();
 
                 return RedirectToAction("index", "PaymentAlerts");
             }
@@ -113,12 +122,33 @@ namespace MegatubeV2.Controllers
         // GET: Payments/Delete/5
         public ActionResult Revert(int? id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Payment p           = db.Payments.Find(id);
 
-            Payment p = db.Payments.Find(id);
-            p.Accreditations.Clear();
-            db.Payments.Remove(p);
-            return RedirectToAction("index", "Payments");
+                PaymentAlert alert  = new PaymentAlert();
+                alert.Gross         = p.Accreditations.Sum(x => x.GrossAmmount);
+                alert.CreationDate  = p.DateFrom;
+                alert.UpdateDate    = DateTime.Now;
+
+                if (p.User.PaymentMethod != null)
+                    alert.Net       = PaymentMethodFactory.GetMethodFromDBCode(p.User.PaymentMethod.Value).ComputeNet(alert.Gross);
+                else
+                    alert.Net       = alert.Gross;
+
+                p.Accreditations.Clear();
+
+                db.Payments.Remove(p);
+                db.PaymentAlerts.Add(alert);
+                db.SaveChanges();
+
+                return RedirectToAction("index", "Payments");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
         }
 
         protected override void Dispose(bool disposing)
