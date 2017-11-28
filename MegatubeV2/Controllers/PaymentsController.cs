@@ -91,7 +91,6 @@ namespace MegatubeV2.Controllers
                 List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
 
                 Payment p           = new Payment();
-                p.Id                = db.Payments.Max(x => x.Id) + 1;
                 p.DateFrom          = accreditations.Min(x => x.DateFrom);
                 p.DateTo            = accreditations.Max(x => x.DateTo);
                 p.Amount            = accreditations.Sum(x => x.GrossAmmount);                            
