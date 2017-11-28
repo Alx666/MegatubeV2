@@ -39,25 +39,40 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Create
-        public ActionResult Create(int userId)
+        public ActionResult Create(int? userId)
         {
-            User toPay = db.Users.Find(userId);
-            User admin = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
+            try
+            {
+                User toPay         = db.Users.Find(userId);
+                User admin         = db.Users.Find(toPay.FiscalAdministratorId) ?? toPay;
+                int year           = DateTime.Now.Year;
+                Payment mostRecent = (from x in db.Payments
+                                      where x.Date.Year == year && x.UserId == admin.Id
+                                      orderby x.ReceiptCount descending
+                                      select x).FirstOrDefault();
+                int count          = mostRecent != null ? mostRecent.ReceiptCount + 1 : 1;
 
-            List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+                List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
 
+                PaymentData p      = new PaymentData();
+                p.User             = toPay;
+                p.Administrator    = admin;
+                p.Accreditations   = accreditations;
+                p.Gross            = p.Accreditations.Sum(x => x.GrossAmmount);
+                p.Net              = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Gross);
+                p.From             = accreditations.Min(x => x.DateFrom);
+                p.To               = accreditations.Max(x => x.DateTo);
+                p.PaymentMode      = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ToString();
+                p.ReceiptCount     = count;
 
-            PaymentData p       = new PaymentData();
-            p.User              = toPay;
-            p.Administrator     = admin;
-            p.Accreditations    = accreditations;
-            p.Gross             = p.Accreditations.Sum(x => x.GrossAmmount);
-            p.From              = accreditations.Min(x => x.DateFrom);
-            p.To                = accreditations.Max(x => x.DateTo);
-            p.ReceiptCounter    = 666 + 1;
-            //p.ReceiptCounter    = (from payment in db.Payments where payment.UserId == toPay.Id select payment.).Max(x => x.i)
+                return View(p);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
 
-            return View(p);
         }
 
         // POST: Payments/Create
@@ -67,26 +82,31 @@ namespace MegatubeV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int userId, int receiptCounter)
         {
-            User toPay = db.Users.Find(userId);
-            User admin = toPay.Administrator ?? toPay;
+            try
+            {
+                User toPay = db.Users.Find(userId);
+                User admin = toPay.Administrator ?? toPay;
 
-            List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
-            Payment p                          = new Payment();
-            p.Id                               = db.Payments.Max(x => x.Id) + 1;
-            p.DateFrom                         = accreditations.Min(x => x.DateFrom);
-            p.DateTo                           = accreditations.Max(x => x.DateTo);
-            p.Amount                           = 0;                            //accreditations.Sum(x => x.GrossAmmount); //deve essere gia tassato?
-            p.UserId                           = toPay.Id;
-            p.PaymentType                      = (byte)admin.PaymentMethod;    //(devo pagare l'amministratore fiscale o l'utente?)
+                List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
+                Payment p       = new Payment();
+                p.Id            = db.Payments.Max(x => x.Id) + 1;
+                p.DateFrom      = accreditations.Min(x => x.DateFrom);
+                p.DateTo        = accreditations.Max(x => x.DateTo);
+                p.Amount        = 0;                            
+                p.UserId        = toPay.Id;
+                p.PaymentType   = (byte)admin.PaymentMethod;
 
-            accreditations.ForEach(a => a.PaymentId = p.Id);
+                accreditations.ForEach(a => a.PaymentId = p.Id);
 
-            //Receipt receipt = new Receipt(admin, accreditations);
+                //Receipt receipt = new Receipt(admin, accreditations);
 
-            
-
-
-            return RedirectToAction("index", "PaymentAlerts");
+                return RedirectToAction("index", "PaymentAlerts");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
         }
 
 

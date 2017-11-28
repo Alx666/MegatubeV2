@@ -97,7 +97,7 @@
           <Property Name="PaymentType" Type="tinyint" Nullable="false" />
           <Property Name="DateFrom" Type="date" Nullable="false" />
           <Property Name="DateTo" Type="date" Nullable="false" />
-          <Property Name="Receipt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReceiptCount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentAlert">
           <Key>
@@ -508,9 +508,9 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="PaymentType" Type="Byte" Nullable="false" />
           <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Receipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Payment_ToUser" FromRole="Payment" ToRole="User" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
+          <Property Name="ReceiptCount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -956,6 +956,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="MegatubeV2Model.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="ReceiptCount" ColumnName="ReceiptCount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -963,7 +964,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
-                <ScalarProperty Name="Receipt" ColumnName="Receipt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

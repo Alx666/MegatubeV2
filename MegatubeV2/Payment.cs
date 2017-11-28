@@ -27,7 +27,7 @@ namespace MegatubeV2
         public byte PaymentType { get; set; }
         public System.DateTime DateFrom { get; set; }
         public System.DateTime DateTo { get; set; }
-        public string Receipt { get; set; }
+        public int ReceiptCount { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,6 +1,10 @@
 ﻿@model MegatubeV2.Models.PaymentData
 
-@using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { @class = "m-t-3", id = "paymentsCreate", enctype="multipart/form-data" }))
+@{
+    IPaymentMethod method = PaymentMethodFactory.GetMethodFromDBCode(Model.Administrator.PaymentMethod.Value);
+}
+
+@using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { @class = "m-t-3", id = "paymentsCreate", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -22,7 +26,7 @@
             <label class="col-xs-4 control-label">Payment mode</label>
             <div class="col-xs-8">
                 <p class="form-control-static">
-                    Not Implemented
+                    @method.ToString()
                 </p>
             </div>
         </div>
@@ -53,9 +57,6 @@
                         Gross
                     </th>
                     <th>
-                        Net
-                    </th>
-                    <th>
                         Date From
                     </th>
                     <th>
@@ -67,15 +68,22 @@
                 </tr>
             </thead>
             <tbody>
+
+
+
             @foreach (var item in Model.Accreditations)
             {
+                Accreditation.AccreditationMainType mainType    = (Accreditation.AccreditationMainType)item.Type;
+                Accreditation.AccreditationSubType subType      = (Accreditation.AccreditationSubType)item.SubType;
+                string mainTypeText                             = Accreditation.AccreditationMainTypeText(mainType);
+                string subTypeText                              = Accreditation.AccreditationSubTypeText(subType);
+
                 <tr>
-                    <td>Not Implemented</td>
+                    <td>@mainTypeText @item.Channel.Name</td>
                     <td>@item.GrossAmmount</td>
-                    <td>Not Implemented</td>
-                    <td>Not Implemented</td>
                     <td>@item.DateFrom.ToShortDateString()</td>
                     <td>@item.DateTo.ToShortDateString()</td>
+                    <td>@subTypeText</td>
                 </tr>
             }
             </tbody>
@@ -89,7 +97,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="hidden" name="userId" value="@Model.User.Id" />
-                <input type="text" name="receiptCounter" class="form-inline" style="width:60px" value="@Model.ReceiptCounter" />
+                <input type="text" name="receiptCounter" class="form-inline" style="width:60px" value="@Model.ReceiptCount" />
                 <input type="date" value="@currentDateStr" class="btn btn-default" />
                 <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-default">Upload</a>
             </div>
