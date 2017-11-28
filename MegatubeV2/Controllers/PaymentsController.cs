@@ -129,6 +129,7 @@ namespace MegatubeV2.Controllers
                 alert.Gross         = p.Accreditations.Sum(x => x.GrossAmmount);
                 alert.CreationDate  = p.DateFrom;
                 alert.UpdateDate    = DateTime.Now;
+                alert.UserId        = p.UserId;
 
                 if (p.User.PaymentMethod != null)
                     alert.Net       = PaymentMethodFactory.GetMethodFromDBCode(p.User.PaymentMethod.Value).ComputeNet(alert.Gross);
