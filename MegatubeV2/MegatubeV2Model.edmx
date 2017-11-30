@@ -92,12 +92,14 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Gross" Type="money" Nullable="false" />
+          <Property Name="Net" Type="money" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="PaymentType" Type="tinyint" Nullable="false" />
           <Property Name="DateFrom" Type="date" Nullable="false" />
           <Property Name="DateTo" Type="date" Nullable="false" />
           <Property Name="ReceiptCount" Type="int" Nullable="false" />
+          <Property Name="AdministratorId" Type="int" />
         </EntityType>
         <EntityType Name="PaymentAlert">
           <Key>
@@ -503,7 +505,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PaymentType" Type="Byte" Nullable="false" />
           <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
@@ -511,6 +512,9 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="User" Relationship="Self.FK_Payment_ToUser" FromRole="Payment" ToRole="User" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
           <Property Name="ReceiptCount" Type="Int32" Nullable="false" />
+          <Property Name="Gross" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Net" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="AdministratorId" Type="Int32" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -956,10 +960,12 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="MegatubeV2Model.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="AdministratorId" ColumnName="AdministratorId" />
+                <ScalarProperty Name="Net" ColumnName="Net" />
+                <ScalarProperty Name="Gross" ColumnName="Gross" />
                 <ScalarProperty Name="ReceiptCount" ColumnName="ReceiptCount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />

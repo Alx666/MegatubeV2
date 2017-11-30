@@ -57,13 +57,14 @@ namespace MegatubeV2
         public enum AccreditationMainType : byte
         {
             Traffic,
-            SuperChat
+            PaidFeatures
         }
 
         public enum AccreditationSubType : byte
         {
             Ownership,
             Recruiting,
+            Extra,
             NetworkPerformance
         }
 
@@ -72,7 +73,7 @@ namespace MegatubeV2
             switch (type)
             {
                 case AccreditationMainType.Traffic: return "Traffico su canale";
-                case AccreditationMainType.SuperChat: return "Accredito SuperChat";
+                case AccreditationMainType.PaidFeatures: return "Accredito SuperChat";
                 default: throw new Exception("Unknow Accreditation Type");
             }
         }

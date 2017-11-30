@@ -93,9 +93,11 @@ namespace MegatubeV2.Controllers
                 Payment p           = new Payment();
                 p.DateFrom          = accreditations.Min(x => x.DateFrom);
                 p.DateTo            = accreditations.Max(x => x.DateTo);
-                p.Amount            = accreditations.Sum(x => x.GrossAmmount);                            
+                p.Gross             = accreditations.Sum(x => x.GrossAmmount);
+                p.Net               = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Net);
                 p.UserId            = toPay.Id;
                 p.PaymentType       = (byte)admin.PaymentMethod;
+                p.AdministratorId   = toPay.Administrator.Id;
                 accreditations.ForEach(a => a.PaymentId = p.Id);
 
                 db.Payments.Add(p);
@@ -150,6 +152,27 @@ namespace MegatubeV2.Controllers
                 return View("Error");
             }
         }
+
+        // GET: Payments/Delete/5
+        public ActionResult DownloadReceipt(int? id)
+        {
+            try
+            {
+                Payment p = db.Payments.Find(id);
+
+                Receipt r = new Receipt(p);
+
+               
+                return RedirectToAction("index", "Payments");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

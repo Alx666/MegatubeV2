@@ -62,7 +62,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                @Html.DisplayNameFor(model => model.Gross)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Net)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -85,6 +88,9 @@
             <th>
 
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -92,7 +98,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                    @Html.DisplayFor(modelItem => item.Gross)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Net)
                 </td>
                 <td>
                     @item.Date.ToShortDateString()
@@ -115,6 +124,9 @@
 
                     }
                     @name
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "DownloadReceipt", "Payments", new { id = item.Id }, null)
                 </td>
                 <td>
                     @Html.ActionLink("Revert", "Revert", "Payments", new { id = item.Id }, null)
