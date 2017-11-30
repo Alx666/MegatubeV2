@@ -126,10 +126,14 @@
                     @name
                 </td>
                 <td>
-                    @Html.ActionLink("Download", "DownloadReceipt", "Payments", new { id = item.Id }, null)
+                    <a href="/Payments/DownloadReceipt/@item.Id" role="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-download-alt"></span> Download
+                    </a>
                 </td>
                 <td>
-                    @Html.ActionLink("Revert", "Revert", "Payments", new { id = item.Id }, null)
+                    <a href="/Payments/Revert/@item.Id" role="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span> Revert
+                    </a>
                 </td>
             </tr>
         }

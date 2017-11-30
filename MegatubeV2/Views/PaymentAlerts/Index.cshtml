@@ -48,7 +48,9 @@
                     @(item.User.LastName+" "+item.User.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Pay", "Create", "Payments", new { userId = item.UserId }, null)
+                    <a href="/Payments/Create?userId=@item.UserId" role="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-euro"></span> Pay
+                    </a>
                 </td>
             </tr>
         }

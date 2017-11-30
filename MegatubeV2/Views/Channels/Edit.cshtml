@@ -98,6 +98,7 @@
         }
     </div>
 </div>
+@*
 <div class="row m-t-3">
     <div class="col-lg-12 m-b-3">
         <!-- START Header -->
@@ -107,8 +108,8 @@
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                 <div class="btn-group" role="group" aria-label="...">
-                    @*<button type="button" class="btn btn-sm btn-default">Items Sold</button>
-                        <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
+                    @<button type="button" class="btn btn-sm btn-default">Items Sold</button>
+                        <button type="button" class="btn btn-sm btn-default">Revenue</button>@
                 </div>
             </div>
         </div>
@@ -118,6 +119,7 @@
         <!-- END Chart Higcharts -->
     </div>
 </div>
+*@
 <div class="row m-t-3">
     @*{
 
@@ -213,7 +215,7 @@
         $('.percentage').change(function () { checkErrors(); });
         $('#RecruiterId').change(function () { checkErrors(); });
 
-        Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
+        /*Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
             $(this).highcharts({
                 chart: {
                     type: 'column',
@@ -277,7 +279,7 @@
 
                 }]
             });
-        });
+        });*/
 
     });
     </script>
