@@ -33,6 +33,7 @@
         <AssociationConnector Association="MegatubeV2Model.FK_PaymentAlert_ToUser" />
         <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="3.375" PointY="18.625" />
         <AssociationConnector Association="MegatubeV2Model.FK_Table_ToUser" />
+        <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToUserAdministrator" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -331,6 +331,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Payment_ToUserAdministrator">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="AdministratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentAlert_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="PaymentAlert" Type="Self.PaymentAlert" Multiplicity="*" />
@@ -451,6 +463,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="User" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToUserAdministrator" Association="Self.FK_Payment_ToUserAdministrator">
+            <End Role="User" EntitySet="User" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
           <AssociationSet Name="FK_PaymentAlert_ToUser" Association="Self.FK_PaymentAlert_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="PaymentAlert" EntitySet="PaymentAlert" />
@@ -515,6 +531,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="Gross" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Net" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="AdministratorId" Type="Int32" />
+          <NavigationProperty Name="User1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="Payment" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -568,6 +585,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
           <NavigationProperty Name="PaymentAlerts" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="User" ToRole="PaymentAlert" />
           <NavigationProperty Name="Contracts" Relationship="MegatubeV2Model.FK_Table_ToUser" FromRole="User" ToRole="Contract" />
+          <NavigationProperty Name="Payments1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="User" ToRole="Payment" />
         </EntityType>
         <Association Name="FK_ChannelOwner_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
@@ -711,6 +729,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_Table_ToUser" Association="MegatubeV2Model.FK_Table_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToUserAdministrator" Association="MegatubeV2Model.FK_Payment_ToUserAdministrator">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Network">
@@ -923,6 +945,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Principal>
             <Dependent Role="Contract">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_ToUserAdministrator">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="MegatubeV2Model.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="AdministratorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

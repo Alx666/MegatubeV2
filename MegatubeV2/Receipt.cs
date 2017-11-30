@@ -23,19 +23,19 @@ namespace MegatubeV2
                     {
                         //hDocument.Open();
 
+                        //User receiver = payment.Administrator 
+
                         //IPaymentMethod hPayMethod = PaymentMethodFactory.GetMethodFromDBCode(payment.User.PaymentMethod.Value);
 
-                        //string sDateFrom        = payment.DateFrom.ToString(@"dd MM yyyy");
-                        //string sDateTo          = payment.DateTo.ToString(@"dd MM yyyy");
-                        //string sDateToday       = DateTime.Today.ToString(@"dd MM yyyy");
-
-                        
+                        //string sDateFrom    = payment.DateFrom.ToString(@"dd MM yyyy");
+                        //string sDateTo      = payment.DateTo.ToString(@"dd MM yyyy");
+                        //string sDateToday   = DateTime.Today.ToString(@"dd MM yyyy");
 
                         //string sUserName        = !string.IsNullOrEmpty(hUser.TutorName) ? hUser.TutorName : hUser.Name;
                         //string sUserSurname     = !string.IsNullOrEmpty(hUser.TutorSurname) ? hUser.TutorSurname : hUser.Surname;
                         //string sUserFullAddress = !string.IsNullOrEmpty(hUser.TutorFullAddress) ? hUser.TutorFullAddress : hUser.Full_Address;
-                        //string sUserPIVAOVAT = !string.IsNullOrEmpty(hUser.TutorPIVAORVAT) ? hUser.TutorPIVAORVAT : hUser.PIVAORVAT;
-                        //string sPostalCode = !string.IsNullOrEmpty(hUser.TutorPostalCode) ? hUser.TutorPostalCode : hUser.PostalCode;
+                        //string sUserPIVAOVAT    = !string.IsNullOrEmpty(hUser.TutorPIVAORVAT) ? hUser.TutorPIVAORVAT : hUser.PIVAORVAT;
+                        //string sPostalCode      = !string.IsNullOrEmpty(hUser.TutorPostalCode) ? hUser.TutorPostalCode : hUser.PostalCode;
 
                         //float fTotalGross = float.Parse(TextTotalGross.Text);
                         //float fTotalNet = float.Parse(TextTotalNet.Text);
@@ -53,9 +53,9 @@ namespace MegatubeV2
                         //                    "[Rows]" +
                         //                "</table>";
 
-                        //List<Accreditation> hAccPart    = hAccreditations.Where(x => x.Type == 0).ToList();
-                        //List<Accreditation> hAccRec     = hAccreditations.Where(x => x.Type == 1).ToList();
-                        //List<Accreditation> hAccExtra   = hAccreditations.Where(x => x.Type == 2).ToList();
+                        //List<Accreditation> hAccPart = hAccreditations.Where(x => x.Type == 0).ToList();
+                        //List<Accreditation> hAccRec = hAccreditations.Where(x => x.Type == 1).ToList();
+                        //List<Accreditation> hAccExtra = hAccreditations.Where(x => x.Type == 2).ToList();
 
                         //if (hAccPart.Count > 0)
                         //{
