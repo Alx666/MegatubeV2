@@ -34,6 +34,6 @@ namespace MegatubeV2
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
-        public virtual User User1 { get; set; }
+        public virtual User Administrator { get; set; }
     }
 }

@@ -89,5 +89,13 @@ namespace MegatubeV2
             }
         }
 
+        public string ToString(string channelName)
+        {
+            string mainType = AccreditationMainTypeText((AccreditationMainType)this.Type);
+            string subType = AccreditationMainTypeText((AccreditationMainType)this.SubType);
+
+            return $"{mainType} {channelName} {subType}";
+        }
+
     }
 }

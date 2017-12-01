@@ -97,7 +97,10 @@ namespace MegatubeV2.Controllers
                 p.Net               = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Net);
                 p.UserId            = toPay.Id;
                 p.PaymentType       = (byte)admin.PaymentMethod;
-                p.AdministratorId   = toPay.Administrator.Id;
+
+                if(toPay.Administrator != null)
+                    p.AdministratorId   = toPay.Administrator.Id;
+
                 accreditations.ForEach(a => a.PaymentId = p.Id);
 
                 db.Payments.Add(p);

@@ -531,7 +531,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="Gross" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Net" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="AdministratorId" Type="Int32" />
-          <NavigationProperty Name="User1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="Payment" ToRole="User" />
+          <NavigationProperty Name="Administrator" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="Payment" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
