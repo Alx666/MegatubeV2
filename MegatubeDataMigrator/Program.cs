@@ -16,13 +16,14 @@ namespace MegatubeDataMigrator
         {
             if (confirm)
             {
+                
                 Console.Write("\nAre you sure?> ");
                 if (Console.ReadLine() != "y")
                     return;
             }
 
             Console.Write($"Dropping {dataset.Count()} {dataset.GetType().GetGenericArguments()[0].Name}...");
-            dataset.RemoveRange(dataset);
+            dataset.RemoveRange(dataset);            
             Console.WriteLine("Done");
         }
 
@@ -33,19 +34,27 @@ namespace MegatubeDataMigrator
             Console.WriteLine($"{dataset.Count()} records");
         }
 
-        private void MigrateTable<T, K>(DbSet<T> source, DbSet<K> dest, Func<T, K> mapper)
+        private void MigrateTable<T, K>(IEnumerable<T> source, DbSet<K> dest, Func<T, K> mapper, MegatubeV2Entities db, Action<int,int,K> OnSave)
             where T : class
             where K : class
-        {
-            ConcurrentQueue<K> queue = new ConcurrentQueue<K>();
+        {            
+            List<T> records = source.ToList();
 
-            source.AsParallel().ForAll(t =>
+            for (int i = 0; i < records.Count; i++)
             {
-                K newRecord = mapper.Invoke(t);
-                queue.Enqueue(newRecord);
-            });
-
-            dest.AddRange(queue.ToList());
+                try
+                {
+                    K newRecord = mapper.Invoke(records[i]);
+                    dest.Add(newRecord);
+                    db.SaveChanges();
+                    OnSave(i + 1, records.Count, newRecord);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.ReadLine();
+                }
+            }
         }
 
 
@@ -57,6 +66,7 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
                 DropTable(db.PaymentAlerts);
+                db.SaveChanges();
             }
         }
 
@@ -79,6 +89,7 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
                 DropTable(db.Payments);
+                db.SaveChanges();
             }
         }
 
@@ -101,6 +112,7 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
                 DropTable(db.Accreditations);
+                db.SaveChanges();
             }
         }
 
@@ -108,7 +120,7 @@ namespace MegatubeDataMigrator
         public void EnumerateAccreditations()
         {
             using (MegatubeV2Entities db = new MegatubeV2Entities())
-            {
+            {                
                 EnumerateTable(db.Accreditations);
             }
         }
@@ -123,6 +135,7 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
                 DropTable(db.DataFiles);
+                db.SaveChanges();
             }
         }
 
@@ -162,11 +175,14 @@ namespace MegatubeDataMigrator
         #region Users
 
         [ConsoleUIMethod]
-        public void DropUsers()
+        public void DropUser(int id)
         {
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
-                DropTable(db.Users);
+                ModelNew.User u = db.Users.Find(id);
+                u.AdministrratorOf.Clear();
+                db.Users.Remove(u);
+                db.SaveChanges();
             }
         }
 
@@ -212,18 +228,28 @@ namespace MegatubeDataMigrator
                             record.RegistrationDate = DateTime.Now;
 
                         return record;
-                    });
+                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
                 }
             }
         }
 
+        [ConsoleUIMethod]
         public void MigrateTutors()
         {
             using (MegatubeV2Entities newDb = new MegatubeV2Entities())
             {
                 using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
                 {
-                    MigrateTable((DbSet<ModelOld.User>)oldDb.Users.Where(x => x.TutorIban != null), newDb.Users, t => 
+                    MigrateTable(oldDb.Users.Where(x => 
+                        !string.IsNullOrWhiteSpace(x.TutorIban) || 
+                        !string.IsNullOrWhiteSpace(x.TutorName) || 
+                        !string.IsNullOrWhiteSpace(x.TutorSurname) || 
+                        x.TutorBirthDate.HasValue || 
+                        !string.IsNullOrWhiteSpace(x.TutorBirthPlace)|| 
+                        !string.IsNullOrWhiteSpace(x.TutorBICSWIFT)|| 
+                        !string.IsNullOrWhiteSpace(x.TutorPostalCode)|| 
+                        !string.IsNullOrWhiteSpace(x.TutorPIVAORVAT)|| 
+                        !string.IsNullOrWhiteSpace(x.TutorFullAddress)), newDb.Users, t =>
                     {
                         ModelNew.User admin           = new ModelNew.User();
                         admin.Id                      = newDb.Users.Max(x => x.Id) + 1;
@@ -236,14 +262,17 @@ namespace MegatubeDataMigrator
                         admin.BICSWIFT                = t.TutorBICSWIFT;
                         admin.Name                    = t.TutorName;
                         admin.LastName                = t.TutorSurname;
-
+                        
                         ModelNew.User partner         = newDb.Users.Find(t.Id);
                         partner.FiscalAdministratorId = admin.Id;
+                        admin.RegistrationDate        = partner.RegistrationDate;
 
                         return admin;
-                    });
+                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
                 }
             }
+
+            Console.WriteLine("WARNING: Check for bad User Records (Some had whitespaces in fields)");
         }
 
         #endregion
@@ -260,12 +289,15 @@ namespace MegatubeDataMigrator
                 if (Console.ReadLine() != "y")
                     return;
 
-                DropTable(db.PaymentAlerts, false);
-                DropTable(db.Payments, false);
-                DropTable(db.Accreditations, false);
-                DropTable(db.DataFiles, false);
-                DropTable(db.Notes, false);
-                DropTable(db.Users, false);
+                db.Database.ExecuteSqlCommand("delete [PaymentAlert]");
+                db.Database.ExecuteSqlCommand("delete [Accreditation]");
+                db.Database.ExecuteSqlCommand("delete [Payment]");
+                db.Database.ExecuteSqlCommand("delete [DataFile]");
+                db.Database.ExecuteSqlCommand("delete [Note]");
+                db.Database.ExecuteSqlCommand("delete [Channel]");
+                //db.Database.ExecuteSqlCommand("delete [User]");
+
+                Console.WriteLine("Done!");
             }
         }
 
@@ -278,14 +310,3 @@ namespace MegatubeDataMigrator
         }
     }
 }
-                            //ModelNew.User admin = new ModelNew.User();
-                            //admin.FullAddress   = t.TutorFullAddress;
-                            //admin.CompanyName   = t.TutorCompanyName;
-                            //admin.CompanyKind   = t.TutorCompanyKind;
-                            //admin.IBAN          = t.TutorIban;
-                            //admin.PIVAorVAT     = t.TutorPIVAORVAT;
-                            //admin.PostalCode    = t.TutorPostalCode;
-                            //admin.BICSWIFT      = t.TutorBICSWIFT;
-                            //admin.Name          = t.TutorName;
-                            //admin.LastName      = t.TutorSurname;
-                            //result.Add(admin);
