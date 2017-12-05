@@ -289,3 +289,4 @@ __pycache__/
 
 Web.config
 /CsvProcessing
+/MegatubeDataMigrator/App.config
