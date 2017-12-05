@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="27db1c04df9440c3b6895c650de5c517" Name="Diagram1">
+        <EntityTypeShape EntityType="MegatubeModelOld.Accreditation" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Channel" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.ChannelOwnership" Width="1.5" PointX="7.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.ChannelRecruiting" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.ChannelReport" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Contract" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.CustomOwner" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Genre" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Manager" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Network" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Notification" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Partner" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Payment" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.Recruiter" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.User" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.UserMontlyEarning" Width="1.5" PointX="5.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeModelOld.UserPendingRegistration" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Accreditation_ToChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Accreditation_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_ChannelOwnership_ToChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_ChannelRecruiting_ToChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_ChannelReport_ToChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_ChannelOwnership_ToPartner" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_ChannelRecruiting_ToPartner" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_CustomOwner_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Manager_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_User_ToNetwork" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Partner_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Payment_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_Recruiter_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.FK_UserMontlyEarnings_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MegatubeModelOld.UserContract" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

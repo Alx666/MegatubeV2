@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD4379B6-168F-4AEB-B801-F3F5A51E364B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MegatubeDataMigrator</RootNamespace>
+    <AssemblyName>MegatubeDataMigrator</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleUI.cs" />
+    <Compile Include="ModelNew\Accreditation.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Channel.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Contract.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\DataFile.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\ModelNew.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNew.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\ModelNew.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\ModelNew.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNew.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Note.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Payment.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\PaymentAlert.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Role.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\sp_helpdiagrams_Result.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\sysdiagram.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\User.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\ViewChannel.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\ViewNote.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Accreditation.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Channel.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\ChannelOwnership.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\ChannelRecruiting.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\ChannelReport.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Contract.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\CustomOwner.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Genre.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Manager.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Network.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Notification.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\OldModle.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OldModle.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\OldModle.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\OldModle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OldModle.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Partner.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Payment.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\Recruiter.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\User.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\UserMontlyEarning.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelOld\UserPendingRegistration.cs">
+      <DependentUpon>OldModle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="ModelOld\OldModle.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OldModle.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="ModelNew\ModelNew.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelNew.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelNew\ModelNew.edmx.diagram">
+      <DependentUpon>ModelNew.edmx</DependentUpon>
+    </None>
+    <None Include="ModelOld\OldModle.edmx.diagram">
+      <DependentUpon>OldModle.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ModelNew\ModelNew.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNew.edmx</DependentUpon>
+      <LastGenOutput>ModelNew.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelNew\ModelNew.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNew.edmx</DependentUpon>
+      <LastGenOutput>ModelNew.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelOld\OldModle.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OldModle.Context.cs</LastGenOutput>
+      <DependentUpon>OldModle.edmx</DependentUpon>
+    </Content>
+    <Content Include="ModelOld\OldModle.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OldModle.edmx</DependentUpon>
+      <LastGenOutput>OldModle.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
