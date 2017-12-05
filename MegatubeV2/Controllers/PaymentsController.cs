@@ -163,7 +163,7 @@ namespace MegatubeV2.Controllers
             {
                 Payment p = db.Payments.Find(id);
 
-                Receipt r = new Receipt(p);
+                //Receipt r = new Receipt(p);
 
                
                 return RedirectToAction("index", "Payments");

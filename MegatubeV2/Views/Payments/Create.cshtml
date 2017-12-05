@@ -107,7 +107,7 @@
         
         @{ 
             DateTime currentDate = DateTime.Today;
-            string currentDateStr = currentDate.Year.ToString() + "-" + currentDate.Month.ToString() + "-" + currentDate.Day.ToString();
+            string currentDateStr = currentDate.ToString("yyyy-MM-dd");//.Year.ToString("YYYY") + "-" + currentDate.Month.ToString("MM") + "-" + currentDate.Day.ToString("dd");
 
         }
         <div class="form-group">
@@ -115,7 +115,7 @@
                 <input type="hidden" name="userId" value="@Model.User.Id" />
                 <input type="text" name="receiptCounter" class="form-inline" style="width:60px" value="@Model.ReceiptCount" />
                 <input type="date" value="@currentDateStr" class="btn btn-default" />
-                <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-default">Upload</a>
+                <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-default">Proceed</a>
             </div>
         </div>
     </div>
