@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    string[] ViewTypeArr = { "Associated", "Not associated", "Not active" };
+    int selectedViewType = 0;
 }
 
 @*https://stackoverflow.com/questions/19819597/datatables-setting-column-width*@
@@ -15,7 +17,37 @@
     });
 </script>
 
-<h2>Index</h2>
+<div class="row">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Show me:</label>
+            <div class="col-sm-5">
+                <select class="form-control" name="m">
+                    @{
+                        string selected = "";
+                        for (int i = 0; i < ViewTypeArr.Length; i++)
+                        {
+
+                            if (i == selectedViewType)
+                            {
+                                selected = "selected";
+                            }
+                            else
+                            {
+                                selected = "";
+                            }
+                            @Html.Raw("<option value=\"" + (i) + "\"" + selected + ">" + ViewTypeArr[i] + "</option>");
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+
+        </div>
+    </form>
+</div>
 
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
