@@ -82,6 +82,7 @@
     <Compile Include="ModelNew\Note.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelNew\PartialUser.cs" />
     <Compile Include="ModelNew\Payment.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
