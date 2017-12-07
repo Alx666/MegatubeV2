@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleUI.cs" />
+    <Compile Include="IPaymentMethod.cs" />
     <Compile Include="ModelNew\Accreditation.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
@@ -176,6 +177,11 @@
     <Compile Include="ModelOld\UserPendingRegistration.cs">
       <DependentUpon>OldModle.tt</DependentUpon>
     </Compile>
+    <Compile Include="PaymentMethodCessioneDirittiOver35.cs" />
+    <Compile Include="PaymentMethodCessioneDirittiUnder35.cs" />
+    <Compile Include="PaymentMethodFactory.cs" />
+    <Compile Include="PaymentMethodInvoice.cs" />
+    <Compile Include="PaymentMethodNettoPariALordo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

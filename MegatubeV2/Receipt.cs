@@ -45,7 +45,7 @@ namespace MegatubeV2
 
                         List<Accreditation> ownershipCredits    = payment.Accreditations.Where(a => (Accreditation.AccreditationSubType)a.SubType == Accreditation.AccreditationSubType.Ownership).ToList();
                         List<Accreditation> recruitingCredits   = payment.Accreditations.Where(a => (Accreditation.AccreditationSubType)a.SubType == Accreditation.AccreditationSubType.Recruiting).ToList();
-                        List<Accreditation> extraCredits        = payment.Accreditations.Where(a => (Accreditation.AccreditationSubType)a.SubType == Accreditation.AccreditationSubType.Extra).ToList();
+                        List<Accreditation> extraCredits        = payment.Accreditations.Where(a => (Accreditation.AccreditationSubType)a.SubType == Accreditation.AccreditationSubType.Manual).ToList();
 
 
                         if (ownershipCredits.Count > 0)

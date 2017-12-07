@@ -56,16 +56,17 @@ namespace MegatubeV2
 
         public enum AccreditationMainType : byte
         {
-            Traffic,
-            PaidFeatures
+            Traffic             = 0,
+            PaidFeatures        = 1,
+            Extra               = 2,
         }
 
         public enum AccreditationSubType : byte
         {
-            Ownership,
-            Recruiting,
-            Extra,
-            NetworkPerformance
+            Ownership           = 0,
+            Recruiting          = 1,            
+            Manual              = 2,
+            NetworkPerformance  = 3
         }
 
         public static string AccreditationMainTypeText(AccreditationMainType type)

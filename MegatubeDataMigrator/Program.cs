@@ -88,8 +88,13 @@ namespace MegatubeDataMigrator
         {
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
-                DropTable(db.Payments);
-                db.SaveChanges();
+                Console.Write("\nAre you sure?> ");
+                if (Console.ReadLine() != "y")
+                    return;
+
+                db.Database.ExecuteSqlCommand("delete [Payment]");                
+
+                Console.WriteLine("Done!");
             }
         }
 
@@ -102,6 +107,35 @@ namespace MegatubeDataMigrator
             }
         }
 
+        [ConsoleUIMethod]
+        public void MigratePayment()
+        {
+            using (MegatubeV2Entities newDb = new MegatubeV2Entities())
+            {
+                using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
+                {
+                    MigrateTable(oldDb.Payments, newDb.Payments, t =>
+                    {
+                        ModelNew.Payment record = new ModelNew.Payment();
+                        record.Id = t.Id;
+                        record.DateFrom = t.DateFrom;
+                        record.DateTo = t.DateTo;
+                        record.Date = t.Date;
+                        record.Gross = t.Amount;
+                        record.Net = PaymentMethodFactory.GetNetFromGrossF((short)t.PaymentType, record.Gross);
+                        record.PaymentType = t.PaymentType;
+                        record.ReceiptCount = 0;
+                        record.UserId = t.UserId;
+                        record.AdministratorId = newDb.Users.Find(record.UserId).FiscalAdministratorId;
+                        
+                        
+                        return record;
+
+                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                }
+            }
+        }
+
         #endregion
 
         #region Accreditations
@@ -111,8 +145,12 @@ namespace MegatubeDataMigrator
         {
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
-                DropTable(db.Accreditations);
-                db.SaveChanges();
+                Console.Write("\nAre you sure?> ");
+                if (Console.ReadLine() != "y")
+                    return;
+
+                db.Database.ExecuteSqlCommand("delete [Accreditation]");
+                Console.WriteLine("Done!");
             }
         }
 
@@ -122,6 +160,55 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {                
                 EnumerateTable(db.Accreditations);
+            }
+        }
+        [ConsoleUIMethod]
+        public void MigrateAccreditations()
+        {
+            using (MegatubeV2Entities newDb = new MegatubeV2Entities())
+            {
+                using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
+                {
+                    var mapping = new Dictionary<int, Tuple<byte, byte>>
+                    {
+                        { 0, new Tuple<byte, byte>(0, 0) }, //Traffic, Ownership
+                        { 1, new Tuple<byte, byte>(0, 1) }, //Traffic, Recruiting
+                        { 2, new Tuple<byte, byte>(2, 2) }, //Custom Accreditation
+                        { 3, new Tuple<byte, byte>(1, 0) }, //Paid-Features Ownership
+                        { 4, new Tuple<byte, byte>(1, 1) }  //Paid-Features Recruiting
+                    };
+
+
+                    //var accrUser = (from a in oldDb.Accreditations
+                    //                where !a.Payed
+                    //                group a by a.UserId into g
+                    //                select new
+                    //                {
+                    //                    UserId = g.Key,
+                    //                    PFO = g.Where(x => x.Type == 3).ToList(),
+                    //                    PFR = g.Where(x => x.Type == 4).ToList(),
+                    //                    TO = g.Where(x => x.Type == 0).ToList(),
+                    //                    TR = g.Where(x => x.Type == 1).ToList()
+                    //                }).ToList();
+
+
+
+                    MigrateTable(oldDb.Accreditations.Where(x => !x.Payed), newDb.Accreditations, t =>
+                    {
+                        ModelNew.Accreditation record = new ModelNew.Accreditation();
+                        record.Id = t.Id;
+                        record.DateFrom = t.DateFrom;
+                        record.DateTo = t.DateTo;
+                        record.ChannelId = t.ChannelId;
+                        record.GrossAmmount = t.GrossAmmount;
+                        record.UserId = t.UserId;
+                        record.Type = mapping[t.Type].Item1;
+                        record.SubType = mapping[t.Type].Item2;
+                        record.PaymentId = null;
+                        return record;
+
+                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                }
             }
         }
 
@@ -277,6 +364,63 @@ namespace MegatubeDataMigrator
 
         #endregion
 
+        #region Channel
+
+        [ConsoleUIMethod]
+        public void EnumerateChannels()
+        {
+            using (MegatubeV2Entities db = new MegatubeV2Entities())
+            {
+                EnumerateTable(db.Channels);
+            }
+        }
+
+        [ConsoleUIMethod]
+        public void MigrateChannels()
+        {
+            using (MegatubeV2Entities newDb = new MegatubeV2Entities())
+            {
+                using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
+                {
+                    MigrateTable(oldDb.Channels, newDb.Channels, t =>
+                    {
+                        ModelNew.Channel record = new ModelNew.Channel();
+                        record.Id               = t.Id;
+                        record.Name             = t.Name;
+                        record.OwnerId          = t.ChannelOwnership != null ? (int?)t.ChannelOwnership.PartnerId : null;
+                        record.RecruiterId      = t.ChannelRecruiting != null ? (int?)t.ChannelRecruiting.RecruiterId : null;
+                        record.RegistrationDate = t.RegistrationDate;
+                        record.IsActive         = true;
+                        record.LatestActivity   = DateTime.Now;
+                        record.PercentMegatube  = t.PercentMegatube;
+                        record.PercentOwner     = t.ChannelOwnership != null ? t.ChannelOwnership.PercentPartner : 0.0;
+                        record.PercentRecruiter = t.ChannelRecruiting != null ? t.ChannelRecruiting.PercentRecruiter : 0.0;
+
+                        return record;
+                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                }
+            }
+        }
+        #endregion
+
+        //var item = (Mixer.GetType().GetProperty("exposedParameters").GetValue(Mixer, null) as IEnumerable<object>).Select(x => new Parameter(x.GetType().GetField("name").GetValue(x) as string, Mixer))
+
+        //public enum AccreditationMainType : byte
+        //{
+        //    Traffic = 0,
+        //    PaidFeatures = 1
+        //    Extra = 2,
+        //}
+
+        //public enum AccreditationSubType : byte
+        //{
+        //    Ownership = 0,
+        //    Recruiting = 1,
+        //    Manual = 2,
+        //    NetworkPerformance = 3
+        //}
+
+   
 
         #region FullProcedures
 

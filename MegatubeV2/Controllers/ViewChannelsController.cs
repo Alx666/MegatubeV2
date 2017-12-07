@@ -17,11 +17,11 @@ namespace MegatubeV2.Controllers
         // GET: ViewChannels
         public ActionResult Index(bool referenced = true, bool active = false)
         {
-            var res = (from c in db.ViewChannels
-                      where ((referenced && c.OwnerId != null) || (!referenced && c.OwnerId == null)) && c.IsActive == active                      
-                      select c).OrderBy(c => c.Name);
+            //var res = (from c in db.ViewChannels
+            //          where ((referenced && c.OwnerId != null) || (!referenced && c.OwnerId == null)) && c.IsActive == active                      
+            //          select c).OrderBy(c => c.Name);
                       
-            return View(res);
+            return View(db.ViewChannels);
         }
     
         protected override void Dispose(bool disposing)
