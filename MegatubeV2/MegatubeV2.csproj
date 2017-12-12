@@ -163,6 +163,7 @@
     </Compile>
     <Compile Include="ProcessingType.cs" />
     <Compile Include="Receipt.cs" />
+    <Compile Include="Sepa.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
     <Compile Include="IOperation.cs" />

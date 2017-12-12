@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MegatubeV2;
+using System.Text;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace MegatubeV2.Controllers
 {
@@ -21,10 +24,24 @@ namespace MegatubeV2.Controllers
             return View(paymentAlerts);
         }
 
-
+        [HttpPost]
         public ActionResult GenerateSepa(List<int> ids)
         {
-            throw new NotImplementedException();
+            PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.Id)).ToArray();
+
+            XmlSerializer serializer    = new XmlSerializer(typeof(Sepa));
+            Sepa document = new Sepa("INPUT REQUIRED FOR MsgId", "Company Name Here", "NationCode", DateTime.Now, "CUC", "EMITTER IBAN", toPay, "REASON" );
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                serializer.Serialize(ms, document);
+
+                return File(Encoding.UTF8.GetBytes(Encoding.UTF8.GetString(ms.GetBuffer())), "text/html");
+            }
+                
+            
+
+            
         }
     
 
