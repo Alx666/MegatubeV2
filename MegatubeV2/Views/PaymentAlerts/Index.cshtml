@@ -2,14 +2,21 @@
 
 @{
     ViewBag.Title = "Index";
-
 }
 
 
 
+@using (Html.BeginForm("GenerateSepa", "PaymentAlerts", FormMethod.Post, new { @class = "m-t-3", id = "payAlerts", enctype = "multipart/form-data" }))
+{
 <table class="table" id="alertsTable">
     <thead>
         <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Gross)
             </th>
@@ -22,9 +29,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.UpdateDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.Name)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,6 +36,12 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <input name="ids" type="checkbox" value="@item.UserId" />
+                </td>
+                <td>
+                    @(item.User.LastName + " " + item.User.Name)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Gross)
                 </td>
@@ -43,9 +53,6 @@
                 </td>
                 <td>
                     @item.UpdateDate.ToShortDateString()
-                </td>
-                <td>
-                    @(item.User.LastName + " " + item.User.Name)
                 </td>
                 <td>
                     @if ((item.User.FiscalAdministratorId != null && item.User.Administrator.PaymentMethod != null) || (item.User.FiscalAdministratorId == null && item.User.PaymentMethod != null))
@@ -64,6 +71,13 @@
     </tbody>
 
 </table>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href="javasctipt:{}" onclick="$('#payAlerts').submit(); return false;" role="button" class="btn btn-default">Pay selected</a>
+    </div>
+</div>
+
+}
 <script language="javascript">
 
     $(document).ready(function () {

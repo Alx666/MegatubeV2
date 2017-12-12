@@ -25,7 +25,7 @@ namespace MegatubeV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateSepa(List<int> ids)
+        public ActionResult GenerateSepa(int[] ids)
         {
             PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.Id)).ToArray();
 

@@ -62,13 +62,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                Receiver
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Gross)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Net)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PaymentType)
@@ -83,9 +86,6 @@
                 @Html.DisplayNameFor(model => model.ReceiptCount)
             </th>
             <th>
-                Receiver
-            </th>
-            <th>
 
             </th>
             <th>
@@ -98,13 +98,20 @@
         {
             <tr>
                 <td>
+                    @item.Date.ToShortDateString()
+                </td>
+                <td>
+                    @{
+                        string name = item.User.LastName + @" " + @item.User.Name;
+
+                    }
+                    @name
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Gross)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Net)
-                </td>
-                <td>
-                    @item.Date.ToShortDateString()
                 </td>
                 <td>
                     @{
@@ -122,14 +129,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ReceiptCount)
                 </td>
-                <td>
-                    @{
-                        string name = item.User.LastName + @" " + @item.User.Name;
-
-                    }
-                    @name
-                </td>
-
                 @{ 
                     bool fullData = item.Accreditations.Count > 0;
 
