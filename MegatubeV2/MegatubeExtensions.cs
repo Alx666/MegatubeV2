@@ -39,6 +39,7 @@ namespace MegatubeV2
                 p.Net           = p.Gross;
 
                 db.PaymentAlerts.Add(p);
+                db.SaveChanges();
             }
         }
     }

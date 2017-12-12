@@ -45,12 +45,19 @@
                     @item.UpdateDate.ToShortDateString()
                 </td>
                 <td>
-                    @(item.User.LastName+" "+item.User.Name)
+                    @(item.User.LastName + " " + item.User.Name)
                 </td>
                 <td>
-                    <a href="/Payments/Create?userId=@item.UserId" role="button" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-euro"></span> Pay
-                    </a>
+                    @if ((item.User.FiscalAdministratorId != null && item.User.Administrator.PaymentMethod != null) || (item.User.FiscalAdministratorId == null && item.User.PaymentMethod != null))
+                    {
+                        <a href="/Payments/Create?userId=@item.UserId" role="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-euro"></span> Pay
+                        </a>
+                    }
+                    else
+                    {
+                        <p>Missing Payment Method</p>
+                    }
                 </td>
             </tr>
         }

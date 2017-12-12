@@ -17,10 +17,15 @@ namespace MegatubeV2.Controllers
         // GET: PaymentAlerts
         public ActionResult Index()
         {
-            var paymentAlerts = db.PaymentAlerts.Include(p => p.User);
-            return View(paymentAlerts.ToList());
+            var paymentAlerts = db.PaymentAlerts.ToList();
+            return View(paymentAlerts);
         }
 
+
+        public ActionResult GenerateSepa(List<int> ids)
+        {
+            throw new NotImplementedException();
+        }
     
 
         protected override void Dispose(bool disposing)

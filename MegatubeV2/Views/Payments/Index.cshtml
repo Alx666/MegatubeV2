@@ -107,7 +107,11 @@
                     @item.Date.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PaymentType)
+                    @{
+                        string paymentType = PaymentMethodFactory.GetMethodFromDBCode(item.PaymentType).ToString();
+                     }
+
+                    @paymentType
                 </td>
                 <td>
                     @item.DateFrom.ToShortDateString()
@@ -125,15 +129,27 @@
                     }
                     @name
                 </td>
+
+                @{ 
+                    bool fullData = item.Accreditations.Count > 0;
+
+                }
+
                 <td>
-                    <a href="/Payments/DownloadReceipt/@item.Id" role="button" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-download-alt"></span> Download
-                    </a>
+                    @if (fullData)
+                    {
+                        <a href="/Payments/DownloadReceipt/@item.Id" role="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-download-alt"></span> Download
+                        </a>
+                    }
                 </td>
                 <td>
-                    <a href="/Payments/Revert/@item.Id" role="button" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-trash"></span> Revert
-                    </a>
+                    @if (fullData)
+                    {
+                        <a href="/Payments/Revert/@item.Id" role="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span> Revert
+                        </a>
+                    }
                 </td>
             </tr>
         }

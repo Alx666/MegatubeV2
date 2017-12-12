@@ -34,6 +34,12 @@ namespace MegatubeV2.Controllers
             }
         }
 
+        public ActionResult UpdatePaymentAlerts()
+        {
+            db.UpdatePaymentAlerts();
+            return RedirectToAction("Index", "PaymentAlerts");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

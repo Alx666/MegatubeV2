@@ -308,6 +308,7 @@ namespace MegatubeDataMigrator
                         record.PIVAorVAT            = t.PIVAORVAT;
                         record.PostalCode           = t.PostalCode;
                         record.Skype                = t.Skype;
+                        record.PaymentMethod        = t.PaymentMethod;
 
                         if (t.Payments.Count() > 0)
                             record.RegistrationDate = t.Payments.Min(x => x.Date);
@@ -349,6 +350,7 @@ namespace MegatubeDataMigrator
                         admin.BICSWIFT                = t.TutorBICSWIFT;
                         admin.Name                    = t.TutorName;
                         admin.LastName                = t.TutorSurname;
+                        admin.PaymentMethod           = t.PaymentMethod;
                         
                         ModelNew.User partner         = newDb.Users.Find(t.Id);
                         partner.FiscalAdministratorId = admin.Id;

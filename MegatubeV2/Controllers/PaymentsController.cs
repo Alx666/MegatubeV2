@@ -19,7 +19,7 @@ namespace MegatubeV2.Controllers
         public ActionResult Index()
         {
             //var result = from p in db.Payments ord
-            var payments = db.Payments.Include(p => p.User);
+            var payments = db.Payments.Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
             return View(payments.ToList());
         }
 
@@ -97,6 +97,7 @@ namespace MegatubeV2.Controllers
                 p.Net               = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Net);
                 p.UserId            = toPay.Id;
                 p.PaymentType       = (byte)admin.PaymentMethod;
+                p.Date              = DateTime.Now;
 
                 if(toPay.Administrator != null)
                     p.AdministratorId   = toPay.Administrator.Id;
