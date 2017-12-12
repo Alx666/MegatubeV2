@@ -27,21 +27,20 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         public ActionResult GenerateSepa(int[] ids)
         {
-            PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.Id)).ToArray();
+            PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();
 
             XmlSerializer serializer    = new XmlSerializer(typeof(Sepa));
-            Sepa document = new Sepa("INPUT REQUIRED FOR MsgId", "Company Name Here", "NationCode", DateTime.Now, "CUC", "EMITTER IBAN", toPay, "REASON" );
+            Sepa document = new Sepa("GROWUP", "Grow Up Network SRL", "IT", DateTime.Now, "SIAB8VPN", "IT45G0306901798100000005467", toPay, "Pagamento Traffico Growup");
+
+            byte[] data;
 
             using (MemoryStream ms = new MemoryStream())
             {
                 serializer.Serialize(ms, document);
-
-                return File(Encoding.UTF8.GetBytes(Encoding.UTF8.GetString(ms.GetBuffer())), "text/html");
-            }
-                
-            
-
-            
+                data = new byte[ms.GetBuffer().Length];
+                Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
+                return File(data, "application/xml", "sepa.xml");
+            }                                        
         }
     
 

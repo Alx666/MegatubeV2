@@ -18,7 +18,7 @@ namespace MegatubeV2
 
         public Sepa(string sMsgId, string sCompanyName, string sNationCode, DateTime vGenDate, string sCuc, string sEmitterIBAN, PaymentAlert[] hPayments, string sReason)
         {
-            CstmrCdtTrfInitn = new CstmrCdtTrfInitn(sMsgId, sCompanyName, sNationCode, vGenDate, sCuc, sEmitterIBAN.Trim(), hPayments, sReason);
+            CstmrCdtTrfInitn            = new CstmrCdtTrfInitn(sMsgId, sCompanyName, sNationCode, vGenDate, sCuc, sEmitterIBAN.Trim(), hPayments, sReason);
         }
 
         public Sepa()
@@ -33,10 +33,10 @@ namespace MegatubeV2
     {
         public CstmrCdtTrfInitn(string sMsgId, string sCompanyName, string sNationCode, DateTime vGenDate, string sCuc, string sEmitterIBAN, PaymentAlert[] hPayments, string sReason)
         {
-            sMsgId = sMsgId + "-" + vGenDate.ToString("yyyymmddhhmmss");
+            sMsgId                      = sMsgId + "-" + vGenDate.ToString("yyyymmddhhmmss");
 
-            GrpHdr = new GrpHdr(sMsgId, sCompanyName, vGenDate, sCuc, sEmitterIBAN, hPayments);
-            PmtInf = new PmtInf(sMsgId, sCompanyName, sNationCode, vGenDate, sCuc, sEmitterIBAN, hPayments, sReason);
+            GrpHdr                      = new GrpHdr(sMsgId, sCompanyName, vGenDate, sCuc, sEmitterIBAN, hPayments);
+            PmtInf                      = new PmtInf(sMsgId, sCompanyName, sNationCode, vGenDate, sCuc, sEmitterIBAN, hPayments, sReason);
         }
 
         public CstmrCdtTrfInitn()
@@ -81,11 +81,11 @@ namespace MegatubeV2
 
         public GrpHdr(string sMsgId, string sCompanyName, DateTime vGenDate, string sCuc, string sEmitterIBAN, PaymentAlert[] hPayments)
         {
-            MsgId = sMsgId;
-            CreDtTm = vGenDate.ToString("yyyy-mm-ddThh:mm:ss");
-            NbOfTxs = hPayments.Length;
-            CtrlSum = hPayments.Sum(x => x.Gross);
-            InitPty = new InitgPty(sCompanyName, sCuc);
+            MsgId                       = sMsgId;
+            CreDtTm                     = vGenDate.ToString("yyyy-mm-ddThh:mm:ss");
+            NbOfTxs                     = hPayments.Length;
+            CtrlSum                     = hPayments.Sum(x => x.Gross);
+            InitPty                     = new InitgPty(sCompanyName, sCuc);
         }
 
         public GrpHdr()
@@ -109,13 +109,13 @@ namespace MegatubeV2
 
         public InitgPty(string sName, string sCUC)
         {
-            Nm = sName;
-            Id = new Id(sCUC);
+            Nm                          = sName;
+            Id                          = new Id(sCUC);
         }
 
         public InitgPty()
         {
-            Id = new Id();
+            Id                          = new Id();
         }
     }
 
@@ -130,12 +130,12 @@ namespace MegatubeV2
 
         public Id(string sCuc)
         {
-            OrigId = new OrigId(sCuc);
+            OrigId                      = new OrigId(sCuc);
         }
 
         public Id()
         {
-            OrigId = new OrigId();
+            OrigId                      = new OrigId();
         }
 
 
@@ -152,12 +152,12 @@ namespace MegatubeV2
         public OrigId(string sCuc)
         {
 
-            Othr = new Othr(sCuc, "CBI");
+            Othr                        = new Othr(sCuc, "CBI");
         }
 
         public OrigId()
         {
-            Othr = new Othr();
+            Othr                        = new Othr();
         }
     }
 
@@ -176,8 +176,8 @@ namespace MegatubeV2
 
         public Othr(string sCuc, string sIssr)
         {
-            Id = sCuc;
-            Issr = sIssr;
+            Id                          = sCuc;
+            Issr                        = sIssr;
         }
 
         public Othr()
@@ -244,31 +244,31 @@ namespace MegatubeV2
 
         public PmtInf(string sMsgId, string sCompanyName, string sNationCode, DateTime vGenDate, string sCuc, string sEmitterIBAN, PaymentAlert[] hPayments, string sReason)
         {
-            PmtInfId = sMsgId;
-            PmtMtd = "TODO: system generated code";
-            NbOfTxs = hPayments.Length;
-            CtrlSum = hPayments.Sum(x => x.Gross);
-            PmtTpInf = new PmtTpInf();
-            ReqdExctnDt = vGenDate.ToString("yyyy-mm-dd");
-            Dbtr = new Dbtr(sCompanyName, sNationCode);
-            DbtrAcct = new DbtrAcct(sEmitterIBAN);
-            DbtrAgt = new DbtrAgt(sEmitterIBAN.Substring(5, 5)); //Extract ABI from IBAN
-            ChrgBr = "SLEV";
-            CdtTrfTxInf = hPayments.Select((p, i) => new CdtTrfTxInf(p, i, "IT", sReason)).ToArray();
+            PmtInfId                    = sMsgId;
+            PmtMtd                      = "TRF";
+            NbOfTxs                     = hPayments.Length;
+            CtrlSum                     = hPayments.Sum(x => x.Gross);
+            PmtTpInf                    = new PmtTpInf();
+            ReqdExctnDt                 = vGenDate.ToString("yyyy-mm-dd");
+            Dbtr                        = new Dbtr(sCompanyName, sNationCode);
+            DbtrAcct                    = new DbtrAcct(sEmitterIBAN);
+            DbtrAgt                     = new DbtrAgt(sEmitterIBAN.Substring(5, 5)); //Extract ABI from IBAN
+            ChrgBr                      = "SLEV";
+            CdtTrfTxInf                 = hPayments.Select((p, i) => new CdtTrfTxInf(p, i + 1, "IT", sMsgId, sReason)).ToArray();
         }
 
         public PmtInf()
         {
-            PmtTpInf = new PmtTpInf();
-            Dbtr = new Dbtr();
-            DbtrAcct = new DbtrAcct();
-            DbtrAgt = new DbtrAgt();
-            ChrgBr = "SLEV";
-            CdtTrfTxInf = new CdtTrfTxInf[5];
+            PmtTpInf                    = new PmtTpInf();
+            Dbtr                        = new Dbtr();
+            DbtrAcct                    = new DbtrAcct();
+            DbtrAgt                     = new DbtrAgt();
+            ChrgBr                      = "SLEV";
+            CdtTrfTxInf                 = new CdtTrfTxInf[5];
 
-            for (int i = 0; i < CdtTrfTxInf.Length; i++)
+            for (int i                  = 0; i < CdtTrfTxInf.Length; i++)
             {
-                CdtTrfTxInf[i] = new CdtTrfTxInf();
+                CdtTrfTxInf[i]          = new CdtTrfTxInf();
             }
         }
     }
@@ -280,7 +280,7 @@ namespace MegatubeV2
 
         public PmtTpInf()
         {
-            SvcLvl = new SvcLvl();
+            SvcLvl                      = new SvcLvl();
         }
     }
 
@@ -291,7 +291,7 @@ namespace MegatubeV2
 
         public SvcLvl()
         {
-            Cd = "SEPA";
+            Cd                          = "SEPA";
         }
     }
 
@@ -304,8 +304,8 @@ namespace MegatubeV2
 
         public Dbtr(string sNm, string sNationCode)
         {
-            Nm = sNm;
-            PstlAdr = new PstlAdr(sNationCode);
+            Nm                          = sNm;
+            PstlAdr                     = new PstlAdr(sNationCode);
         }
 
         public Dbtr()
@@ -321,7 +321,7 @@ namespace MegatubeV2
 
         public PstlAdr(string sNationCode)
         {
-            Ctry = sNationCode;
+            Ctry                        = sNationCode;
         }
 
         public PstlAdr()
@@ -337,12 +337,12 @@ namespace MegatubeV2
 
         public DbtrAcct(string sEmitterIban)
         {
-            Id = new Id_IBAN(sEmitterIban);
+            Id                          = new Id_IBAN(sEmitterIban);
         }
 
         public DbtrAcct()
         {
-            Id = new Id_IBAN();
+            Id                          = new Id_IBAN();
         }
     }
 
@@ -353,7 +353,7 @@ namespace MegatubeV2
 
         public Id_IBAN(string sIBAN)
         {
-            IBAN = sIBAN;
+            IBAN                        = sIBAN;
         }
 
         public Id_IBAN()
@@ -367,12 +367,12 @@ namespace MegatubeV2
         public FinInstnId FinInstnId { get; set; }
         public DbtrAgt(string sAbi)
         {
-            FinInstnId = new FinInstnId(sAbi);
+            FinInstnId                  = new FinInstnId(sAbi);
         }
 
         public DbtrAgt()
         {
-            FinInstnId = new FinInstnId();
+            FinInstnId                  = new FinInstnId();
         }
     }
 
@@ -383,12 +383,12 @@ namespace MegatubeV2
         public ClrSysMmbId ClrSysMmbId { get; set; }
         public FinInstnId(string sAbi)
         {
-            ClrSysMmbId = new ClrSysMmbId(sAbi);
+            ClrSysMmbId                 = new ClrSysMmbId(sAbi);
         }
 
         public FinInstnId()
         {
-            ClrSysMmbId = new ClrSysMmbId();
+            ClrSysMmbId                 = new ClrSysMmbId();
         }
     }
 
@@ -400,7 +400,7 @@ namespace MegatubeV2
 
         public ClrSysMmbId(string sAbi)
         {
-            MmbId = sAbi;
+            MmbId                       = sAbi;
         }
 
         public ClrSysMmbId()
@@ -423,24 +423,24 @@ namespace MegatubeV2
         public CdtrAcct CdtrAcct { get; set; }
         public RmtInf RmtInf { get; set; }
 
-        public CdtTrfTxInf(PaymentAlert hPaymentInfo, int iProgressive, string sNationCode, string sReason)
+        public CdtTrfTxInf(PaymentAlert hPaymentInfo, int iProgressive, string sNationCode, string sMsgId, string sReason)
         {
-            PmtId = new PmtId(iProgressive, "TODO: sEndToEndId");
-            PmtTpInf = new PmtTpInf_CdtTrfTxInf();
-            Amt = new Amt(hPaymentInfo.Gross);
-            CdTr = new Cdtr(hPaymentInfo.User.Name, sNationCode);
-            CdtrAcct = new CdtrAcct(hPaymentInfo.User.IBAN);
-            RmtInf = new RmtInf(sReason);
+            PmtId                       = new PmtId(iProgressive, sMsgId);
+            PmtTpInf                    = new PmtTpInf_CdtTrfTxInf();
+            Amt                         = new Amt(hPaymentInfo.Gross);
+            CdTr                        = new Cdtr(hPaymentInfo.User.Name + " " + hPaymentInfo.User.LastName, sNationCode);
+            CdtrAcct                    = new CdtrAcct(hPaymentInfo.User.IBAN);
+            RmtInf                      = new RmtInf(sReason);
         }
 
         public CdtTrfTxInf()
         {
-            PmtId = new PmtId();
-            PmtTpInf = new PmtTpInf_CdtTrfTxInf();
-            Amt = new Amt();
-            CdTr = new Cdtr();
-            CdtrAcct = new CdtrAcct();
-            RmtInf = new RmtInf();
+            PmtId                       = new PmtId();
+            PmtTpInf                    = new PmtTpInf_CdtTrfTxInf();
+            Amt                         = new Amt();
+            CdTr                        = new Cdtr();
+            CdtrAcct                    = new CdtrAcct();
+            RmtInf                      = new RmtInf();
         }
     }
 
@@ -452,8 +452,8 @@ namespace MegatubeV2
 
         public PmtId(int iId, string sEndToEndId)
         {
-            InstrId = iId;
-            EndToEndId = sEndToEndId;
+            InstrId                     = iId;
+            EndToEndId                  = sEndToEndId + "-" + InstrId;
         }
 
         public PmtId()
@@ -470,7 +470,7 @@ namespace MegatubeV2
 
         public PmtTpInf_CdtTrfTxInf()
         {
-            CtgyPurp = new CtgyPurp();
+            CtgyPurp                    = new CtgyPurp();
         }
     }
 
@@ -481,7 +481,7 @@ namespace MegatubeV2
 
         public CtgyPurp()
         {
-            Cd = "OTHR";
+            Cd                          = "SUPP";
         }
     }
 
@@ -492,12 +492,12 @@ namespace MegatubeV2
 
         public Amt(decimal amount)
         {
-            InstAmt = new InstAmt(amount);
+            InstAmt                     = new InstAmt(amount);
         }
 
         public Amt()
         {
-            InstAmt = new InstAmt();
+            InstAmt                     = new InstAmt();
         }
     }
 
@@ -506,12 +506,12 @@ namespace MegatubeV2
     {
         public InstAmt()
         {
-            Ccy = "EUR";
+            Ccy                         = "EUR";
         }
 
         public InstAmt(decimal ammount) : this()
         {
-            Ammount = ammount;
+            Ammount                     = ammount;
         }
 
         [XmlAttribute("Ccy")]
@@ -529,13 +529,13 @@ namespace MegatubeV2
 
         public Cdtr(string sName, string sCountry)
         {
-            Nm = sName;
-            PstlAdr = new PstlAdr();
+            Nm                          = sName;
+            PstlAdr                     = new PstlAdr();
         }
 
         public Cdtr()
         {
-            PstlAdr = new PstlAdr();
+            PstlAdr                     = new PstlAdr();
         }
     }
 
@@ -547,11 +547,11 @@ namespace MegatubeV2
 
         public CdtrAcct(string sIBAN)
         {
-            Id = new Id_IBAN(sIBAN);
+            Id                          = new Id_IBAN(sIBAN);
         }
         public CdtrAcct()
         {
-            Id = new Id_IBAN();
+            Id                          = new Id_IBAN();
         }
     }
 
@@ -563,7 +563,7 @@ namespace MegatubeV2
 
         public RmtInf(string sUstrd)
         {
-            Ustrd = sUstrd;
+            Ustrd                       = sUstrd;
         }
 
         public RmtInf()
