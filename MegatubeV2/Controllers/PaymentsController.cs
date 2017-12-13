@@ -86,32 +86,10 @@ namespace MegatubeV2.Controllers
             try
             {
                 User toPay          = db.Users.Find(userId);
-                User admin          = toPay.Administrator ?? toPay;
-
-                List<Accreditation> accreditations = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
-
-                Payment p           = new Payment();
-                p.DateFrom          = accreditations.Min(x => x.DateFrom);
-                p.DateTo            = accreditations.Max(x => x.DateTo);
-                p.Gross             = accreditations.Sum(x => x.GrossAmmount);
-                p.Net               = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Net);
-                p.UserId            = toPay.Id;
-                p.PaymentType       = (byte)admin.PaymentMethod;
-                p.Date              = DateTime.Now;
-
-                if(toPay.Administrator != null)
-                    p.AdministratorId   = toPay.Administrator.Id;
-
-                accreditations.ForEach(a => a.PaymentId = p.Id);
+                Payment p = toPay.CreatePayment(db, out PaymentAlert toRemove);
 
                 db.Payments.Add(p);
-                PaymentAlert alert = (from a in db.PaymentAlerts
-                                      where a.UserId == toPay.Id
-                                      select a).SingleOrDefault();
-
-                if (alert != null)
-                    db.PaymentAlerts.Remove(alert);
-
+                db.PaymentAlerts.Remove(toRemove);
                 db.SaveChanges();
 
                 return RedirectToAction("index", "PaymentAlerts");
@@ -164,10 +142,9 @@ namespace MegatubeV2.Controllers
             {
                 Payment p = db.Payments.Find(id);
 
-                //Receipt r = new Receipt(p);
-
-               
-                return RedirectToAction("index", "Payments");
+                Receipt r = new Receipt(p, false);
+                
+                return File(r.Data, "application/pdf", $"{p.User.Name}{p.User.LastName}_{p.ReceiptCount}{DateTime.Now.Year}.pdf");                                
             }
             catch (Exception ex)
             {

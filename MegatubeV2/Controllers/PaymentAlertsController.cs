@@ -39,6 +39,16 @@ namespace MegatubeV2.Controllers
                 serializer.Serialize(ms, document);
                 data = new byte[ms.GetBuffer().Length];
                 Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
+
+
+                for (int i = 0; i < toPay.Length; i++)
+                {
+                    Payment p = toPay[i].User.CreatePayment(db, out PaymentAlert toRemove);
+                    db.Payments.Add(p);
+                    db.PaymentAlerts.Remove(toRemove);
+                    db.SaveChanges();
+                }
+
                 return File(data, "application/xml", "sepa.xml");
             }                                        
         }

@@ -13,6 +13,8 @@ namespace MegatubeV2
 {
     public class Receipt
     {
+        public byte[] Data { get; private set; }
+
         public Receipt(Payment payment, bool isFiscal)
         {
             using (Document hDocument = new Document(PageSize.A4, 50, 50, 25, 25))
@@ -128,11 +130,12 @@ namespace MegatubeV2
                         hDocument.Close();
 
                         //Save On Disk
-                        byte[] hDataBinary   = hOutput.ToArray();
-                        string sFileName     = string.Format($"{receiver.LastName} {receiver.Name} - {payment.ReceiptCount}_{DateTime.Now.Year.ToString()}.pdf");
-                        string sOutFileName  = HttpContext.Current.Server.MapPath("~/receipts" + sFileName);
-                        File.WriteAllBytes(sOutFileName, hDataBinary);
+                        Data                 = hOutput.ToArray();
 
+
+                        //string sFileName     = string.Format($"{receiver.LastName} {receiver.Name} - {payment.ReceiptCount}_{DateTime.Now.Year.ToString()}.pdf");
+                        //string sOutFileName  = HttpContext.Current.Server.MapPath("~/receipts" + sFileName);
+                        //File.WriteAllBytes(sOutFileName, hDataBinary);
                         ////Generate Receipt               
                         //hPayment.Receipt = sFileName;
                     }
