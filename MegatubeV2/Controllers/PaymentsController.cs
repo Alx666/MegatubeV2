@@ -141,8 +141,7 @@ namespace MegatubeV2.Controllers
             try
             {
                 Payment p = db.Payments.Find(id);
-
-                Receipt r = new Receipt(p, false);
+                Receipt r = p.Receipt;
                 
                 return File(r.Data, "application/pdf", $"{p.User.Name}{p.User.LastName}_{p.ReceiptCount}{DateTime.Now.Year}.pdf");                                
             }
