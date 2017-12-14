@@ -15,14 +15,29 @@
     $(document).ready(function () {
         $('#userTable').DataTable();
     });
+
+    function UpdateFilter(){
+
+        var referenced = "true";
+        var active = "true";
+
+        if ($("#channelsType").val() == "2")
+            active = "false";
+        else if ($("#channelsType").val() == "1")
+            referenced = "false";
+
+        $('#referenced').val(referenced);
+        $('#active').val(active);
+        $('#viewChannelsForm').submit();
+
+    }
 </script>
 
 <div class="row">
-    <form class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label">Show me:</label>
             <div class="col-sm-5">
-                <select class="form-control" name="m">
+                <select class="form-control" id="channelsType" action="@Url.Action("Index", "ViewChannels")">
                     @{
                         string selected = "";
                         for (int i = 0; i < ViewTypeArr.Length; i++)
@@ -41,12 +56,15 @@
                     }
                 </select>
             </div>
+    @using (Html.BeginForm("Index", "ViewChannels", FormMethod.Post, new { @class = "form-horizontal", id = "viewChannelsForm", enctype = "multipart/form-data" }))
+    {
             <div class="col-sm-4">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <input type="hidden" name="referenced" id="referenced" value="true" />
+                <input type="hidden" name="active" id="active" value="true" />
+                <a href="javasctipt:{}" onclick="UpdateFilter(); return false;" role="button" class="btn btn-default">Show</a>
             </div>
-
+    }
         </div>
-    </form>
 </div>
 
 <table class="table table-condensed table-hover table-striped" id="userTable">
@@ -85,7 +103,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+            {
             <tr>
                 <td>
                     @{
@@ -127,7 +145,6 @@
                     @*<a title="Details" class="btn btn-default text-danger btn-sm action-button" href=""><i class="glyphicon glyphicon-arrow-right"></i></a>*@
                 </td>
             </tr>
-        }
+                        }
     </tbody>
 </table>
-
