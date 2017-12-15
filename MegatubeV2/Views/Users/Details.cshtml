@@ -3,6 +3,7 @@
 @{
 
     ViewBag.Title = "Details";
+    System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("it-IT");
 }
 <!-- START EDIT CONTENT -->
 <div class="row">
@@ -12,12 +13,12 @@
             
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
-                    <div class="panel-heading">Total Gross Earnings<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-heading">Total Gross Earnings</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">
-                            IDR 10,215,845
+                            @ViewBag.TotalGrossEarning.ToString("C",ci)
                         </h2>
-                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">33,87%</span> <small>from last week</small>
+                        <small>Since</small> <span class="text-success m-r-1">@Model.RegistrationDate.ToShortDateString()</span> 
                     </div>
                 </div>
             </div>
@@ -26,8 +27,8 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">128,980</h2>
-                        <i class="fa fa-fw fa-caret-down text-danger"></i> <span class="text-danger m-r-1">33,87%</span> <small>from last week</small>
+                        <h2 class="m-t-0 f-w-300">@ViewBag.TotalGrossPaid.ToString("C", ci)</h2>
+                        <small>Last payment</small> <span class="text-success m-r-1">01-01-2017</span>
                     </div>
                 </div>
             </div>
@@ -37,8 +38,8 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
-                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                        <h2 class="m-t-0 f-w-300">@ViewBag.TotalGrossToPay.ToString("C", ci)</h2>
+                        <small>&nbsp;</small>
                     </div>
                 </div>
             </div>
@@ -47,8 +48,8 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Net To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">2,905,895</h2>
-                        <i class="fa fa-fw fa-caret-up text-success"></i> <span class="text-success m-r-1">92,01%</span> <small>from last week</small>
+                        <h2 class="m-t-0 f-w-300">@ViewBag.TotalNetToPay.ToString("C", ci)</h2>
+                        <small>&nbsp;</small>
                     </div>
                 </div>
             </div>
