@@ -15,13 +15,16 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: ViewChannels
-        public ActionResult Index(bool referenced = true, bool active = false)
+        public ActionResult Index(bool referenced = true, bool active = true)
         {
-            //var res = (from c in db.ViewChannels
-            //          where ((referenced && c.OwnerId != null) || (!referenced && c.OwnerId == null)) && c.IsActive == active                      
-            //          select c).OrderBy(c => c.Name);
+            IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active);
+
+            if (referenced)
+                channels = channels.Where(x => x.OwnerId != null);
+            else
+                channels = channels.Where(x => x.OwnerId == null);
                       
-            return View(db.ViewChannels);
+            return View(channels.OrderBy(x => x.Name));
         }
     
         protected override void Dispose(bool disposing)

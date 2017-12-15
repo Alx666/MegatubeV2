@@ -129,15 +129,7 @@ namespace MegatubeV2
 
                         hDocument.Close();
 
-                        //Save On Disk
                         Data                 = hOutput.ToArray();
-
-
-                        //string sFileName     = string.Format($"{receiver.LastName} {receiver.Name} - {payment.ReceiptCount}_{DateTime.Now.Year.ToString()}.pdf");
-                        //string sOutFileName  = HttpContext.Current.Server.MapPath("~/receipts" + sFileName);
-                        //File.WriteAllBytes(sOutFileName, hDataBinary);
-                        ////Generate Receipt               
-                        //hPayment.Receipt = sFileName;
                     }
                 }
             }
