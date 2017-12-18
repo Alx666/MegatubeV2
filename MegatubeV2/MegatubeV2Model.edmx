@@ -76,16 +76,6 @@
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Partnership">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="NetworkId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
-          <Property Name="NetworkId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Payment">
           <Key>
             <PropertyRef Name="Id" />
@@ -152,6 +142,7 @@
           <Property Name="BICSWIFT" Type="nvarchar" MaxLength="50" />
           <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
           <Property Name="FiscalAdministratorId" Type="int" />
+          <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -283,42 +274,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Partnership_ToNetwork">
-          <End Role="Network" Type="Self.Network" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Network">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="NetworkId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Partnership_ToRole">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Partnership_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Payment_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
@@ -367,6 +322,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="User1" Type="Self.User" Multiplicity="*" />
@@ -386,7 +353,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySet Name="DataFile" EntityType="Self.DataFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Network" EntityType="Self.Network" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Partnership" EntityType="Self.Partnership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentAlert" EntityType="Self.PaymentAlert" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
@@ -447,18 +413,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="User" />
             <End Role="Note" EntitySet="Note" />
           </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToNetwork" Association="Self.FK_Partnership_ToNetwork">
-            <End Role="Network" EntitySet="Network" />
-            <End Role="Partnership" EntitySet="Partnership" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToRole" Association="Self.FK_Partnership_ToRole">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="Partnership" EntitySet="Partnership" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToUser" Association="Self.FK_Partnership_ToUser">
-            <End Role="User" EntitySet="User" />
-            <End Role="Partnership" EntitySet="Partnership" />
-          </AssociationSet>
           <AssociationSet Name="FK_Payment_ToUser" Association="Self.FK_Payment_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Payment" EntitySet="Payment" />
@@ -474,6 +428,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_Table_ToUser" Association="Self.FK_Table_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToRole" Association="Self.FK_User_ToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_ToUser" Association="Self.FK_User_ToUser">
             <End Role="User" EntitySet="User" />
@@ -502,19 +460,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
         </EntityType>
-        <EntityType Name="Partnership">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="NetworkId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="NetworkId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Partnership_ToRole" FromRole="Partnership" ToRole="Role" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Partnership_ToUser" FromRole="Partnership" ToRole="User" />
-          <NavigationProperty Name="Network" Relationship="MegatubeV2Model.FK_Partnership_ToNetwork" FromRole="Partnership" ToRole="Network" />
-        </EntityType>
         <EntityType Name="Payment">
           <Key>
             <PropertyRef Name="Id" />
@@ -539,7 +484,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToRole" FromRole="Role" ToRole="Partnership" />
+          <NavigationProperty Name="Users" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -576,7 +521,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="FiscalAdministratorId" Type="Int32" />
           <NavigationProperty Name="ChannelsOwned" Relationship="Self.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
           <NavigationProperty Name="ChannelsRecruited" Relationship="Self.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty Name="Partnerships" Relationship="Self.FK_Partnership_ToUser" FromRole="User" ToRole="Partnership" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_ToUser" FromRole="User" ToRole="Payment" />
           <NavigationProperty Name="AdministratorOf" Relationship="Self.FK_User_ToUser" FromRole="User" ToRole="User1" />
           <NavigationProperty Name="Administrator" Relationship="Self.FK_User_ToUser" FromRole="User1" ToRole="User" />
@@ -586,6 +530,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="PaymentAlerts" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="User" ToRole="PaymentAlert" />
           <NavigationProperty Name="Contracts" Relationship="MegatubeV2Model.FK_Table_ToUser" FromRole="User" ToRole="Contract" />
           <NavigationProperty Name="Payments1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="User" ToRole="Payment" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="User" ToRole="Role" />
         </EntityType>
         <Association Name="FK_ChannelOwner_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
@@ -608,30 +554,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Principal>
             <Dependent Role="Channel">
               <PropertyRef Name="RecruiterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Partnership_ToRole">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Partnership_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Partnership" Type="Self.Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -661,7 +583,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
         </Association>
         <EntityContainer Name="MegatubeV2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Channels" EntityType="Self.Channel" />
-          <EntitySet Name="Partnerships" EntityType="Self.Partnership" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -674,14 +595,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="Users" />
             <End Role="Channel" EntitySet="Channels" />
           </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToRole" Association="Self.FK_Partnership_ToRole">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Partnership" EntitySet="Partnerships" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Partnership_ToUser" Association="Self.FK_Partnership_ToUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Partnership" EntitySet="Partnerships" />
-          </AssociationSet>
           <AssociationSet Name="FK_Payment_ToUser" Association="Self.FK_Payment_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="Payment" EntitySet="Payments" />
@@ -692,10 +605,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </AssociationSet>
           <EntitySet Name="Networks" EntityType="MegatubeV2Model.Network" />
           <EntitySet Name="Notes" EntityType="MegatubeV2Model.Note" />
-          <AssociationSet Name="FK_Partnership_ToNetwork" Association="MegatubeV2Model.FK_Partnership_ToNetwork">
-            <End Role="Network" EntitySet="Networks" />
-            <End Role="Partnership" EntitySet="Partnerships" />
-          </AssociationSet>
           <AssociationSet Name="FK_Note_ToUserAuthor" Association="MegatubeV2Model.FK_Note_ToUserAuthor">
             <End Role="User" EntitySet="Users" />
             <End Role="Note" EntitySet="Notes" />
@@ -734,6 +643,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="Users" />
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_ToRole" Association="MegatubeV2Model.FK_User_ToRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Network">
           <Key>
@@ -741,7 +654,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Partnerships" Relationship="MegatubeV2Model.FK_Partnership_ToNetwork" FromRole="Network" ToRole="Partnership" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -755,18 +667,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Author" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="Note" ToRole="User" />
           <NavigationProperty Name="Subject" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="Note" ToRole="User" />
         </EntityType>
-        <Association Name="FK_Partnership_ToNetwork">
-          <End Type="MegatubeV2Model.Network" Role="Network" Multiplicity="1" />
-          <End Type="MegatubeV2Model.Partnership" Role="Partnership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Network">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Partnership">
-              <PropertyRef Name="NetworkId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Note_ToUserAuthor">
           <End Type="MegatubeV2Model.User" Role="User" Multiplicity="1" />
           <End Type="MegatubeV2Model.Note" Role="Note" Multiplicity="*" />
@@ -960,6 +860,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_ToRole">
+          <End Type="MegatubeV2Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -979,15 +891,6 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
                 <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
                 <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Partnerships">
-            <EntityTypeMapping TypeName="MegatubeV2Model.Partnership">
-              <MappingFragment StoreEntitySet="Partnership">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1029,6 +932,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MegatubeV2Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="RoleId" ColumnName="Role" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

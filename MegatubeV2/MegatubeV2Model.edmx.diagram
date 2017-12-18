@@ -6,20 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="099f9d0b10db4159ab4ae2ee9f5cd9cc" Name="Diagram1">
         <EntityTypeShape EntityType="MegatubeV2Model.Channel" Width="1.5" PointX="7.375" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Partnership" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MegatubeV2Model.Payment" Width="1.5" PointX="7.125" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="2.875" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="3.875" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MegatubeV2Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MegatubeV2Model.User" Width="1.875" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelOwner_ToUser" ManuallyRouted="false" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelRecruiter_ToUser" ManuallyRouted="false" />
-        <AssociationConnector Association="MegatubeV2Model.FK_Partnership_ToRole" ManuallyRouted="false" />
-        <AssociationConnector Association="MegatubeV2Model.FK_Partnership_ToUser" ManuallyRouted="false" />
         <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToUser" ManuallyRouted="false" />
         <AssociationConnector Association="MegatubeV2Model.FK_User_ToUser" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="5.25" PointY="5.375" />
         <EntityTypeShape EntityType="MegatubeV2Model.Note" Width="1.5" PointX="4.625" PointY="8.875" />
-        <AssociationConnector Association="MegatubeV2Model.FK_Partnership_ToNetwork" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserAuthor" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserSubject" />
         <EntityTypeShape EntityType="MegatubeV2Model.ViewNote" Width="1.5" PointX="7.375" PointY="0.75" />
@@ -34,6 +30,7 @@
         <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="3.375" PointY="18.625" />
         <AssociationConnector Association="MegatubeV2Model.FK_Table_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToUserAdministrator" />
+        <AssociationConnector Association="MegatubeV2Model.FK_User_ToRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

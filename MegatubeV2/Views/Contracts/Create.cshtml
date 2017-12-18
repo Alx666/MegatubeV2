@@ -1,13 +1,16 @@
 ﻿@using (Html.BeginForm("Create", "Contracts", FormMethod.Post, new { @class = "m-t-3", id = "uploadForm", enctype = "multipart/form-data" }))
 {
     <div class="form-group">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <input class="form-control" type="file" name="file" size="40" placeholder="load Pdf" />
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <input class="form-control" type="date" name="expireDate" size="40" placeholder="select expire date" />
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+            @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-lg-3">
             <a href="javasctipt:{}" onclick="document.getElementById('uploadForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
         </div>
     </div>        

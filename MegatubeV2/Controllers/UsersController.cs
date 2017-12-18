@@ -15,6 +15,7 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: Users
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
             var users = db.Users.Include(u => u.Administrator);
@@ -22,6 +23,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Details/5
+        [CustomAuthorize(RoleType.Standard)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,23 +40,35 @@ namespace MegatubeV2.Controllers
 
             ViewBag.Notes = db.ViewNotes.Where(x => x.Subject == user.Id).ToList();
 
-            ViewBag.TotalGrossEarning   = (from a in db.Accreditations where a.UserId == id select a).Sum(x => x.GrossAmmount);
-            ViewBag.TotalGrossPaid      = (from p in db.Payments where p.UserId == id select p).Sum(x => x.Gross);
-            ViewBag.TotalGrossToPay     = ViewBag.TotalGrossEarning - ViewBag.TotalGrossPaid;
+            ViewBag.TotalGrossEarning = 0;
+            ViewBag.TotalGrossPaid = 0;
+            ViewBag.TotalGrossToPay =0;
 
             if (user.PaymentMethod.HasValue)
-                ViewBag.TotalNetToPay = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(ViewBag.TotalGrossToPay);
+                ViewBag.TotalNetToPay = 0;
             else
                 ViewBag.TotalNetToPay = "-";
 
-            ViewBag.LastPayments = (from p in db.Payments
-                                    group p by p.Date into g
-                                    select new { Date = g.Key, Amount = g.Sum(x => x.Gross) }).OrderByDescending(x => x.Date).Take(12).ToList();
+            ViewBag.LastPayments = 0;
+
+            //ViewBag.TotalGrossEarning = (from a in db.Accreditations where a.UserId == id select a).Sum(x => x.GrossAmmount);
+            //ViewBag.TotalGrossPaid = (from p in db.Payments where p.UserId == id select p).Sum(x => x.Gross);
+            //ViewBag.TotalGrossToPay = ViewBag.TotalGrossEarning - ViewBag.TotalGrossPaid;
+
+            //if (user.PaymentMethod.HasValue)
+            //    ViewBag.TotalNetToPay = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(ViewBag.TotalGrossToPay);
+            //else
+            //    ViewBag.TotalNetToPay = "-";
+
+            //ViewBag.LastPayments = (from p in db.Payments
+            //                        group p by p.Date into g
+            //                        select new { Date = g.Key, Amount = g.Sum(x => x.Gross) }).OrderByDescending(x => x.Date).Take(12).ToList();
 
             return View(user);
         }
 
         // GET: Users/Create
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult Create()
         {
             ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name");
@@ -66,6 +80,7 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult Create([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
@@ -80,6 +95,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Edit/5
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,6 +116,7 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
@@ -113,6 +130,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Delete/5
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -130,6 +148,7 @@ namespace MegatubeV2.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Developer)]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);

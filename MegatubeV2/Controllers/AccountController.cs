@@ -9,9 +9,8 @@ namespace MegatubeV2.Controllers
     public class AccountController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
-        
+
         // GET: /Account/Login
-        [AllowAnonymous]
         public ActionResult Index()
         {
             //ViewBag.ReturnUrl = returnUrl;
@@ -21,12 +20,37 @@ namespace MegatubeV2.Controllers
 
         //POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Login(string username, string password)
         {
+            //lucazodaa@gmail.com
+            //asdasd
             try
             {
-                return RedirectToAction("Index", "Users");
+                string pass = password.ToMD5();
+                User user = (from u in db.Users where u.EMail == username && u.Password == pass select u).Single();
+
+                Session.SetUser(user);
+
+                if (user.IsDeveloper || user.IsManager)
+                {
+                    return RedirectToAction("Index", "Users");
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Users", new { id = user.Id });
+                }
+
+            }
+            catch(InvalidOperationException e)
+            {
+                //Piu di un utente
+                return RedirectToAction("Index", "Account");
+            }
+            catch(ArgumentNullException e)
+            {
+                
+                //utente non esiste oppure username/psw errati
+                return RedirectToAction("Index", "Account");
             }
             catch(Exception ex)
             {

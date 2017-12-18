@@ -15,6 +15,7 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: ViewChannels
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(bool referenced = true, bool active = true)
         {
             IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active);

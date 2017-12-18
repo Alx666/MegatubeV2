@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MegatubeV2;
+using System.IO;
 
 namespace MegatubeV2.Controllers
 {
@@ -39,14 +40,42 @@ namespace MegatubeV2.Controllers
         // GET: Contracts/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name");
+           
+            ViewBag.UserId = new SelectList(db.Users.ToList().Select(x => new { Id = x.Id, Name = $"{x.Name} {x.LastName}" }), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file, DateTime expireDate)
+        public ActionResult Create(HttpPostedFileBase file, DateTime expireDate, int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string path = Server.MapPath("~\\ArchivioContratti");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                int fileName = file.FileName.GetHashCode();
+                if (System.IO.File.Exists($"{path}\\{fileName}.pdf"))
+                {
+                    throw new Exception("Contract already exist");
+                }
+                file.SaveAs($"{path}\\{fileName}.pdf");
+                Contract contract = new Contract()
+                {
+                    ExpireDate = expireDate,
+                    FilenName = fileName.ToString(),
+                    UserId = userId
+                };
+                db.Contracts.Add(contract);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Contracts");
+            }
+            catch(Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
         }
 
         // GET: Contracts/Edit/5
@@ -105,10 +134,24 @@ namespace MegatubeV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contract contract = db.Contracts.Find(id);
-            db.Contracts.Remove(contract);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                string path = Server.MapPath($"~\\ArchivioContratti\\{db.Contracts.First(x => x.Id == id).FilenName}.pdf");
+                if (!System.IO.File.Exists(path))
+                {
+                    throw new FileNotFoundException("File not exist");
+                }
+                System.IO.File.Delete(path);
+                Contract contract = db.Contracts.Find(id);
+                db.Contracts.Remove(contract);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
         }
 
         protected override void Dispose(bool disposing)

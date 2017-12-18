@@ -18,6 +18,7 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: PaymentAlerts
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
             var paymentAlerts = db.PaymentAlerts.ToList();
@@ -25,6 +26,7 @@ namespace MegatubeV2.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult GenerateSepa(int[] ids)
         {
             PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();

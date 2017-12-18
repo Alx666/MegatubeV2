@@ -19,7 +19,6 @@ namespace MegatubeV2
         {
             this.ChannelsOwned = new HashSet<Channel>();
             this.ChannelsRecruited = new HashSet<Channel>();
-            this.Partnerships = new HashSet<Partnership>();
             this.Payments = new HashSet<Payment>();
             this.AdministratorOf = new HashSet<User>();
             this.NotesCreated = new HashSet<Note>();
@@ -49,13 +48,12 @@ namespace MegatubeV2
         public string BICSWIFT { get; set; }
         public System.DateTime RegistrationDate { get; set; }
         public Nullable<int> FiscalAdministratorId { get; set; }
+        public int RoleId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> ChannelsOwned { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> ChannelsRecruited { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Partnership> Partnerships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -73,5 +71,6 @@ namespace MegatubeV2
         public virtual ICollection<Contract> Contracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments1 { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -7,6 +7,31 @@ namespace MegatubeV2
 {
     public partial class User
     {
+
+        public bool IsDeveloper 
+        {
+            get 
+            {
+                return this.RoleId == (int)RoleType.Developer;
+            }
+        }
+
+        public bool IsManager 
+        {
+            get 
+            {
+                return this.RoleId == (int)RoleType.Manager || this.RoleId == (int)RoleType.Developer;
+            }
+        }
+
+        public bool IsStandard 
+        {
+            get 
+            {
+                return this.RoleId == (int)RoleType.Standard || this.RoleId == (int)RoleType.Developer;
+            }
+        }
+
         public Payment CreatePayment(MegatubeV2Entities db, out PaymentAlert toRemove)
         {
             User toPay                           = this;

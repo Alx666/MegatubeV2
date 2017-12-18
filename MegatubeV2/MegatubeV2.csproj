@@ -150,6 +150,7 @@
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
+    <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="IPaymentMethod.cs" />
     <Compile Include="IReferenceable.cs" />
     <Compile Include="MegatubeExtensions.cs" />
@@ -165,6 +166,7 @@
     </Compile>
     <Compile Include="ProcessingType.cs" />
     <Compile Include="Receipt.cs" />
+    <Compile Include="RoleType.cs" />
     <Compile Include="Sepa.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
@@ -207,9 +209,6 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Note.cs">
-      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Partnership.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment.cs">

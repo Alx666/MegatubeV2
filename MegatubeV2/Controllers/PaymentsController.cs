@@ -14,8 +14,9 @@ namespace MegatubeV2.Controllers
     public class PaymentsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
-        
+
         // GET: Payments
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
             //var result = from p in db.Payments ord
@@ -24,6 +25,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Details/5
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,6 +41,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Create
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create(int? userId)
         {
             try
@@ -81,6 +84,7 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create(int userId, int receiptCounter)
         {
             try
@@ -103,6 +107,7 @@ namespace MegatubeV2.Controllers
 
 
         // GET: Payments/Delete/5
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Revert(int? id)
         {
             try
@@ -136,6 +141,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Delete/5
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult DownloadReceipt(int? id)
         {
             try
