@@ -24,8 +24,16 @@ namespace MegatubeV2
             DataFile record         = db.DataFiles.Where(x => x.Name == file.FileName).FirstOrDefault();
             bool isPaidFeatures     = file.FileName.Contains("Ecommerce_paid_features_M");
 
-           
-            if (isPaidFeatures && record == null)
+
+            if (record != null && (ProcessingType)record.ProcessingType == ProcessingType.TrafficRevenueUpdate)
+            {
+                throw new Exception("File already Fully Processed");
+            }
+            else if (record != null && (ProcessingType)record.ProcessingType == ProcessingType.PaidFeatures)
+            {
+                throw new Exception("File already Fully Processed");
+            }
+            else if (isPaidFeatures && record == null)
             {
                 return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
             }
@@ -39,7 +47,7 @@ namespace MegatubeV2
             }
             else
             {
-                throw new Exception("Could not deduce the correct processing for the uploaded file");
+                throw new Exception("Could not deduce the correct processing model for the uploaded file");
             }
 
         }
