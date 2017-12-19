@@ -76,7 +76,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Create
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create()
         {
             ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name");
@@ -88,7 +88,7 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Edit/5
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -124,7 +124,7 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
@@ -138,7 +138,7 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Delete/5
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -156,7 +156,7 @@ namespace MegatubeV2.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Developer)]
+        [CustomAuthorize(RoleType.Manager)]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
