@@ -529,7 +529,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
           <NavigationProperty Name="PaymentAlerts" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="User" ToRole="PaymentAlert" />
           <NavigationProperty Name="Contracts" Relationship="MegatubeV2Model.FK_Table_ToUser" FromRole="User" ToRole="Contract" />
-          <NavigationProperty Name="Payments1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="User" ToRole="Payment" />
+          <NavigationProperty Name="AdministratorPayments" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="User" ToRole="Payment" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="User" ToRole="Role" />
         </EntityType>

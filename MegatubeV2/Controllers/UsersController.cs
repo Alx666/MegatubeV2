@@ -23,13 +23,17 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Details/5
-        [CustomAuthorize(RoleType.Standard)]
+        [CustomAuthorize(RoleType.Standard, RoleType.Manager)]
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
+            User current = Session.GetUser();
+
+            if (current.IsStandard && current.Id != id.Value)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
 
             User user = db.Users.Find(id);            
 
@@ -40,29 +44,33 @@ namespace MegatubeV2.Controllers
 
             ViewBag.Notes = db.ViewNotes.Where(x => x.Subject == user.Id).ToList();
 
-            ViewBag.TotalGrossEarning = 0;
-            ViewBag.TotalGrossPaid = 0;
-            ViewBag.TotalGrossToPay =0;
+            if (user.Accreditations.Count() > 0)
+            {
+                user.TotalGrossEarning   = (from a in db.Accreditations where a.UserId == user.Id select a).Sum(x => x.GrossAmmount);
+                user.TotalGrossPaid      = (from p in db.Payments where p.UserId == user.Id select p).Sum(x => x.Gross);
+                user.TotalGrossToPay     = user.TotalGrossEarning - user.TotalGrossPaid;
 
-            if (user.PaymentMethod.HasValue)
-                ViewBag.TotalNetToPay = 0;
+                if (user.PaymentMethod.HasValue)
+                    user.TotalNetToPay   = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(user.TotalGrossToPay);
+                else
+                    user.TotalNetToPay   = 0;
+            }
             else
-                ViewBag.TotalNetToPay = "-";
+            {
+                user.TotalGrossEarning   = 0;
+                user.TotalGrossPaid      = 0;
+                user.TotalGrossToPay     = 0;
+                user.TotalNetToPay       = 0;
 
-            ViewBag.LastPayments = 0;
+            }
 
-            //ViewBag.TotalGrossEarning = (from a in db.Accreditations where a.UserId == id select a).Sum(x => x.GrossAmmount);
-            //ViewBag.TotalGrossPaid = (from p in db.Payments where p.UserId == id select p).Sum(x => x.Gross);
-            //ViewBag.TotalGrossToPay = ViewBag.TotalGrossEarning - ViewBag.TotalGrossPaid;
+            if (user.Payments.Count() > 0)
+            {
+                var accr = (from p in db.Accreditations where p.UserId == user.Id group p by p.DateFrom into g select new { Date = g.Key, Amount = g.Sum(x => x.GrossAmmount) }).OrderByDescending(x => x.Date).Take(12).ToList();
 
-            //if (user.PaymentMethod.HasValue)
-            //    ViewBag.TotalNetToPay = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(ViewBag.TotalGrossToPay);
-            //else
-            //    ViewBag.TotalNetToPay = "-";
-
-            //ViewBag.LastPayments = (from p in db.Payments
-            //                        group p by p.Date into g
-            //                        select new { Date = g.Key, Amount = g.Sum(x => x.Gross) }).OrderByDescending(x => x.Date).Take(12).ToList();
+                user.CreditHistory = accr.Select(x => new User.AccreditationsPerMonth(x.Date, x.Amount)).ToList();
+                user.CreditHistory.Reverse();
+            }
 
             return View(user);
         }

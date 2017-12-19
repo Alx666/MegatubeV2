@@ -7,6 +7,12 @@ namespace MegatubeV2
 {
     public partial class User
     {
+        public decimal TotalGrossEarning                    { get; set; }
+        public decimal TotalGrossPaid                       { get; set; }
+        public decimal TotalGrossToPay                      { get; set; }
+        public decimal TotalNetToPay                        { get; set; }
+        public List<AccreditationsPerMonth> CreditHistory   { get; set; }
+
 
         public bool IsDeveloper 
         {
@@ -57,8 +63,20 @@ namespace MegatubeV2
             toRemove                             = (from a in db.PaymentAlerts
                                                     where a.UserId == toPay.Id
                                                     select a).SingleOrDefault();
-
             return p;
+        }
+
+
+        public struct AccreditationsPerMonth
+        {
+            public AccreditationsPerMonth(DateTime date, decimal amount)
+            {
+                Date = date;
+                Amount = amount;
+            }
+
+            public DateTime Date { get; set; }
+            public decimal Amount { get; set; }
         }
     }
 }
