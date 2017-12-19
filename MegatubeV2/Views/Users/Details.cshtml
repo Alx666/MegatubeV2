@@ -3,9 +3,22 @@
 @{
 
     ViewBag.Title = "Details";
-    System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("it-IT");
+    string extraClass = "";
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
+    System.Globalization.CultureInfo ci_EN = new System.Globalization.CultureInfo("en-EN");
 
+    bool hasCredit = Model.CreditHistory != null;
 
+    string period = "-";
+    if (hasCredit && Model.CreditHistory.Count>0)
+    {
+        period=Model.CreditHistory.Last().Date.Year.ToString();
+    }
+    else
+    {
+        Model.CreditHistory = new List<User.AccreditationsPerMonth>();
+        extraClass = "hidden";
+    }
 
 }
 
@@ -21,7 +34,7 @@
                     <div class="panel-heading">Total Gross Earnings</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">
-                            @Model.TotalGrossEarning.ToString("C",ci)
+                            @Model.TotalGrossEarning.ToString("C",ci_IT)
                         </h2>
                         <small>Since</small> <span class="text-success m-r-1">@Model.RegistrationDate.ToShortDateString()</span> 
                     </div>
@@ -32,7 +45,7 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">@Model.TotalGrossPaid.ToString("C", ci)</h2>
+                        <h2 class="m-t-0 f-w-300">@Model.TotalGrossPaid.ToString("C", ci_IT)</h2>
                         <small>Last payment</small> <span class="text-success m-r-1">01-01-2017</span>
                     </div>
                 </div>
@@ -43,7 +56,7 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">@Model.TotalGrossToPay.ToString("C", ci)</h2>
+                        <h2 class="m-t-0 f-w-300">@Model.TotalGrossToPay.ToString("C", ci_IT)</h2>
                         <small>&nbsp;</small>
                     </div>
                 </div>
@@ -53,7 +66,7 @@
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Net To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
                     <div class="panel-body">
-                        <h2 class="m-t-0 f-w-300">@Model.TotalNetToPay.ToString("C", ci)</h2>
+                        <h2 class="m-t-0 f-w-300">@Model.TotalNetToPay.ToString("C", ci_IT)</h2>
                         <small>&nbsp;</small>
                     </div>
                 </div>
@@ -63,11 +76,11 @@
         <!-- END ROWs #1 -->
         <!-- START ROW Report Statisticts & Latest Transactions -->
         <div class="row m-t-3">
-            <div class="col-lg-12 m-b-3">
+            <div class="col-lg-12 m-b-3 @extraClass">
                 <!-- START Header -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-6">
-                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @DateTime.Now.Year.ToString()</small>
+                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @period</small>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                         <div class="btn-group" role="group" aria-label="...">
@@ -78,7 +91,9 @@
                 </div>
                 <!-- END Header -->
                 <!-- START Chart Higcharts -->
+                 
                 <div class="highcharts-basic-column m-t-2"></div>
+                
                 <!-- END Chart Higcharts -->
             </div>            
             
@@ -497,18 +512,10 @@
                 },
                 xAxis: {
                     categories: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sep',
-                        'Oct',
-                        'Nov',
-                        'Dec'
+                        @for(int i=0;i< Model.CreditHistory.Count;i++)
+                        {
+                            @Html.Raw((i > 0 ? "," : "") + "'" + Model.CreditHistory[i].Date.ToString("MMM", ci_EN) + "'");
+                        }
                     ],
                     crosshair: true
                 },
@@ -517,7 +524,7 @@
                     title: {
                         text: ''
                     }
-                },
+                        },
                 credits: {
                     enabled: false
                 },
@@ -530,7 +537,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.2f} &euro;</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true
@@ -543,11 +550,17 @@
                 },
                 series: [{
                     name: 'Gross',
-                    data: [12.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                    data: [
+                        @for(int i=0;i< Model.CreditHistory.Count;i++)
+                        {
+                            @Html.Raw((i > 0 ? "," : "") + Model.CreditHistory[i].Amount.ToString().Replace(',', '.'));
+                        }
+                    ]
 
                 }]
             });
         });
+
 
         $('.tabSwitch').click(function () {
             if ($(this).attr('id') == "userTab") {
