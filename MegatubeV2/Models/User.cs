@@ -34,7 +34,7 @@ namespace MegatubeV2
         {
             get 
             {
-                return this.RoleId == (int)RoleType.Standard || this.RoleId == (int)RoleType.Developer;
+                return this.RoleId == (int)RoleType.Standard;
             }
         }
 

@@ -41,12 +41,12 @@ namespace MegatubeV2.Controllers
                 }
 
             }
-            catch(InvalidOperationException e)
+            catch(InvalidOperationException)
             {
                 //Piu di un utente
                 return RedirectToAction("Index", "Account");
             }
-            catch(ArgumentNullException e)
+            catch(ArgumentNullException)
             {
                 
                 //utente non esiste oppure username/psw errati
