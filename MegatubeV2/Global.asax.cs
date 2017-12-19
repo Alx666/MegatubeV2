@@ -20,7 +20,6 @@ namespace MegatubeV2
 
         protected void Application_Error(object sender, EventArgs e)
         {
-
             Exception exception = Server.GetLastError();
             Server.ClearError();
             Response.Redirect("/Home/Error");

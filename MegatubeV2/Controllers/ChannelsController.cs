@@ -50,13 +50,14 @@ namespace MegatubeV2.Controllers
             {
                 db.Entry(channel).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "ViewChannels");
             }
 
             var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
 
             ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
             ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
+
             return View(channel);
         }
   
