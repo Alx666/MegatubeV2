@@ -330,15 +330,16 @@ namespace MegatubeDataMigrator
                 using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
                 {
                     MigrateTable(oldDb.Users.Where(x => 
-                        !string.IsNullOrWhiteSpace(x.TutorIban) || 
-                        !string.IsNullOrWhiteSpace(x.TutorName) || 
-                        !string.IsNullOrWhiteSpace(x.TutorSurname) || 
-                        x.TutorBirthDate.HasValue || 
-                        !string.IsNullOrWhiteSpace(x.TutorBirthPlace)|| 
-                        !string.IsNullOrWhiteSpace(x.TutorBICSWIFT)|| 
-                        !string.IsNullOrWhiteSpace(x.TutorPostalCode)|| 
-                        !string.IsNullOrWhiteSpace(x.TutorPIVAORVAT)|| 
-                        !string.IsNullOrWhiteSpace(x.TutorFullAddress)), newDb.Users, t =>
+                        !(x.TutorIban == null || x.TutorIban.Trim() == string.Empty) ||
+                        !(x.TutorName == null || x.TutorName.Trim() == string.Empty) ||
+                        !(x.TutorSurname == null || x.TutorSurname.Trim() == string.Empty) ||
+                        !(x.TutorBirthPlace == null || x.TutorBirthPlace.Trim() == string.Empty) ||
+                        !(x.TutorBICSWIFT == null || x.TutorBICSWIFT.Trim() == string.Empty) ||
+                        !(x.TutorPostalCode == null || x.TutorPostalCode.Trim() == string.Empty) ||
+                        !(x.TutorPostalCode == null || x.TutorPostalCode.Trim() == string.Empty) ||
+                        !(x.TutorPIVAORVAT == null || x.TutorPIVAORVAT.Trim() == string.Empty) ||
+                        !(x.TutorFullAddress == null || x.TutorFullAddress.Trim() == string.Empty) ||
+                        x.TutorBirthDate.HasValue), newDb.Users, t =>
                     {
                         ModelNew.User admin           = new ModelNew.User();
                         admin.Id                      = newDb.Users.Max(x => x.Id) + 1;
