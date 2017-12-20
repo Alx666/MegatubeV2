@@ -48,6 +48,7 @@ namespace MegatubeDataMigrator.ModelNew
         public string BICSWIFT { get; set; }
         public System.DateTime RegistrationDate { get; set; }
         public Nullable<int> FiscalAdministratorId { get; set; }
+        public int Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
@@ -70,5 +71,6 @@ namespace MegatubeDataMigrator.ModelNew
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> AdministrratorOf { get; set; }
         public virtual User FiscalAdministrator { get; set; }
+        public virtual Role Role1 { get; set; }
     }
 }

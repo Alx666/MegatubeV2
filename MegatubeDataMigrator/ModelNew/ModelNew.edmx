@@ -135,6 +135,7 @@
           <Property Name="BICSWIFT" Type="nvarchar" MaxLength="50" />
           <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
           <Property Name="FiscalAdministratorId" Type="int" />
+          <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -314,6 +315,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="User1" Type="Self.User" Multiplicity="*" />
@@ -439,6 +452,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="User" />
             <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_ToRole" Association="Self.FK_User_ToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_ToUser" Association="Self.FK_User_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="User1" EntitySet="User" />
@@ -539,6 +556,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_User_ToRole" Association="MegatubeV2Model.FK_User_ToRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Accreditation">
           <Key>
@@ -649,6 +670,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -694,6 +716,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="PaymentAlerts" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="User" ToRole="PaymentAlert" />
           <NavigationProperty Name="AdministrratorOf" Relationship="MegatubeV2Model.FK_User_ToUser" FromRole="User" ToRole="User1" />
           <NavigationProperty Name="FiscalAdministrator" Relationship="MegatubeV2Model.FK_User_ToUser" FromRole="User1" ToRole="User" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role1" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="User" ToRole="Role" />
         </EntityType>
         <EntityType Name="ViewChannel">
           <Key>
@@ -892,6 +916,18 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_User_ToRole">
+          <End Type="MegatubeV2Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1017,6 +1053,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MegatubeV2Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="FiscalAdministratorId" ColumnName="FiscalAdministratorId" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="BICSWIFT" ColumnName="BICSWIFT" />

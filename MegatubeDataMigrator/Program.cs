@@ -108,7 +108,7 @@ namespace MegatubeDataMigrator
         }
 
         [ConsoleUIMethod]
-        public void MigratePayment()
+        public void MigratePayments()
         {
             using (MegatubeV2Entities newDb = new MegatubeV2Entities())
             {
@@ -309,6 +309,7 @@ namespace MegatubeDataMigrator
                         record.PostalCode           = t.PostalCode;
                         record.Skype                = t.Skype;
                         record.PaymentMethod        = t.PaymentMethod;
+                        record.Role                 = 2;
 
                         if (t.Payments.Count() > 0)
                             record.RegistrationDate = t.Payments.Min(x => x.Date);
@@ -351,6 +352,7 @@ namespace MegatubeDataMigrator
                         admin.Name                    = t.TutorName;
                         admin.LastName                = t.TutorSurname;
                         admin.PaymentMethod           = t.PaymentMethod;
+                        admin.Role                    = 2;
                         
                         ModelNew.User partner         = newDb.Users.Find(t.Id);
                         partner.FiscalAdministratorId = admin.Id;
@@ -441,10 +443,29 @@ namespace MegatubeDataMigrator
                 db.Database.ExecuteSqlCommand("delete [DataFile]");
                 db.Database.ExecuteSqlCommand("delete [Note]");
                 db.Database.ExecuteSqlCommand("delete [Channel]");
-                //db.Database.ExecuteSqlCommand("delete [User]");
+                db.Database.ExecuteSqlCommand("delete [User]");
 
                 Console.WriteLine("Done!");
             }
+        }
+
+        [ConsoleUIMethod]
+        public void MigrateDatabase()
+        {
+            Console.WriteLine("Migrating Users");
+            MigrateUsers();
+
+            Console.WriteLine("Migrating Administrators");
+            MigrateTutors();
+
+            Console.WriteLine("Migrating Channels");
+            MigrateChannels();
+
+            Console.WriteLine("Migrating Payments");
+            MigratePayments();
+
+            Console.WriteLine("Migrating Accreditations");
+            MigrateAccreditations();
         }
 
         #endregion

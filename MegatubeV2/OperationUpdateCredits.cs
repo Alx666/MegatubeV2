@@ -69,7 +69,10 @@ namespace MegatubeV2
                                       join c in allChannels
                                       on g.Key equals c.Id
                                       select Accreditation.Create(g, c, dollarToEuro, fileStartDate, fileEndDate, Accreditation.AccreditationMainType.Traffic)).SelectMany(x => x).GroupBy(x => x.UserId).ToList();
-                                
+
+
+                
+
                 DataFile updateRecord               = db.DataFiles.Where(x => x.Name == file.FileName).Single();
                 updateRecord.ProcessingType         = (byte)ProcessingType.TrafficRevenueUpdate;
                 updateRecord.TrafficIncomeTotal     = accreditations.SelectMany(x => x).Sum(x => x.GrossAmmount);
@@ -77,7 +80,8 @@ namespace MegatubeV2
                 updateRecord.UploadDate             = DateTime.Now;
                 updateRecord.DollarToEuroConv       = (double)dollarToEuro;
 
-                
+
+                db.Accreditations.AddRange(accreditations.SelectMany(x => x));
                 db.SaveChanges();
                 db.UpdatePaymentAlerts();
                 db.SaveChanges();

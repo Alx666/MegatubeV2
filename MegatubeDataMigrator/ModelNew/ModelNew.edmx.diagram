@@ -29,6 +29,7 @@
         <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToUserAdministrator" />
         <AssociationConnector Association="MegatubeV2Model.FK_PaymentAlert_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_User_ToUser" />
+        <AssociationConnector Association="MegatubeV2Model.FK_User_ToRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
