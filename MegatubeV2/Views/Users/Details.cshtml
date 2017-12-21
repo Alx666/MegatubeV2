@@ -10,9 +10,12 @@
     bool hasCredit = Model.CreditHistory != null;
 
     string period = "-";
+    string firstAccreditation = "-";
+
     if (hasCredit && Model.CreditHistory.Count>0)
     {
         period=Model.CreditHistory.Last().Date.Year.ToString();
+        
     }
     else
     {
@@ -172,7 +175,10 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.BirthDate)
+                                @if (Model.BirthDate != null)
+                                {
+                                    @Html.Raw(((DateTime)Model.BirthDate).ToShortDateString());
+                                }
                             </td>
                         </tr>
 
@@ -284,7 +290,8 @@
                             <td class="userDetails">
                             @if (Model.Administrator != null)
                             {
-                                @(Model.Administrator.Name + " " + Model.Administrator.LastName);
+                                string adminfullName = Model.Administrator.Name + " " + Model.Administrator.LastName;
+                                <a href="@Url.Action("Details", "Users", new { id = Model.Administrator.Id })">@(adminfullName)</a>
                             }
                             </td>
                         </tr>
@@ -350,7 +357,10 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.BirthDate)
+                                @if (Model.Administrator.BirthDate != null)
+                                {
+                                    @Html.Raw(((DateTime)Model.Administrator.BirthDate).ToShortDateString());
+                                }
                             </td>
                         </tr>
 

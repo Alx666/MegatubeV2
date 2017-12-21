@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<MegatubeV2.Payment>
 
+@{ 
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
+}
 
 <div class="col-xs-12">
     <div class="row">
@@ -14,39 +17,29 @@
         <thead>
             <tr>
                 <th class="small text-muted text-uppercase">
-                    <strong>Type</strong>
+                    <strong>Date</strong>
                 </th>
                 <th class="small text-muted text-uppercase">
                     <strong>Amount</strong>
                 </th>
                 <th class="small text-muted text-uppercase">
-                    <strong>Receipt</strong>
+                    <strong>Net</strong>
                 </th>
             </tr>
         </thead>
         <tbody>            
             @{
                 foreach (var item in Model)
-                {                    
+                {
                     <tr>
                         <td class="v-a-m">
-                            <div class="media media-auto">
-                                <div class="media-left">
-                                    <a href="javascript: void(0)">
-                                        <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/lvovenok/128.jpg" alt="Avatar">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <span class="media-heading text-white">@item.PaymentType</span>
-                                    <br>
-                                    <span class="media-heading">
-                                        <span>@item.Date.ToShortDateString()</span>
-                                    </span>
-                                </div>
-                            </div>
+                            <span class='hide'>@item.Date.Ticks</span>
+                            <span class="media-heading">
+                                <span>@item.Date.ToShortDateString()</span>
+                            </span>
                         </td>
-                        <td class="v-a-m"><span>@item.Gross</span></td>
-                        <td class="v-a-m"><i class="fa fa-circle text-success m-r-1"></i>@item.Net</td>
+                        <td class="v-a-m"><span>@item.Gross.ToString("C", ci_IT)</span></td>
+                        <td class="v-a-m"><i class="fa fa-circle text-success m-r-1"></i>@item.Net.ToString("C", ci_IT)</td>
                     </tr>
                 }
             }
@@ -121,7 +114,8 @@
 
     $(document).ready(function () {
         $('#paymentsTable').DataTable({
-            "pageLength": 5
+            "pageLength": 5,
+            "order": [[0, "desc"]]
         });
     });
 </script>
