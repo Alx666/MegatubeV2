@@ -70,13 +70,13 @@
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
             <th class="small text-muted text-uppercase">
                 <strong>
                     @Html.DisplayNameFor(model => model.Id)
                 </strong>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OwnerName)
@@ -105,6 +105,9 @@
         @foreach (var item in Model)
             {
             <tr>
+                <td class="text-mint-green">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
                 <td>
                     @{
                         string sUrl = "https://www.youtube.com/channel/UC" + item.Id;
@@ -119,16 +122,14 @@
                         }
                     }
                 </td>
-                <td class="text-mint-green">
-                    @Html.DisplayFor(modelItem => item.Name)
+                <td>
+                    <a href="@Url.Action("Details", "Users", new { id = item.OwnerId })">@(item.OwnerName)</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OwnerName)
+                    <a href="@Url.Action("Details", "Users", new { id = item.RecruiterId })">@(item.RecruiterName)</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RecruiterName)
-                </td>
-                <td>
+                    <span class='hide'>@item.RegistrationDate.Ticks</span>
                     @item.RegistrationDate.ToShortDateString()
                 </td>
                 <td>
