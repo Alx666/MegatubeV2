@@ -18,7 +18,7 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Administrator);
+            var users = db.Users.Include(u => u.Administrator).Include(x => x.AdministratorOf);
             return View(users.OrderBy(x => x.LastName).ToList());
         }
 
@@ -47,7 +47,12 @@ namespace MegatubeV2.Controllers
             if (user.Accreditations.Count() > 0)
             {
                 user.TotalGrossEarning   = (from a in db.Accreditations where a.UserId == user.Id select a).Sum(x => x.GrossAmmount);
-                user.TotalGrossPaid      = (from p in db.Payments where p.UserId == user.Id select p).Sum(x => x.Gross);
+
+                if (user.Payments.Count() > 0)
+                    user.TotalGrossPaid = (from p in user.Payments select p).Sum(x => x.Gross);
+                else
+                    user.TotalGrossPaid = 0;
+
                 user.TotalGrossToPay     = user.TotalGrossEarning - user.TotalGrossPaid;
 
                 if (user.PaymentMethod.HasValue)
@@ -64,7 +69,7 @@ namespace MegatubeV2.Controllers
 
             }
 
-            if (user.Payments.Count() > 0)
+            if (user.Accreditations.Count() > 0)
             {
                 var accr = (from p in db.Accreditations where p.UserId == user.Id group p by p.DateFrom into g select new { Date = g.Key, Amount = g.Sum(x => x.GrossAmmount) }).OrderByDescending(x => x.Date).Take(12).ToList();
 
@@ -98,7 +103,7 @@ namespace MegatubeV2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name", user.FiscalAdministratorId);
+            ViewBag.FiscalAdministratorId = new SelectList(db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name}), "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
 
