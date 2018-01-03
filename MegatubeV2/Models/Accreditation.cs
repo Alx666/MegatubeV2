@@ -86,6 +86,7 @@ namespace MegatubeV2
                 case AccreditationSubType.Ownership: return "possesso canale";
                 case AccreditationSubType.Recruiting: return "canale reclutato";
                 case AccreditationSubType.NetworkPerformance: return "network performance";
+                case AccreditationSubType.Manual: return "manuale";
                 default: throw new Exception("Unknow Accreditation Subtype");
             }
         }

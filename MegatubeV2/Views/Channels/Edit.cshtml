@@ -135,7 +135,7 @@
 
     <script language="javascript">
     function checkPercent() {
-        if (parseInt($('#ownerInput').val()) + parseInt($('#recruiterInput').val()) + parseInt($('#networkInput').val()) != 100) {
+        if (Number($('#ownerInput').val().replace(',', '.')) + Number($('#recruiterInput').val().replace(',', '.')) + Number($('#networkInput').val().replace(',', '.')) != 100) {
             $('#saveChannelButton').hide();
             $('#channelErrMsg').html("Check the percentage values: the sum must be 100");
             $('#channelErrMsg').show();
@@ -149,7 +149,7 @@
     }
 
     function checkRecruiter() {
-        if (parseInt($("#RecruiterId").val()) == "0" && parseInt($('#recruiterInput').val())!=0) {
+        if ($("#RecruiterId").val() == "" && parseInt($('#recruiterInput').val())!=0) {
             $('#saveChannelButton').hide();
             $('#channelErrMsg').html("You can't specify recruiter's percentage if no recruiter is selected");
             $('#channelErrMsg').show();
