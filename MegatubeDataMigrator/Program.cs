@@ -7,11 +7,23 @@ using MegatubeDataMigrator.ModelNew;
 using MegatubeDataMigrator.ModelOld;
 using System.Data.Entity;
 using System.Collections.Concurrent;
+using System.Globalization;
 
 namespace MegatubeDataMigrator
 {
     class Program
     {
+
+        private void OutPercentage(int current, int total)
+        {
+            float result = ((float)current / total) * 100f;            
+
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(result.ToString("n2")+ "%" +  new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
+
         private void DropTable<T>(DbSet<T> dataset, bool confirm = true) where T : class
         {
             if (confirm)
@@ -260,6 +272,38 @@ namespace MegatubeDataMigrator
         #endregion
 
         #region Users
+
+        [ConsoleUIMethod]
+        public void NormalizeNames()
+        {
+            using (MegatubeV2Entities db = new MegatubeV2Entities())
+            {
+                List<ModelNew.User> users = db.Users.ToList();
+
+                for (int i = 0; i < users.Count; i++)
+                {
+                    ModelNew.User  current = users[i];
+
+                    if (!string.IsNullOrWhiteSpace(current.Name))
+                    {
+                        current.Name        = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(current.Name);
+                        current.Name        = current.Name.Trim();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(current.LastName))
+                    {
+                        current.LastName    = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(current.LastName);
+                        current.LastName    = current.LastName.Trim();
+
+                    }
+
+                    db.SaveChanges();
+                    OutPercentage(i, users.Count);
+                }
+
+                
+            }
+        }
 
         [ConsoleUIMethod]
         public void DropUser(int id)
