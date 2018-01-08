@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MegatubeV2;
+using System.Data.Entity.Core.Objects;
 
 namespace MegatubeV2.Controllers
 {
     public class UsersController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
+        
 
         // GET: Users
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
-        {
+        {                        
             var users = db.Users.Include(u => u.Administrator).Include(x => x.AdministratorOf);
             return View(users.OrderBy(x => x.LastName).ToList());
         }
@@ -45,29 +47,22 @@ namespace MegatubeV2.Controllers
             ViewBag.Notes = db.ViewNotes.Where(x => x.Subject == user.Id).ToList();
 
             if (user.Accreditations.Count() > 0)
-            {
-                user.TotalGrossEarning   = (from a in db.Accreditations where a.UserId == user.Id select a).Sum(x => x.GrossAmmount);
-
-                if (user.Payments.Count() > 0)
-                    user.TotalGrossPaid = (from p in user.Payments select p).Sum(x => x.Gross);
-                else
-                    user.TotalGrossPaid = 0;
-
-                user.TotalGrossToPay     = user.TotalGrossEarning - user.TotalGrossPaid;
-
-                if (user.PaymentMethod.HasValue)
-                    user.TotalNetToPay   = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(user.TotalGrossToPay);
-                else
-                    user.TotalNetToPay   = 0;
-            }
+                user.TotalGrossEarning = (from a in db.Accreditations where a.UserId == user.Id select a).Sum(x => x.GrossAmmount);
             else
-            {
-                user.TotalGrossEarning   = 0;
-                user.TotalGrossPaid      = 0;
-                user.TotalGrossToPay     = 0;
-                user.TotalNetToPay       = 0;
+                user.TotalGrossEarning = 0;
 
-            }
+            if (user.Payments.Count() > 0)
+                user.TotalGrossPaid = (from p in user.Payments select p).Sum(x => x.Gross);
+            else
+                user.TotalGrossPaid = 0;
+
+            user.TotalGrossToPay     = user.TotalGrossEarning - user.TotalGrossPaid;
+
+            if (user.PaymentMethod.HasValue)
+                user.TotalNetToPay = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(user.TotalGrossToPay);
+            else
+                user.TotalNetToPay = 0;
+
 
             if (user.Accreditations.Count() > 0)
             {
@@ -77,6 +72,8 @@ namespace MegatubeV2.Controllers
                 user.CreditHistory.Reverse();
             }
 
+            user.FirstAccredationDate = user.Accreditations.Min(x => x.DateFrom);
+
             return View(user);
         }
 
@@ -84,7 +81,9 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create()
         {
-            ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name");
+            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+
+            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name");
             return View();
         }
 
@@ -103,7 +102,9 @@ namespace MegatubeV2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FiscalAdministratorId = new SelectList(db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name}), "Id", "Name", user.FiscalAdministratorId);
+            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+
+            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
 
@@ -120,7 +121,10 @@ namespace MegatubeV2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name", user.FiscalAdministratorId);
+
+            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+
+            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
 
@@ -138,7 +142,10 @@ namespace MegatubeV2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FiscalAdministratorId = new SelectList(db.Users, "Id", "Name", user.FiscalAdministratorId);
+
+            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+
+            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
 
