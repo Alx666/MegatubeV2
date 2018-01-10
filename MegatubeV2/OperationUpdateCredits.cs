@@ -79,20 +79,6 @@ namespace MegatubeV2
                 updateRecord.DollarToEuroConv       = (double)dollarToEuro;
 
 
-                //List<int> missingIds = new List<int>();
-                //foreach (var group in accreditations)
-                //{
-                //    try
-                //    {
-                //        db.Accreditations.AddRange(group);
-                //        db.SaveChanges();
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        missingIds.Add(group.Key);
-                //    }
-                //}
-
                 db.Accreditations.AddRange(accreditations.SelectMany(x => x).Where(x => x.UserId != 0));
                 db.SaveChanges();
                 db.UpdatePaymentAlerts();

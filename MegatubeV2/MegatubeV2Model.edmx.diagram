@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="099f9d0b10db4159ab4ae2ee9f5cd9cc" Name="Diagram1">
-        <EntityTypeShape EntityType="MegatubeV2Model.Accreditation" Width="1.5" PointX="10.375" PointY="12.625" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Channel" Width="1.5" PointX="7.625" PointY="14" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Accreditation" Width="1.5" PointX="13.125" PointY="10" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Channel" Width="1.5" PointX="7" PointY="13" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="12.75" PointY="5.375" />
         <EntityTypeShape EntityType="MegatubeV2Model.DataFile" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Note" Width="1.5" PointX="6.75" PointY="10.125" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Payment" Width="1.5" PointX="5.25" PointY="21.375" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Note" Width="1.5" PointX="5.25" PointY="7.375" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Payment" Width="1.5" PointX="5.125" PointY="18" />
         <EntityTypeShape EntityType="MegatubeV2Model.PaymentAlert" Width="1.5" PointX="5.25" PointY="3.875" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="0.75" PointY="11.625" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="3.375" PointY="10.75" />
         <EntityTypeShape EntityType="MegatubeV2Model.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MegatubeV2Model.User" Width="2.125" PointX="3" PointY="8.75" />
+        <EntityTypeShape EntityType="MegatubeV2Model.User" Width="2.125" PointX="9" PointY="5.375" />
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToChannel" />
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToPayment" />
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToUser" />

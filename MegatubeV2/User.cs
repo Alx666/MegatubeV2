@@ -21,10 +21,10 @@ namespace MegatubeV2
             this.OwnedChannels = new HashSet<Channel>();
             this.RecruitedChannels = new HashSet<Channel>();
             this.Contracts = new HashSet<Contract>();
-            this.Notes = new HashSet<Note>();
-            this.Notes1 = new HashSet<Note>();
+            this.NotesCreated = new HashSet<Note>();
+            this.NotesReceived = new HashSet<Note>();
             this.Payments = new HashSet<Payment>();
-            this.Payments1 = new HashSet<Payment>();
+            this.AdministratorPayments = new HashSet<Payment>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
             this.AdministratorOf = new HashSet<User>();
         }
@@ -59,13 +59,13 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contract> Contracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> Notes { get; set; }
+        public virtual ICollection<Note> NotesCreated { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> Notes1 { get; set; }
+        public virtual ICollection<Note> NotesReceived { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment> Payments1 { get; set; }
+        public virtual ICollection<Payment> AdministratorPayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
         public virtual Role Role { get; set; }

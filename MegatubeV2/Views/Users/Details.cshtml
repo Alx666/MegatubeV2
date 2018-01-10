@@ -476,8 +476,8 @@
         </div>
         <div class="row m-t-3">        
             @{
-                Html.RenderPartial("~/Views/_PartialUserChannels.cshtml", Model.ChannelsOwned);
-                Html.RenderPartial("~/Views/_PartialUserRecChannels.cshtml", Model.ChannelsRecruited);
+                Html.RenderPartial("~/Views/_PartialUserChannels.cshtml", Model.OwnedChannels);
+                Html.RenderPartial("~/Views/_PartialUserRecChannels.cshtml", Model.RecruitedChannels);
             }
         </div>
         <div class="row m-t-3">        
