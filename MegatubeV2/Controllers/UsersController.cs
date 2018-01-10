@@ -72,7 +72,10 @@ namespace MegatubeV2.Controllers
                 user.CreditHistory.Reverse();
             }
 
-            user.FirstAccredationDate = user.Accreditations.Min(x => x.DateFrom);
+            if (user.Accreditations.Any())
+                user.FirstAccredationDate = user.Accreditations.Min(x => x.DateFrom);
+            else
+                user.FirstAccredationDate = null;
 
             return View(user);
         }

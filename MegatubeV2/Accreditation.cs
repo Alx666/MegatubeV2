@@ -26,6 +26,6 @@ namespace MegatubeV2
     
         public virtual Channel Channel { get; set; }
         public virtual Payment Payment { get; set; }
-        public virtual User Beneficiary { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -18,6 +18,9 @@
                 @Html.DisplayNameFor(model => model.User.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.User.PaymentMethod)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Gross)
             </th>
             <th>
@@ -41,6 +44,23 @@
                 </td>
                 <td>
                     @(item.User.LastName + " " + item.User.Name)
+                </td>
+                <td>
+                    @{
+                        string mode;
+
+                        try
+                        {
+                            mode = PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value).ToString();
+                        }
+                        catch (Exception)
+                        {
+                            mode = "-";
+                        }
+
+                    }   
+                    
+                    @mode
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Gross)

@@ -31,9 +31,9 @@ namespace MegatubeV2
         public bool IsActive { get; set; }
         public System.DateTime LatestActivity { get; set; }
     
-        public virtual User Owner { get; set; }
-        public virtual User Recruiter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

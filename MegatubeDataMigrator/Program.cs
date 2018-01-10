@@ -27,8 +27,7 @@ namespace MegatubeDataMigrator
         private void DropTable<T>(DbSet<T> dataset, bool confirm = true) where T : class
         {
             if (confirm)
-            {
-                
+            {                
                 Console.Write("\nAre you sure?> ");
                 if (Console.ReadLine() != "y")
                     return;
@@ -294,14 +293,11 @@ namespace MegatubeDataMigrator
                     {
                         current.LastName    = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(current.LastName);
                         current.LastName    = current.LastName.Trim();
-
                     }
 
                     db.SaveChanges();
                     OutPercentage(i, users.Count);
-                }
-
-                
+                }                
             }
         }
 

@@ -22,18 +22,18 @@ namespace MegatubeV2
     
         public int Id { get; set; }
         public int UserId { get; set; }
+        public decimal Gross { get; set; }
+        public decimal Net { get; set; }
         public System.DateTime Date { get; set; }
         public byte PaymentType { get; set; }
         public System.DateTime DateFrom { get; set; }
         public System.DateTime DateTo { get; set; }
         public int ReceiptCount { get; set; }
-        public decimal Gross { get; set; }
-        public decimal Net { get; set; }
         public Nullable<int> AdministratorId { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
+        public virtual User User { get; set; }
         public virtual User Administrator { get; set; }
     }
 }

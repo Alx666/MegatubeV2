@@ -20,7 +20,7 @@ namespace MegatubeV2
         public string Text { get; set; }
         public System.DateTime Date { get; set; }
     
-        public virtual User Author { get; set; }
-        public virtual User Subject { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

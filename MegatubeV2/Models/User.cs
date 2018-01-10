@@ -12,7 +12,7 @@ namespace MegatubeV2
         public decimal TotalGrossToPay                      { get; set; }
         public decimal TotalNetToPay                        { get; set; }
         public List<AccreditationsPerMonth> CreditHistory   { get; set; }
-        public DateTime FirstAccredationDate                { get; set; }
+        public DateTime? FirstAccredationDate               { get; set; }
 
 
 
