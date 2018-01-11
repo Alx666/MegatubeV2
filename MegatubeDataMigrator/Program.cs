@@ -142,7 +142,7 @@ namespace MegatubeDataMigrator
                         
                         return record;
 
-                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                    }, newDb, (index, total, entity) => OutPercentage(index, total));
                 }
             }
         }
@@ -218,7 +218,7 @@ namespace MegatubeDataMigrator
                         record.PaymentId = null;
                         return record;
 
-                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                    }, newDb, (index, total, entity) => OutPercentage(index, total));
                 }
             }
         }
@@ -357,7 +357,7 @@ namespace MegatubeDataMigrator
                             record.RegistrationDate = DateTime.Now;
 
                         return record;
-                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                    }, newDb, (index, total, entity) => OutPercentage(index, total));
                 }
             }
         }
@@ -400,7 +400,7 @@ namespace MegatubeDataMigrator
                         admin.RegistrationDate        = partner.RegistrationDate;
 
                         return admin;
-                    }, newDb, (index, total, entity) => Console.WriteLine($"{index}/{total}"));
+                    }, newDb, (index, total, entity) => OutPercentage(index, total));
                 }
             }
 

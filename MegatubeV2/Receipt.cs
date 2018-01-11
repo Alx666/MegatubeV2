@@ -54,7 +54,7 @@ namespace MegatubeV2
                         {
                             StringBuilder hSbRows = new StringBuilder();
                             ownershipCredits.ForEach(x => hSbRows.AppendFormat("<tr><td colspan=\"4\">{0}</td><td bgcolor=\"#cccccc\"></td><td>{1}</td></tr>{2}", x.ToString(), x.GrossAmmount, Environment.NewLine));
-                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Partnership Canali da {0} a {1}", payment.DateFrom, payment.DateTo));
+                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Partnership Canali da {0} a {1}", payment.DateFrom.ToShortDateString(), payment.DateTo.ToShortDateString()));
                             hSbTables.AppendLine(sTmpHTML);
                             hSbTables.AppendLine("<br>");
                             hSbTables.AppendLine("<br>");
@@ -64,7 +64,7 @@ namespace MegatubeV2
                         {
                             StringBuilder hSbRows = new StringBuilder();
                             recruitingCredits.ForEach(x => hSbRows.AppendFormat("<tr><td colspan=\"4\">{0}</td><td bgcolor=\"#cccccc\"></td><td>{1}</td></tr>{2}", x.ToString(), x.GrossAmmount, Environment.NewLine));
-                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Recruiting Canali da {0} a {1}", payment.DateFrom, payment.DateTo));
+                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Recruiting Canali da {0} a {1}", payment.DateFrom.ToShortDateString(), payment.DateTo.ToShortDateString()));
                             hSbTables.AppendLine(sTmpHTML);
                             hSbTables.AppendLine("<br>");
                             hSbTables.AppendLine("<br>");
@@ -74,7 +74,7 @@ namespace MegatubeV2
                         {
                             StringBuilder hSbRows = new StringBuilder();
                             extraCredits.ForEach(x => hSbRows.AppendFormat("<tr><td colspan=\"4\">{0}</td><td bgcolor=\"#cccccc\"></td><td>{1}</td></tr>{2}", x.ToString(), x.GrossAmmount, Environment.NewLine));
-                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Commissioni Extra da {0} a {1}", payment.DateFrom, payment.DateTo));
+                            string sTmpHTML = sTable.Replace("[Rows]", hSbRows.ToString()).Replace("[Heading]", string.Format("Commissioni Extra da {0} a {1}", payment.DateFrom.ToShortDateString(), payment.DateTo.ToShortDateString()));
                             hSbTables.AppendLine(sTmpHTML);
                             hSbTables.AppendLine("<br>");
                             hSbTables.AppendLine("<br>");

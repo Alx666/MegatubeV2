@@ -32,6 +32,8 @@ namespace MegatubeV2
             this.UserId         = iUserId;
         }
 
+        public override string ToString() => this.Channel.Name;
+
         public static IEnumerable<Accreditation> Create(IGrouping<string, CsvVideo> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType)
         {
             yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileStartDate, g.Sum(x => x.PartnerRevenue * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership);
