@@ -18,8 +18,8 @@ namespace MegatubeDataMigrator.ModelNew
         public User()
         {
             this.Accreditations = new HashSet<Accreditation>();
-            this.Channels = new HashSet<Channel>();
-            this.Channels1 = new HashSet<Channel>();
+            this.ChannelsOwned = new HashSet<Channel>();
+            this.ChannelsRecruited = new HashSet<Channel>();
             this.Contracts = new HashSet<Contract>();
             this.Notes = new HashSet<Note>();
             this.NotesReceived = new HashSet<Note>();
@@ -53,9 +53,9 @@ namespace MegatubeDataMigrator.ModelNew
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> Channels { get; set; }
+        public virtual ICollection<Channel> ChannelsOwned { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> Channels1 { get; set; }
+        public virtual ICollection<Channel> ChannelsRecruited { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contract> Contracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
