@@ -2,6 +2,14 @@
 
 @{
     ViewBag.Title = "Edit";
+
+    //fill payment method array with payment method names
+    string[] paymentMethodArr = new string[5];
+    paymentMethodArr[0] = " - ";
+    for (int i = 1; i < paymentMethodArr.Length; i++)
+    {
+        paymentMethodArr[i] = PaymentMethodFactory.GetMethodFromDBCode((short)i).ToString();
+    }
 }
 
 <h2>Edit</h2>
@@ -132,8 +140,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PaymentMethod, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+                <select class="form-control" id="FiscalAdministratorId" name="PaymentMethod" id="PaymentMethod">
+                @{ 
+                    string selected = "";
+                    for (int i = 0; i < paymentMethodArr.Length; i++)
+                    {
+                        selected = (i == Model.PaymentMethod ? " selected" : "");
+                        @Html.Raw("<option value=\""+i+"\""+ selected +"> "+paymentMethodArr[i]+"</option>")
+                    }
+
+                }
+                </select>
             </div>
         </div>
 

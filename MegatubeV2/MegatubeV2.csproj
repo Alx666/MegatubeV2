@@ -429,6 +429,7 @@
     <Content Include="Views\Contracts\Index.cshtml" />
     <Content Include="Views\_PartialUserChannels.cshtml" />
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
+    <Content Include="Views\_PartialAdministratedUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

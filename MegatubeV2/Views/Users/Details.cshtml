@@ -258,7 +258,9 @@
                             </td>
 
                             <td class="userDetails">
-                                @Html.DisplayFor(model => model.PaymentMethod)
+                                @if(Model.PaymentMethod>0){
+                                    @PaymentMethodFactory.GetMethodFromDBCode((short)Model.PaymentMethod).ToString()
+                                }
                             </td>
                         </tr>
 
@@ -480,6 +482,11 @@
                 Html.RenderPartial("~/Views/_PartialUserRecChannels.cshtml", Model.RecruitedChannels);
             }
         </div>
+        <div class="row m-t-3">
+            @{
+                Html.RenderPartial("~/Views/_PartialAdministratedUsers.cshtml", Model.AdministratorOf);
+            }
+        </div>
         <div class="row m-t-3">        
             @{
                 Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
@@ -506,7 +513,9 @@
         $('#userRecChannelsTable').DataTable({
             "pageLength": 5
         });
-
+        $('#administratedUsersTable').DataTable({
+            "pageLength": 5
+        });
 
         Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
             $(this).highcharts({
