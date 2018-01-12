@@ -593,8 +593,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
-          <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Owner" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Recruiter" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
         </EntityType>
         <EntityType Name="Contract">
           <Key>
@@ -706,8 +706,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FiscalAdministratorId" Type="Int32" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
-          <NavigationProperty Name="Channels" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty Name="Channels1" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="ChannelsOwned" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="ChannelsRecruited" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
           <NavigationProperty Name="Contracts" Relationship="MegatubeV2Model.FK_Table_ToUser" FromRole="User" ToRole="Contract" />
           <NavigationProperty Name="Notes" Relationship="MegatubeV2Model.FK_Note_ToUserAuthor" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="NotesReceived" Relationship="MegatubeV2Model.FK_Note_ToUserSubject" FromRole="User" ToRole="Note" />

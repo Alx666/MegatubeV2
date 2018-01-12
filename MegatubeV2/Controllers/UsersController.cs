@@ -19,8 +19,8 @@ namespace MegatubeV2.Controllers
         // GET: Users
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
-        {                        
-            var users = db.Users.Include(u => u.Administrator).Include(x => x.AdministratorOf);
+        {
+            var users = db.Users;
             return View(users.OrderBy(x => x.LastName).ToList());
         }
 
@@ -37,7 +37,9 @@ namespace MegatubeV2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
 
-            User user = db.Users.Find(id);            
+            User user = db.Users.Find(id); 
+            
+            
 
             if (user == null)
             {

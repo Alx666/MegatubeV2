@@ -8,11 +8,14 @@ using MegatubeDataMigrator.ModelOld;
 using System.Data.Entity;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.IO;
 
 namespace MegatubeDataMigrator
 {
     class Program
     {
+
+        #region Misc        
 
         private void OutPercentage(int current, int total)
         {
@@ -68,6 +71,7 @@ namespace MegatubeDataMigrator
             }
         }
 
+#endregion
 
         #region Payment Alerts
 
@@ -465,6 +469,92 @@ namespace MegatubeDataMigrator
         //    NetworkPerformance = 3
         //}
 
+        [ConsoleUIMethod]
+        public void CleanDatabase()
+        {                        
+            using (MegatubeV2Entities db = new MegatubeV2Entities())
+            {
+                List<string> idsToSave  = File.ReadAllLines("CurrentChannels.txt").Select(x => x.Substring(2)).ToList();
+                List<int> peapoleToSAve = new List<int>();
+
+                foreach (ModelNew.Channel channel in db.Channels.ToList())
+                {
+                    if (idsToSave.Contains(channel.Id))
+                    {
+                        if (channel.Owner != null)
+                        {
+                            peapoleToSAve.Add(channel.OwnerId.Value);
+
+                            if (channel.Owner.FiscalAdministrator != null)
+                                peapoleToSAve.Add(channel.Owner.FiscalAdministratorId.Value);
+                        }
+
+                        if (channel.Recruiter != null)
+                        {
+                            peapoleToSAve.Add(channel.RecruiterId.Value);
+
+                            if (channel.Recruiter.FiscalAdministrator != null)
+                                peapoleToSAve.Add(channel.Recruiter.FiscalAdministratorId.Value);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            db.Channels.Remove(channel);
+                            db.SaveChanges();
+                            Console.WriteLine("Channel Removed => " + channel.Name);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
+                }
+
+                foreach (ModelNew.User user in db.Users.ToList())
+                {
+                    try
+                    {
+                        if (peapoleToSAve.Contains(user.Id))
+                            continue;
+
+                        db.Users.Remove(user);
+                        db.SaveChanges();
+                        Console.WriteLine("User Removed => " + user.Name);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+            }
+        }
+
+
+        [ConsoleUIMethod]
+        public void CreateAdministrator()
+        {
+            using (MegatubeV2Entities db = new MegatubeV2Entities())
+            {
+                try
+                {
+                    ModelNew.User admin = new ModelNew.User();
+                    admin.Role = 1;
+                    admin.Name = "Admin";
+                    admin.LastName = "Admin";
+                    admin.EMail = "admin";
+                    admin.Password = "2464b94ceb49c2115c4238f51be98d8b";
+                    db.Users.Add(admin);
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+            }
+        }
    
 
         #region FullProcedures
