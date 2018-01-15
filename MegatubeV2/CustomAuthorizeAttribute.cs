@@ -18,6 +18,9 @@ namespace MegatubeV2
         {
             try
             {
+                if (httpContext.Session.GetUser().RoleId == 0)
+                    return true;
+
                 return allowedroles.Contains((RoleType)httpContext.Session.GetUser().RoleId);
                 
             }
