@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace MegatubeV2
 {
+    [MetadataType(typeof(IUserMetaData))]
     public partial class User
     {
         public decimal TotalGrossEarning                    { get; set; }
@@ -80,5 +82,18 @@ namespace MegatubeV2
             public DateTime Date { get; set; }
             public decimal Amount { get; set; }
         }
+    }
+
+    public interface IUserMetaData
+    {
+        [Required]
+        string Name { get; }
+
+        [Required]
+        string LastName { get; }
+
+        [Required]
+        [EmailAddress]
+        string EMail { get; }
     }
 }

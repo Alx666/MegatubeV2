@@ -99,20 +99,40 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Create([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
-        {            
-            if (ModelState.IsValid)
+        public ActionResult Create([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
+        {
+            try
             {
-                user.Password = user.Password.ToMD5();
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //Look for duplicated email
+                if(!string.IsNullOrEmpty(user.EMail))
+                    user.EMail = user.EMail.ToLower().Trim();
+
+                User withDuplicatedEmail = db.Users.Where(x => x.EMail == user.EMail).FirstOrDefault();
+                if (withDuplicatedEmail != null)
+                    throw new Exception("A user with the same email already exist");
+
+                if (ModelState.IsValid)
+                {
+                    if (!string.IsNullOrEmpty(user.Password))
+                        user.Password = user.Password.ToMD5();
+
+                    user.RegistrationDate = DateTime.Now;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+
+                ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
             }
 
-            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
-
-            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
-            return View(user);
         }
 
         // GET: Users/Edit/5
