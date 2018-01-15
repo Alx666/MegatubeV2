@@ -2,14 +2,14 @@
 
 @{
     ViewBag.Title = "Index";
-    string[] monthsArr = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-    DateTime currentDate = DateTime.Today;
-    int selectedMonth = Request.Params["m"] != null && Request.Params["m"].Length > 0 ? int.Parse(Request.Params["m"]) : currentDate.Month;
-    int selectedYear = Request.Params["y"] != null && Request.Params["y"].Length > 0 ? int.Parse(Request.Params["y"]) : currentDate.Year;
-    System.Globalization.CultureInfo ci_EN = new System.Globalization.CultureInfo("en-EN");
+    //string[] monthsArr = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+    //DateTime currentDate = DateTime.Today;
+    //int selectedMonth = Request.Params["m"] != null && Request.Params["m"].Length > 0 ? int.Parse(Request.Params["m"]) : currentDate.Month;
+    //int selectedYear = Request.Params["y"] != null && Request.Params["y"].Length > 0 ? int.Parse(Request.Params["y"]) : currentDate.Year;
+    //System.Globalization.CultureInfo ci_EN = new System.Globalization.CultureInfo("en-EN");
 }
 
-<div class="row">
+@*<div class="row">
     <form class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label">Select a period</label>
@@ -57,9 +57,9 @@
 
         </div>
     </form>
-</div>
+</div>*@
 
-<table class="table" id="paymentsTable">
+@*<table class="table" id="paymentsTable">
     <thead>
         <tr>
             <th>
@@ -155,8 +155,8 @@
         }
     </tbody>
 
-</table>
-<script language="javascript">
+</table>*@
+@*<script language="javascript">
 
     $(document).ready(function () {
         $('#paymentsTable').DataTable({
@@ -164,4 +164,4 @@
             "order": [[0, "desc"]]
         });
     });
-</script>
+</script>*@

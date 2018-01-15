@@ -36,10 +36,7 @@ namespace MegatubeV2.Controllers
             if (current.IsStandard && current.Id != id.Value)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
-
-            User user = db.Users.Find(id); 
-            
-            
+            User user = db.Users.Find(id);                         
 
             if (user == null)
             {
@@ -87,9 +84,9 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Create()
         {
-            var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
-
-            ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name");
+            var userSelection               = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+            ViewBag.RoleId                  = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", 2);
+            ViewBag.FiscalAdministratorId   = new SelectList(userSelection, "Id", "Name");
             return View();
         }
 
@@ -99,10 +96,13 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Create([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
+        public ActionResult Create([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId,RoleId")] User user)
         {
             try
             {
+                //if (Session.GetUser().RoleId > )
+                //    throw new Exception("Requested priviledges are greater than loggred user");
+
                 //Look for duplicated email
                 if(!string.IsNullOrEmpty(user.EMail))
                     user.EMail = user.EMail.ToLower().Trim();
@@ -124,6 +124,7 @@ namespace MegatubeV2.Controllers
 
                 var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
 
+                ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
                 return View(user);
             }
@@ -148,9 +149,10 @@ namespace MegatubeV2.Controllers
             {
                 return HttpNotFound();
             }
-
+            
             var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
 
+            ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
             ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
@@ -161,10 +163,13 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,RegistrationDate,FiscalAdministratorId")] User user)
+        public ActionResult Edit([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrEmpty(user.Password))
+                    user.Password = user.Password.ToMD5();
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -172,6 +177,7 @@ namespace MegatubeV2.Controllers
 
             var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
 
+            ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
             ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
             return View(user);
         }
