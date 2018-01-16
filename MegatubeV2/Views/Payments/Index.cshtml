@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "Index";
-    string[] monthsArr = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-    DateTime currentDate = DateTime.Today;
-    int selectedMonth = Request.Params["m"] != null && Request.Params["m"].Length > 0 ? int.Parse(Request.Params["m"]) : currentDate.Month;
-    int selectedYear = Request.Params["y"] != null && Request.Params["y"].Length > 0 ? int.Parse(Request.Params["y"]) : currentDate.Year;
-    System.Globalization.CultureInfo ci_EN = new System.Globalization.CultureInfo("en-EN");
 }
 
 
