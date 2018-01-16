@@ -17,7 +17,7 @@ namespace MegatubeV2.Controllers
         // GET: Channels/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id              == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -26,6 +26,9 @@ namespace MegatubeV2.Controllers
             channel.PercentMegatube     *= 100d;
             channel.PercentOwner        *= 100d;
             channel.PercentRecruiter    *= 100d;
+
+            channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
+
 
             if (channel         == null)
             {

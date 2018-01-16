@@ -9,5 +9,7 @@ namespace MegatubeV2
     {
         public override string ToString() => this.Name;
 
+        public List<AccreditationsPerMonth> CreditHistory;
+
     }
 }
