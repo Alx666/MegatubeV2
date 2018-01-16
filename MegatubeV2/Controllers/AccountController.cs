@@ -59,6 +59,13 @@ namespace MegatubeV2.Controllers
             }                                    
         }
 
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            Session.SetUser(null);
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
