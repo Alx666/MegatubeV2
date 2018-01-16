@@ -27,7 +27,7 @@ namespace MegatubeV2.Controllers
             channel.PercentOwner        *= 100d;
             channel.PercentRecruiter    *= 100d;
 
-            channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
+            channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).ToList().Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
 
 
             if (channel         == null)
