@@ -7,6 +7,10 @@
 
 @{
     Layout = null;
+    if (Session.GetUser() != null)
+    {
+        Response.Redirect("~/Users");
+    }
 }
 
 <!DOCTYPE html>
@@ -143,7 +147,6 @@
     <div class="main-wrap">
         <div class="content">
             <div class="container-fluid">
-                <a class="btn btn-default m-t-2 m-b-1 action-navigate-back" href="#" role="button"><i class="fa fa-angle-left m-r-1"></i> Back</a>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4">
                         <div class="panel panel-default b-a-2 no-bg b-gray-dark">
