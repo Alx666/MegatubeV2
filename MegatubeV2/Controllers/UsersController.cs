@@ -83,6 +83,7 @@ namespace MegatubeV2.Controllers
             else
                 user.LastPaymentDate = null;
 
+            ViewBag.Notes = (from n in db.Notes where n.Subject.Id == id.Value select n).ToList();
             
             return View(user);
         }

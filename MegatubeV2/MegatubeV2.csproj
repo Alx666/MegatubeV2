@@ -148,6 +148,7 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentData.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Month.cs" />
     <Compile Include="OperationUpdatePaidFeatures.cs" />
     <Compile Include="OperationUpdateCredits.cs" />
     <Compile Include="PaymentAlert.cs">
@@ -435,6 +437,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Receipts\" />
+    <Folder Include="Views\Notes\" />
+    <Folder Include="Views\UserNotes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\vendor\fonts\glyphicons-halflings-regular.woff" />

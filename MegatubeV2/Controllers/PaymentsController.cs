@@ -29,6 +29,8 @@ namespace MegatubeV2.Controllers
                 payments.Where(x => x.Date.Month == month.Value);
 
 
+            ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
+
             return View(payments.ToList());
         }
 
