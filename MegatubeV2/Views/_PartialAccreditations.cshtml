@@ -61,7 +61,20 @@
                         </td>
                         <td class="v-a-m">
                             <span class="media-heading">
-                                <span><a href="@Url.Action("Edit", "Channels", new { id = item.ChannelId })">@(item.Channel.Name)</a></span>
+                                @{
+
+                                    if (item.Channel != null)
+                                    {
+                                        <span><a href="@Url.Action("Edit", "Channels", new { id = item.ChannelId })">@item.Channel.Name</a></span>
+                                    }
+                                    else
+                                    {
+                                        string name = "Traffic Income From Old System";
+                                        <span>@name</span>
+                                    }
+                                }
+
+                                
                             </span>
                         </td>
                         <td class="v-a-m">

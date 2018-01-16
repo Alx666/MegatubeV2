@@ -194,6 +194,7 @@ namespace MegatubeDataMigrator
                     };
 
 
+
                     //var accrUser = (from a in oldDb.Accreditations
                     //                where !a.Payed
                     //                group a by a.UserId into g
@@ -208,13 +209,16 @@ namespace MegatubeDataMigrator
 
 
 
-                    MigrateTable(oldDb.Accreditations.Where(x => !x.Payed), newDb.Accreditations, t =>
+                    List<int> users = newDb.Users.Select(x => x.Id).ToList();
+
+
+                    MigrateTable(oldDb.Accreditations.Where(x => !x.Payed && users.Contains(x.UserId)), newDb.Accreditations, t =>
                     {
                         ModelNew.Accreditation record = new ModelNew.Accreditation();
                         record.Id = t.Id;
                         record.DateFrom = t.DateFrom;
                         record.DateTo = t.DateTo;
-                        record.ChannelId = t.ChannelId;
+                        //record.ChannelId = t.ChannelId;
                         record.GrossAmmount = t.GrossAmmount;
                         record.UserId = t.UserId;
                         record.Type = mapping[t.Type].Item1;

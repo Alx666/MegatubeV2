@@ -69,7 +69,6 @@ namespace MegatubeV2.Controllers
             if (user.Accreditations.Count() > 0)
             {
                 var accr = (from p in db.Accreditations where p.UserId == user.Id group p by p.DateFrom into g select new { Date = g.Key, Amount = g.Sum(x => x.GrossAmmount) }).OrderByDescending(x => x.Date).Take(12).ToList();
-
                 user.CreditHistory = accr.Select(x => new AccreditationsPerMonth(x.Date, x.Amount)).ToList();
                 user.CreditHistory.Reverse();
             }
