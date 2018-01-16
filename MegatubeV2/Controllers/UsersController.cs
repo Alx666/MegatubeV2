@@ -55,7 +55,10 @@ namespace MegatubeV2.Controllers
             else
                 user.TotalGrossPaid = 0;
 
-            user.TotalGrossToPay     = user.TotalGrossEarning - user.TotalGrossPaid;
+            if (user.Accreditations.Where(x => x.PaymentId == null).Count() > 0)
+                user.TotalGrossToPay = user.Accreditations.Where(x => x.PaymentId == null).Sum(x => x.GrossAmmount);
+            else
+                user.TotalGrossToPay = 0;
 
             if (user.PaymentMethod.HasValue)
                 user.TotalNetToPay = PaymentMethodFactory.GetMethodFromDBCode(user.PaymentMethod.Value).ComputeNet(user.TotalGrossToPay);
@@ -75,6 +78,11 @@ namespace MegatubeV2.Controllers
                 user.FirstAccredationDate = user.Accreditations.Min(x => x.DateFrom);
             else
                 user.FirstAccredationDate = null;
+
+            if (user.Payments.Any())
+                user.LastPaymentDate = db.Payments.Where(x => x.UserId == user.Id).Max(x => x.Date);
+            else
+                user.LastPaymentDate = null;
 
             
             return View(user);
