@@ -12,10 +12,10 @@
     string period = "-";
     string firstAccreditation = "-";
 
-    if (hasCredit && Model.CreditHistory.Count>0)
+    if (hasCredit && Model.CreditHistory.Count > 0)
     {
-        period=Model.CreditHistory.Last().Date.Year.ToString();
-        
+        period = Model.CreditHistory.Last().Date.Year.ToString();
+
     }
     else
     {
@@ -30,20 +30,34 @@
 <div class="row">
     <div class="col-lg-12">
         <!-- START ROWs #1 -->
+        @if (Model.AdministratorOf.Count == 0 && Model.OwnedChannels.Count == 0 && Model.RecruitedChannels.Count == 0)
+        {
+            <div class="row m-t-1">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="panel panel-default b-a-0">
+                        <div class="panel-heading">
+
+                            <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Delete",new { Id = Model.Id })"><i class="glyphicon glyphicon-trash"></i></a> <span>Delete User</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
         <div class="row m-t-1">
-            
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross Earnings</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">
-                            @Model.TotalGrossEarning.ToString("C",ci_IT)
+                            @Model.TotalGrossEarning.ToString("C", ci_IT)
                         </h2>
-                        <small>Since</small> <span class="text-success m-r-1">@Model.RegistrationDate.ToShortDateString()</span> 
+                        <small>Since</small> <span class="text-success m-r-1">@Model.RegistrationDate.ToShortDateString()</span>
                     </div>
                 </div>
             </div>
-                        
+
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
@@ -88,18 +102,18 @@
                     <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                         <div class="btn-group" role="group" aria-label="...">
                             @*<button type="button" class="btn btn-sm btn-default">Items Sold</button>
-                            <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
+                                <button type="button" class="btn btn-sm btn-default">Revenue</button>*@
                         </div>
                     </div>
                 </div>
                 <!-- END Header -->
                 <!-- START Chart Higcharts -->
-                 
+
                 <div class="highcharts-basic-column m-t-2"></div>
-                
+
                 <!-- END Chart Higcharts -->
-            </div>            
-            
+            </div>
+
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-6">
@@ -107,16 +121,16 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-sm-6 text-right">
 
-                        <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>                        
+                        <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
 
                     </div>
                 </div>
                 @if (Model.Administrator != null)
                 {
-                <ul class="nav nav-tabs">
-                    <li role="presentation" id="userTab" class="tabSwitch active"><a href="javascript: void(0)">User</a></li>
-                    <li role="presentation" id="tutorTab" class="tabSwitch"><a href="javascript: void(0)">Administrator</a></li>
-                </ul>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" id="userTab" class="tabSwitch active"><a href="javascript: void(0)">User</a></li>
+                        <li role="presentation" id="tutorTab" class="tabSwitch"><a href="javascript: void(0)">Administrator</a></li>
+                    </ul>
                 }
                 <table id="userDetailsTable" class="table table-condensed table-hover table-striped">
                     <tbody>
@@ -258,7 +272,8 @@
                             </td>
 
                             <td class="userDetails">
-                                @if(Model.PaymentMethod>0){
+                                @if (Model.PaymentMethod > 0)
+                                {
                                     @PaymentMethodFactory.GetMethodFromDBCode((short)Model.PaymentMethod).ToString()
                                 }
                             </td>
@@ -290,11 +305,11 @@
                             </td>
 
                             <td class="userDetails">
-                            @if (Model.Administrator != null)
-                            {
-                                string adminfullName = Model.Administrator.Name + " " + Model.Administrator.LastName;
-                                <a href="@Url.Action("Details", "Users", new { id = Model.Administrator.Id })">@(adminfullName)</a>
-                            }
+                                @if (Model.Administrator != null)
+                                {
+                                    string adminfullName = Model.Administrator.Name + " " + Model.Administrator.LastName;
+                                    <a href="@Url.Action("Details", "Users", new { id = Model.Administrator.Id })">@(adminfullName)</a>
+                                }
                             </td>
                         </tr>
                     </tbody>
@@ -302,181 +317,181 @@
 
                 @if (Model.Administrator != null)
                 {
-                <table id="tutorDetailsTable" class="table table-condensed table-hover table-striped hidden">
-                    <tbody>
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.Name)
-                            </td>
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.Name)
-                            </td>
-                        </tr>
+                    <table id="tutorDetailsTable" class="table table-condensed table-hover table-striped hidden">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </td>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.Name)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.LastName)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.LastName)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.LastName)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.Mobile)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Mobile)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.Mobile)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.Mobile)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.EMail)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.EMail)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.EMail)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.EMail)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.Skype)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Skype)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.Skype)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.Skype)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.BirthDate)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.BirthDate)
+                                </td>
 
-                            <td class="userDetails">
-                                @if (Model.Administrator.BirthDate != null)
-                                {
-                                    @Html.Raw(((DateTime)Model.Administrator.BirthDate).ToShortDateString());
-                                }
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @if (Model.Administrator.BirthDate != null)
+                                    {
+                                        @Html.Raw(((DateTime)Model.Administrator.BirthDate).ToShortDateString());
+                                    }
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.BirthPlace)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.BirthPlace)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.BirthPlace)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.BirthPlace)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.CompanyName)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.CompanyName)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.CompanyName)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.CompanyName)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.CompanyKind)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.CompanyKind)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.CompanyKind)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.CompanyKind)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.IBAN)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.IBAN)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.IBAN)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.IBAN)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.PIVAorVAT)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.PIVAorVAT)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.PIVAorVAT)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.PIVAorVAT)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.FullAddress)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.FullAddress)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.FullAddress)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.FullAddress)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.PostalCode)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.PostalCode)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.PostalCode)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.PostalCode)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.PaymentMethod)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.PaymentMethod)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.PaymentMethod)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.PaymentMethod)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.BICSWIFT)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.BICSWIFT)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.BICSWIFT)
-                            </td>
-                        </tr>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.BICSWIFT)
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                @Html.DisplayNameFor(model => model.RegistrationDate)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.RegistrationDate)
+                                </td>
 
-                            <td class="userDetails">
-                                @Html.DisplayFor(model => model.Administrator.RegistrationDate)
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                <td class="userDetails">
+                                    @Html.DisplayFor(model => model.Administrator.RegistrationDate)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 }
-        </div>
+            </div>
 
             @{
-                
+
                 Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
-             }
+            }
             <div class="highcharts-basic-column m-t-2"></div>
         </div>
-        <div class="row m-t-3">        
+        <div class="row m-t-3">
             @{
                 Html.RenderPartial("~/Views/_PartialUserChannels.cshtml", Model.OwnedChannels);
                 Html.RenderPartial("~/Views/_PartialUserRecChannels.cshtml", Model.RecruitedChannels);
@@ -487,7 +502,7 @@
                 Html.RenderPartial("~/Views/_PartialAdministratedUsers.cshtml", Model.AdministratorOf);
             }
         </div>
-        <div class="row m-t-3">        
+        <div class="row m-t-3">
             @{
                 Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
             }
@@ -496,7 +511,7 @@
             @{
                 Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
             }
-        </div>  
+        </div>
     </div>
 </div>
 <!-- END EDIT CONTENT -->
