@@ -13,14 +13,15 @@ namespace MegatubeV2
         private MegatubeV2Entities  db;
         private DateTime            fileStartDate;
         private DateTime            fileEndDate;       
-        
+        private int                 networkId;
 
-        public OperationUpdateChannels(HttpPostedFileBase file, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
+        public OperationUpdateChannels(HttpPostedFileBase file, MegatubeV2Entities db, DateTime startDate, DateTime endDate, int networkId)
         {
             this.file           = file;
             this.db             = db;
             this.fileStartDate  = startDate;
-            this.fileEndDate    = endDate;            
+            this.fileEndDate    = endDate;
+            this.networkId      = networkId;
         }
 
         public string ReturnActionName      => "Index";
@@ -76,11 +77,13 @@ namespace MegatubeV2
                     }
                     else
                     {
-                        Channel newOne = new Channel();
-                        newOne.Id = csvChannel.Key;
-                        newOne.IsActive = true;
+                        Channel newOne          = new Channel();
+                        newOne.Id               = csvChannel.Key;
+                        newOne.IsActive         = true;
                         newOne.RegistrationDate = DateTime.Now;
-                        newOne.LatestActivity = DateTime.Now;
+                        newOne.LatestActivity   = DateTime.Now;
+                        newOne.NetworkId        = networkId;
+
 
                         try
                         {

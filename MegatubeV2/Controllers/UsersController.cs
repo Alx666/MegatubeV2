@@ -20,7 +20,8 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
-            var users = db.Users;
+            int netid = Session.GetUser().NetworkId;
+            var users = db.Users.Where(x => x.NetworkId == netid);
             return View(users.OrderBy(x => x.LastName).ToList());
         }
 
@@ -125,6 +126,7 @@ namespace MegatubeV2.Controllers
                         user.Password = user.Password.ToMD5();
 
                     user.RegistrationDate = DateTime.Now;
+                    user.NetworkId = Session.GetUser().NetworkId;
                     db.Users.Add(user);
                     db.SaveChanges();
                     return RedirectToAction("Index");

@@ -16,7 +16,7 @@ namespace MegatubeV2
             dateParseRegex = new Regex(@"\d{8}");
         }
 
-        public static IOperation Select(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db)
+        public static IOperation Select(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, int networkId)
         {
             MatchCollection matches = dateParseRegex.Matches(file.FileName);
             DateTime fileStartDate  = DateTime.ParseExact(matches[0].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -39,11 +39,11 @@ namespace MegatubeV2
             }
             else if (record == null && !isPaidFeatures)
             {
-                return new OperationUpdateChannels(file, db, fileStartDate, fileEndDate);
+                return new OperationUpdateChannels(file, db, fileStartDate, fileEndDate, networkId);
             }
             else if (record != null && !isPaidFeatures && ((ProcessingType)record.ProcessingType) == ProcessingType.ChannelListUpdate)
             {
-                return new OperationUpdateCredits(file, dollarToEuro, db, fileStartDate, fileEndDate);
+                return new OperationUpdateCredits(file, dollarToEuro, db, fileStartDate, fileEndDate, networkId);
             }
             else
             {

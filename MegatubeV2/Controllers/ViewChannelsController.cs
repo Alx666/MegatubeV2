@@ -18,7 +18,8 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(bool referenced = true, bool active = true)
         {
-            IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active);
+            int networkId = Session.GetUser().NetworkId;
+            IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active && x.NetworkId == networkId);
 
             if (referenced)
                 channels = channels.Where(x => x.OwnerId != null);

@@ -20,14 +20,23 @@ namespace MegatubeV2.Controllers
 
         //POST: /Account/Login
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(string username, string password, string network)
         {
-            //lucazodaa@gmail.com
-            //asdasd
             try
             {
+                Network net = db.Networks.Where(x => x.Name == network).Single();
+
                 string pass = password.ToMD5();
                 User user = (from u in db.Users where u.EMail == username && u.Password == pass select u).Single();
+
+                if (user.IsDeveloper)
+                {
+                    user.NetworkId = net.Id; //Developers can interact with all networks
+                }
+                else if(user.NetworkId != net.Id)
+                {
+                    throw new InvalidOperationException();
+                }
 
                 Session.SetUser(user);
 

@@ -30,10 +30,12 @@ namespace MegatubeV2
         public double PercentMegatube { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime LatestActivity { get; set; }
+        public int NetworkId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
         public virtual User Owner { get; set; }
         public virtual User Recruiter { get; set; }
+        public virtual Network Network { get; set; }
     }
 }

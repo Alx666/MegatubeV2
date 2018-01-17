@@ -21,7 +21,7 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                IOperation operation = OperationSelector.Select(file, dollarToEuro, db);
+                IOperation operation = OperationSelector.Select(file, dollarToEuro, db, Session.GetUser().NetworkId);
 
                 operation.Execute();
 

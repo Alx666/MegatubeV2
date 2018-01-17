@@ -31,6 +31,8 @@
         <AssociationConnector Association="MegatubeV2Model.FK_User_ToUser" />
         <EntityTypeShape EntityType="MegatubeV2Model.ViewChannel" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="MegatubeV2Model.ViewNote" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="MegatubeV2Model.FK_User_ToNetwork" />
+        <AssociationConnector Association="MegatubeV2Model.FK_Channel_ToNetwork" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

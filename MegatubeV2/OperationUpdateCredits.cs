@@ -15,15 +15,16 @@ namespace MegatubeV2
         private DateTime fileStartDate;
         private DateTime fileEndDate;
         private decimal dollarToEuro;
+        private int networkId;
 
-
-        public OperationUpdateCredits(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
+        public OperationUpdateCredits(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate, int networkId)
         {
             this.file = file;
             this.db = db;
             this.fileStartDate = startDate;
             this.fileEndDate = endDate;
             this.dollarToEuro = (decimal)dollarToEuro;
+            this.networkId = networkId;
         }
 
         public string ReturnActionName => "Index";
@@ -39,8 +40,8 @@ namespace MegatubeV2
             using (StreamReader sr = new StreamReader(file.InputStream))
             {
                 //Get All Channels From Db
-                List<Channel> allChannels = db.Channels.ToList();
-                List<Channel> missingOwner = allChannels.Where(c => c.OwnerId == null).ToList();
+                List<Channel> allChannels = db.Channels.Where(x => x.NetworkId == this.networkId).ToList();
+                List<Channel> missingOwner = allChannels.Where(c => c.NetworkId == this.networkId && c.OwnerId == null).ToList();
 
                 //If there are unassociated channels rise error
                 if (missingOwner.Count > 0)
