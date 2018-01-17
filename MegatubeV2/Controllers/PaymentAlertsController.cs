@@ -21,7 +21,9 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
-            var paymentAlerts = db.PaymentAlerts.ToList();
+            int netId = Session.GetUser().NetworkId;
+
+            var paymentAlerts = db.PaymentAlerts.Where(x => x.NetworkId == netId).ToList();
             return View(paymentAlerts);
         }
 
@@ -45,7 +47,7 @@ namespace MegatubeV2.Controllers
 
                 for (int i = 0; i < toPay.Length; i++)
                 {
-                    Payment p = toPay[i].User.CreatePayment(db, out PaymentAlert toRemove);
+                    Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, out PaymentAlert toRemove);
                     db.Payments.Add(p);
                     db.PaymentAlerts.Remove(toRemove);
                     db.SaveChanges();

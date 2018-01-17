@@ -15,15 +15,17 @@ namespace MegatubeV2
         private DateTime fileStartDate;
         private DateTime fileEndDate;
         private decimal dollarToEuro;
+        private int networkId;
 
 
-        public OperationUpdatePaidFeatures(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate)
+        public OperationUpdatePaidFeatures(HttpPostedFileBase file, float dollarToEuro, MegatubeV2Entities db, DateTime startDate, DateTime endDate, int networkId)
         {
             this.file           = file;
             this.db             = db;
             this.fileStartDate  = startDate;
             this.fileEndDate    = endDate;
             this.dollarToEuro   = (decimal)dollarToEuro;
+            this.networkId      = networkId;
         }
 
         public string ReturnActionName      => "Index";
@@ -66,7 +68,7 @@ namespace MegatubeV2
                                       group v by v.GetOwnerReference() into g
                                       join c in allChannels
                                       on g.Key equals c.Id
-                                      select Accreditation.Create(g, c, dollarToEuro, fileStartDate, fileEndDate, Accreditation.AccreditationMainType.Traffic)).SelectMany(x => x).GroupBy(x => x.UserId).ToList();
+                                      select Accreditation.Create(g, c, dollarToEuro, fileStartDate, fileEndDate, Accreditation.AccreditationMainType.Traffic, networkId)).SelectMany(x => x).GroupBy(x => x.UserId).ToList();
 
 
                 DataFile updateRecord               = new DataFile();
@@ -76,11 +78,12 @@ namespace MegatubeV2
                 updateRecord.TrafficIncomeNetwork   = accreditations.SelectMany(x => x).Where(x => ((Accreditation.AccreditationSubType)x.SubType) == Accreditation.AccreditationSubType.NetworkPerformance).Sum(x => x.GrossAmmount);
                 updateRecord.UploadDate             = DateTime.Now;                
                 updateRecord.DollarToEuroConv       = (double)dollarToEuro;
+                updateRecord.NetworkId              = networkId;
 
                 db.DataFiles.Add(updateRecord);
 
                 db.SaveChanges();
-                db.UpdatePaymentAlerts();
+                db.UpdatePaymentAlerts(networkId);
                 db.SaveChanges();
             }
         }

@@ -69,7 +69,7 @@ namespace MegatubeV2
                                       group v by v.GetOwnerReference() into g
                                       join c in allChannels
                                       on g.Key equals c.Id
-                                      select Accreditation.Create(g, c, dollarToEuro, fileStartDate, fileEndDate, Accreditation.AccreditationMainType.Traffic)).SelectMany(x => x).GroupBy(x => x.UserId).ToList();
+                                      select Accreditation.Create(g, c, dollarToEuro, fileStartDate, fileEndDate, Accreditation.AccreditationMainType.Traffic, this.networkId)).SelectMany(x => x).GroupBy(x => x.UserId).ToList();
 
                 
                 DataFile updateRecord               = db.DataFiles.Where(x => x.Name == file.FileName).Single();
@@ -82,7 +82,7 @@ namespace MegatubeV2
 
                 db.Accreditations.AddRange(accreditations.SelectMany(x => x).Where(x => x.UserId != 0));
                 db.SaveChanges();
-                db.UpdatePaymentAlerts();
+                db.UpdatePaymentAlerts(this.networkId);
                 db.SaveChanges();
 
             }

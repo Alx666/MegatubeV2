@@ -18,9 +18,10 @@ namespace MegatubeV2.Controllers
         // GET: Payments
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(int? month, int? year)
-        {            
-            //var result = from p in db.Payments ord
-            var payments = db.Payments.Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
+        {
+            int networkId = Session.GetUser().NetworkId;
+
+            var payments = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
 
             if (month.HasValue)
                 payments.Where(x => x.Date.Month == month.Value);
@@ -91,7 +92,7 @@ namespace MegatubeV2.Controllers
                 p.From              = accreditations.Min(x => x.DateFrom);
                 p.To                = accreditations.Max(x => x.DateTo);
                 p.PaymentMode       = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ToString();
-                p.ReceiptCount      = count;
+                p.ReceiptCount      = count;                
 
                 return View(p);
             }
@@ -113,7 +114,7 @@ namespace MegatubeV2.Controllers
             try
             {
                 User toPay          = db.Users.Find(userId);
-                Payment p = toPay.CreatePayment(db, out PaymentAlert toRemove);
+                Payment p = toPay.CreatePayment(db, Session.GetUser().NetworkId, out PaymentAlert toRemove);
 
                 db.Payments.Add(p);
                 db.PaymentAlerts.Remove(toRemove);

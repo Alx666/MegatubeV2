@@ -13,8 +13,9 @@ namespace MegatubeV2.Controllers
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         public ActionResult Index()
-        {                        
-            return View(db.DataFiles.OrderByDescending(x => x.UploadDate));
+        {
+            int netId = Session.GetUser().NetworkId;
+            return View(db.DataFiles.Where(x => x.NetworkId == netId).OrderByDescending(x => x.UploadDate));
         }
 
         public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro = 0f)
@@ -36,7 +37,7 @@ namespace MegatubeV2.Controllers
 
         public ActionResult UpdatePaymentAlerts()
         {
-            db.UpdatePaymentAlerts();
+            db.UpdatePaymentAlerts(Session.GetUser().NetworkId);
             return RedirectToAction("Index", "PaymentAlerts");
         }
 

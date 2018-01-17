@@ -46,12 +46,12 @@ namespace MegatubeV2
             return b["User"] as User;
         }
 
-        public static void UpdatePaymentAlerts(this MegatubeV2Entities db)
+        public static void UpdatePaymentAlerts(this MegatubeV2Entities db, int netId)
         {
-            db.PaymentAlerts.RemoveRange(db.PaymentAlerts);
+            db.PaymentAlerts.RemoveRange(db.PaymentAlerts.Where(x => x.NetworkId == netId));
 
             var credits = (from a in db.Accreditations
-                           where a.PaymentId == null
+                           where a.PaymentId == null && a.NetworkId == netId
                            group a by a.UserId into g
                            select new { UserId = g.Key, Gross = g.Sum(x => x.GrossAmmount) }).Where(x => x.Gross > 100).ToList();
 
@@ -63,6 +63,7 @@ namespace MegatubeV2
                 p.UserId        = item.UserId;
                 p.Gross         = item.Gross;
                 p.Net           = p.Gross;
+                p.NetworkId     = netId;
 
                 db.PaymentAlerts.Add(p);
             }

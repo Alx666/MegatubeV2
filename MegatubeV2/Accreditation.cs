@@ -23,9 +23,11 @@ namespace MegatubeV2
         public System.DateTime DateTo { get; set; }
         public byte Type { get; set; }
         public byte SubType { get; set; }
+        public int NetworkId { get; set; }
     
         public virtual Channel Channel { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual User User { get; set; }
+        public virtual Network Network { get; set; }
     }
 }

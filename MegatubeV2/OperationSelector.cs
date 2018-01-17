@@ -35,7 +35,7 @@ namespace MegatubeV2
             }
             else if (isPaidFeatures && record == null)
             {
-                return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate);
+                return new OperationUpdatePaidFeatures(file, dollarToEuro, db, fileStartDate, fileEndDate, networkId);
             }
             else if (record == null && !isPaidFeatures)
             {

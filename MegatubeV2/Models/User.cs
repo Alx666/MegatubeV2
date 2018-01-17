@@ -44,7 +44,7 @@ namespace MegatubeV2
             }
         }
 
-        public Payment CreatePayment(MegatubeV2Entities db, out PaymentAlert toRemove)
+        public Payment CreatePayment(MegatubeV2Entities db, int networkId, out PaymentAlert toRemove)
         {
             User toPay                           = this;
             User admin                           = toPay.Administrator ?? toPay;
@@ -59,6 +59,7 @@ namespace MegatubeV2
             p.UserId                             = toPay.Id;
             p.PaymentType                        = (byte)admin.PaymentMethod;
             p.Date                               = DateTime.Now;
+            p.NetworkId                          = networkId;
 
             if (toPay.Administrator != null)
                 p.AdministratorId                = toPay.Administrator.Id;
