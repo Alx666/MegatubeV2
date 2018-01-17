@@ -83,8 +83,6 @@ namespace MegatubeV2.Controllers
                 user.LastPaymentDate = db.Payments.Where(x => x.UserId == user.Id).Max(x => x.Date);
             else
                 user.LastPaymentDate = null;
-
-            ViewBag.Notes = (from n in db.Notes where n.Subject.Id == id.Value select n).ToList();
             
             return View(user);
         }

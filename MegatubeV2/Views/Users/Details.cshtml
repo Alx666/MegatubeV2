@@ -486,8 +486,7 @@
             </div>
 
             @{
-
-                Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
+                Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
             }
             <div class="highcharts-basic-column m-t-2"></div>
         </div>

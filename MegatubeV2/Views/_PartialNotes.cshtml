@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MegatubeV2.ViewNote>
+﻿@model ICollection<Note>
 
 <div class="col-lg-6">
     <div class="row">
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             @{ 
-                foreach(var item in Model)
+                foreach (var item in Model)
                 {
                     <tr>
                         <td>
@@ -35,7 +35,10 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <span class="media-heading text-white">@item.AuthorName</span>
+                                    @{
+                                        string name = item.Author.Name + " " + item.Author.LastName;
+                                    }
+                                    <span class="media-heading text-white">@name</span>
                                     <p class="m-t-2 m-b-0"><span id="txt_@item.Id">@item.Text</span></p>
                                 </div>
                             </div>
