@@ -2,34 +2,71 @@
 
 @{
     ViewBag.Title = "Index";
+    string[] monthsArr = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+    DateTime currentDate = DateTime.Today;
+    int selectedMonth = ViewBag.SelectedMonth>0? ViewBag.SelectedMonth:currentDate.Month;
+    int selectedYear = ViewBag.SelectedYear > 0 ? ViewBag.SelectedYear : currentDate.Year;
+
 }
 
 
 
 
-<div class="row">
-
-    @using (Html.BeginForm("Index", "Payment"))
+    @using (Html.BeginForm("Index", "Payments"))
     {
-        <div class="form-group">            
-            <div class="col-md-10">
-                @Html.DropDownList("Months", null, htmlAttributes: new { @class = "form-control" })                
-            </div>
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Select a period</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" name="Months">
+                            @{
+                                string selected = "";
+                                for (int i = 0; i < monthsArr.Length; i++)
+                                {
+
+                                    if (i + 1 == selectedMonth)
+                                    {
+                                        selected = "selected";
+                                    }
+                                    else
+                                    {
+                                        selected = "";
+                                    }
+                                    @Html.Raw("<option value=\"" + (i + 1) + "\"" + selected + ">" + monthsArr[i] + "</option>");
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="Years">
+                            @{
+                                for (int i = currentDate.Year; i >= 2010; i--)
+                                {
+                                    if (i == selectedYear)
+                                    {
+                                        selected = "selected";
+                                    }
+                                    else
+                                    {
+                                        selected = "";
+                                    }
+                                    @Html.Raw("<option value=\"" + i + "\"" + selected + ">" + i + "</option>");
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Fitler" class="btn btn-default" />
-            </div>
-        </div>
-    }
+     }
 
    
-</div>
+
 
 <table class="table" id="paymentsTable">
     <thead>

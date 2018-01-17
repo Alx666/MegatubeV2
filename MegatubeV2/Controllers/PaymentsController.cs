@@ -17,17 +17,26 @@ namespace MegatubeV2.Controllers
 
         // GET: Payments
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Index(int? month, int? year)
+        public ActionResult Index(int? Months, int? Years)
         {
             int networkId = Session.GetUser().NetworkId;
 
             var payments = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
 
-            if (month.HasValue)
-                payments.Where(x => x.Date.Month == month.Value);
+            ViewBag.SelectedYear = 0;
+            ViewBag.SelectedMonth = 0;
 
-            if(year.HasValue)
-                payments.Where(x => x.Date.Month == month.Value);
+            if (Months.HasValue)
+            {
+                payments.Where(x => x.Date.Month == Months.Value);
+                ViewBag.SelectedMonth = Months;
+            }
+
+            if (Years.HasValue)
+            {
+                payments.Where(x => x.Date.Year == Years.Value);
+                ViewBag.SelectedYear = Years;
+            }
 
 
             ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
