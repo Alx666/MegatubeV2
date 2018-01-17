@@ -18,7 +18,8 @@ namespace MegatubeV2.Controllers
         // GET: Contracts
         public ActionResult Index()
         {
-            var contracts = db.Contracts.Include(c => c.User);
+            int networkId = Session.GetUser().NetworkId;
+            var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId);
             return View(contracts.ToList());
         }
 
