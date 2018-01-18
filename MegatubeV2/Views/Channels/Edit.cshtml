@@ -25,7 +25,7 @@
 }
 
 
-    <h2>Edit</h2>
+<h2>Edit</h2>
 
 <div class="row m-t-1">
     <div class="col-lg-6">
@@ -41,26 +41,30 @@
                 @Html.HiddenFor(model => model.Id)
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <label class="control-label col-md-4">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </label>
+                    <div class="col-md-8">
                         @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.HiddenFor(model => model.Name)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <label class="control-label col-md-4">
+                        @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </label>
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                         @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2" for="OwnerId">
+                    <label class="control-label col-md-4" for="OwnerId">
                         <a class="" href="@Url.Action("Details","Users", new { id=Model.OwnerId })">Owner</a>
                     </label>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
                     </div>
@@ -68,8 +72,8 @@
 
                 <div class="form-group">
                     @*Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })*@
-                    <label class="control-label col-md-2" for="RecruiterId">
-                        @if (Model.RecruiterId!=null)
+                    <label class="control-label col-md-4" for="RecruiterId">
+                        @if (Model.RecruiterId != null)
                         {
                             <a class="" href="@Url.Action("Details","Users", new { id=Model.RecruiterId })">Recruiter</a>
                         }
@@ -79,31 +83,37 @@
                         }
 
                     </label>
-                    <div class="col-md-10">                        
+                    <div class="col-md-8">
                         @Html.DropDownList("RecruiterId", null, "-", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control percentage", id="ownerInput" } })
+                    <label class="control-label col-md-4">
+                        @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </label>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control percentage", id = "ownerInput" } })
                         @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <label class="control-label col-md-4">
+                        @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </label>
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control percentage", id = "recruiterInput" } })
                         @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <label class="control-label col-md-4">
+                        @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </label>
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control percentage", id = "networkInput" } })
                         @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
                     </div>
@@ -140,16 +150,16 @@
 <div class="row m-t-3">
     @*{
 
-        Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
-    }*@
+            Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
+        }*@
 </div>
 
-    <!-- END EDIT CONTENT -->
-    <script src="~/assets/vendor/js/highstock.min.js"></script>
-    <script src="~/assets/vendor/js/chartist.min.js"></script>
-    <script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
+<!-- END EDIT CONTENT -->
+<script src="~/assets/vendor/js/highstock.min.js"></script>
+<script src="~/assets/vendor/js/chartist.min.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
 
-    <script language="javascript">
+<script language="javascript">
     function checkPercent() {
         if (Number($('#ownerInput').val().replace(',', '.')) + Number($('#recruiterInput').val().replace(',', '.')) + Number($('#networkInput').val().replace(',', '.')) != 100) {
             $('#saveChannelButton').hide();
@@ -296,83 +306,83 @@
         });
 
     });
-    </script>
+</script>
 
 
 
-    @*@using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <h4>Channel</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            <h4>Channel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OwnerId, "OwnerId", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("RecruiterId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-        }*@
 
-    <div>
-        @Html.ActionLink("Back to List", "../ViewChannels")
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OwnerId, "OwnerId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RecruiterId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@
+
+<div>
+    @Html.ActionLink("Back to List", "../ViewChannels")
+</div>

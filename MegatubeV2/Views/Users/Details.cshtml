@@ -11,6 +11,17 @@
 
     string period = "-";
     string firstAccreditation = "-";
+    string lastPayment = "-";
+
+    if (Model.FirstAccredationDate != null)
+    {
+        firstAccreditation = ((DateTime)Model.FirstAccredationDate).ToShortDateString();
+    }
+
+    if (Model.LastPaymentDate !=null)
+    {
+        lastPayment = ((DateTime)Model.LastPaymentDate).ToShortDateString();
+    }
 
     if (hasCredit && Model.CreditHistory.Count > 0)
     {
@@ -53,17 +64,17 @@
                         <h2 class="m-t-0 f-w-300">
                             @Model.TotalGrossEarning.ToString("C", ci_IT)
                         </h2>
-                        <small>Since</small> <span class="text-success m-r-1">@Model.RegistrationDate.ToShortDateString()</span>
+                        <small>Since:</small> <span class="text-success m-r-1">@firstAccreditation</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
-                    <div class="panel-heading">Total Gross Paid<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-heading">Total Gross Paid</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">@Model.TotalGrossPaid.ToString("C", ci_IT)</h2>
-                        <small>Last payment</small> <span class="text-success m-r-1">01-01-2017</span>
+                        <small>Last payment:</small> <span class="text-success m-r-1">@lastPayment</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +82,7 @@
 
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
-                    <div class="panel-heading">Total Gross To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-heading">Total Gross To Pay</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">@Model.TotalGrossToPay.ToString("C", ci_IT)</h2>
                         <small>&nbsp;</small>
@@ -81,7 +92,7 @@
 
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
-                    <div class="panel-heading">Total Net To Pay<small class="pull-right text-gray-lighter">Since 1-Jan-@DateTime.Now.Year.ToString()</small></div>
+                    <div class="panel-heading">Total Net To Pay</div>
                     <div class="panel-body">
                         <h2 class="m-t-0 f-w-300">@Model.TotalNetToPay.ToString("C", ci_IT)</h2>
                         <small>&nbsp;</small>
@@ -97,7 +108,7 @@
                 <!-- START Header -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-6">
-                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @period</small>
+                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <span class="text-gray-lighter">Period: <strong>@period</strong></span>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                         <div class="btn-group" role="group" aria-label="...">
