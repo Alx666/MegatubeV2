@@ -25,12 +25,11 @@
 }
 
 
-<h2>Edit</h2>
+<div class="page-header">
+    <h2>Channel edit</h2>
+</div>
 
 <div class="row m-t-1">
-    <div class="col-lg-6">
-        <div id="chartist-simple-pie-chart" class="highcharts-basic-pie m-t-2"></div>
-    </div>
     <div class="col-lg-6">
         @using (Html.BeginForm())
         {
@@ -41,30 +40,25 @@
                 @Html.HiddenFor(model => model.Id)
 
                 <div class="form-group">
-                    <label class="control-label col-md-4">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.HiddenFor(model => model.Name)
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-4">
-                        @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
                         @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                         @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-4" for="OwnerId">
+                    <label class="col-sm-4 control-label" for="OwnerId">
                         <a class="" href="@Url.Action("Details","Users", new { id=Model.OwnerId })">Owner</a>
                     </label>
-                    <div class="col-md-8">
+                    <div class="col-sm-8">
                         @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
                     </div>
@@ -72,7 +66,7 @@
 
                 <div class="form-group">
                     @*Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })*@
-                    <label class="control-label col-md-4" for="RecruiterId">
+                    <label class="col-sm-4 control-label" for="RecruiterId">
                         @if (Model.RecruiterId != null)
                         {
                             <a class="" href="@Url.Action("Details","Users", new { id=Model.RecruiterId })">Recruiter</a>
@@ -83,50 +77,47 @@
                         }
 
                     </label>
-                    <div class="col-md-8">
+                    <div class="col-sm-8">
                         @Html.DropDownList("RecruiterId", null, "-", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-4">
-                        @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
                         @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control percentage", id = "ownerInput" } })
                         @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-4">
-                        @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
                         @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control percentage", id = "recruiterInput" } })
                         @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-4">
-                        @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <div class="col-md-8">
+                    @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
                         @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control percentage", id = "networkInput" } })
                         @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                <hr />
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" id="saveChannelButton" value="Save" class="btn btn-default" />
+                    <div class="col-sm-offset-4 col-sm-8 text-right">
+                        <input type="submit" id="saveChannelButton" value="Save" class="btn btn-primary" />
                         <span id="channelErrMsg"></span>
                     </div>
                 </div>
             </div>
         }
+    </div>
+    <div class="col-lg-6">
+        <div id="channel-pieChartPerc" class="highcharts-basic-pie m-t-2" style="height: 300px;"></div>
     </div>
 </div>
 
@@ -230,7 +221,7 @@
         // Pie Chart with Custom Labels
         var sum = function (a, b) { return a + b };
 
-        new Chartist.Pie('#chartist-simple-pie-chart', data, {
+        new Chartist.Pie('#channel-pieChartPerc', data, {
             labelInterpolationFnc: function (value,idx) {
                 var percentage = Math.round(value / data.series.reduce(sum) * 100) + '%';
                 return labels[idx] + ': ' + percentage;
@@ -382,7 +373,3 @@
             </div>
         </div>
     }*@
-
-<div>
-    @Html.ActionLink("Back to List", "../ViewChannels")
-</div>
