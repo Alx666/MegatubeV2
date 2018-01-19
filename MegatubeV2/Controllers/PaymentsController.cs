@@ -38,19 +38,21 @@ namespace MegatubeV2.Controllers
                 ViewBag.SelectedYear = Years;
             }
 
-
             ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
 
             if (db.Payments.Any())
             {
-                int oldYear = db.Payments.Min(x => x.Date.Year);
-                int current = DateTime.Now.Year;
-                var years = Enumerable.Range(oldYear, current - oldYear);
+                int oldYear   = db.Payments.Min(x => x.Date.Year);
+                int current   = DateTime.Now.Year;
+                var years     = Enumerable.Range(oldYear, current - oldYear);
                 ViewBag.Years = new SelectList(years, years.Last());
             }
             else
             {
-                ViewBag.Years = new SelectList(Enumerable.Range(2018, 1));
+                if(Years.HasValue)
+                    ViewBag.Years = new SelectList(Enumerable.Range(2018, 1), Years.Value);
+                else
+                    ViewBag.Years = new SelectList(Enumerable.Range(2018, 1));
             }
                 
 

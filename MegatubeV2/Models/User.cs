@@ -84,8 +84,7 @@ namespace MegatubeV2
 
         [Required]
         string LastName { get; }
-
-        [Required]
+        
         [EmailAddress]
         string EMail { get; }
     }

@@ -153,6 +153,8 @@ namespace MegatubeV2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+            user.Password = null;
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -171,13 +173,15 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Edit([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
         {
             if (ModelState.IsValid)
             {
                 if (!string.IsNullOrEmpty(user.Password))
+                {
                     user.Password = user.Password.ToMD5();
-
+                }                
+                                
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
