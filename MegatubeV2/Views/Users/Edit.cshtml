@@ -150,10 +150,12 @@
             <div class="form-group">
                 <label class="control-label col-md-2" for="FiscalAdministratorId">Administrator</label>
                 <div class="col-md-4">
-                    @Html.DropDownList("FiscalAdministratorId", null, "-", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("FiscalAdministratorId", null, "-", htmlAttributes: new { @class = "form-control select2 select2-input" })
                     @Html.ValidationMessageFor(model => model.FiscalAdministratorId, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            
 
             <hr />
             <div class="form-group">
@@ -170,12 +172,34 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
 
 <script language="javascript">
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li><a href="@Url.Action("Details", new { Id = Model.Id })">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</a></li>');
         $('#breadCrumbOl').append('<li class="active">Edit</li>');
+
+        $(document).ready(function () {
+            $('.select2-input').select2();
+
+            if ($('.select2-input').length === 0) {
+                return;
+            }
+
+            $('.select2-input').on("select2:open", function () {
+                if ($(this).parents("[class*='has-']").length) {
+                    var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
+
+                    for (var i = 0; i < classNames.length; ++i) {
+                        if (classNames[i].match("has-")) {
+                            $("body > .select2-container").addClass(classNames[i]);
+                        }
+                    }
+                }
+            }).select2({
+                theme: "bootstrap"
+            });
+        });
 
     });
 </script>

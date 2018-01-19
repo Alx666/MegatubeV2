@@ -1,121 +1,73 @@
 ﻿@model IEnumerable<MegatubeV2.Payment>
 
-@{ 
+@{
     System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
 }
 
-<div class="col-xs-12">
+@if (Model.Count() > 0)
+{
     <div class="row">
         <div class="col-xs-12">
-            <h2 class="m-b-2 m-t-0 f-w-300">Payments</h2>
-        </div>
-        @*<div class="col-md-4 col-sm-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-xs-offset-2 text-right">
-            <button type="button" class="btn btn-sm btn-default">See All<i class="fa m-l-1 fa-angle-right"></i> </button>
-        </div>*@
-    </div>
-    <table class="table table-condensed table-hover table-striped" id="paymentsTable">
-        <thead>
-            <tr>
-                <th class="small text-muted text-uppercase">
-                    <strong>Date</strong>
-                </th>
-                <th class="small text-muted text-uppercase">
-                    <strong>Amount</strong>
-                </th>
-                <th class="small text-muted text-uppercase">
-                    <strong>Net</strong>
-                </th>
-            </tr>
-        </thead>
-        <tbody>            
-            @{
-                foreach (var item in Model)
-                {
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-header">
+                        <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-bank" aria-hidden="true"></i>Payments</h2>
+                    </div>
+                </div>
+                @*<div class="col-md-4 col-sm-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-xs-offset-2 text-right">
+                        <button type="button" class="btn btn-sm btn-default">See All<i class="fa m-l-1 fa-angle-right"></i> </button>
+                    </div>*@
+            </div>
+            <table class="table table-condensed table-hover table-striped" id="paymentsTable">
+                <thead>
                     <tr>
-                        <td class="v-a-m">
-                            <span class='hide'>@item.Date.Ticks</span>
-                            <span class="media-heading">
-                                <span>@item.Date.ToShortDateString()</span>
-                            </span>
-                        </td>
-                        <td class="v-a-m"><span>@item.Gross.ToString("C", ci_IT)</span></td>
-                        <td class="v-a-m"><i class="fa fa-circle text-success m-r-1"></i>@item.Net.ToString("C", ci_IT)</td>
+                        <th class="small text-muted text-uppercase">
+                            <strong>Date</strong>
+                        </th>
+                        <th class="small text-muted text-uppercase">
+                            <strong>Amount</strong>
+                        </th>
+                        <th class="small text-muted text-uppercase">
+                            <strong>Net</strong>
+                        </th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="v-a-m">
+                                    <span class='hide'>@item.Date.Ticks</span>
+                                    <span class="media-heading">
+                                        <span>@item.Date.ToShortDateString()</span>
+                                    </span>
+                                </td>
+                                <td class="v-a-m"><span>@item.Gross.ToString("C", ci_IT)</span></td>
+                                <td class="v-a-m"><i class="fa fa-circle text-success m-r-1"></i>@item.Net.ToString("C", ci_IT)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <hr />
+        </div>
+    </div>
 
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateFrom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateTo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Receipt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </th>
-        <th></th>
-    </tr>
+        <script language="javascript">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateFrom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateTo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Receipt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>*@
-
-<script language="javascript">
-
-    $(document).ready(function () {
-        $('#paymentsTable').DataTable({
-            "pageLength": 5,
-            "order": [[0, "desc"]]
-        });
-    });
-</script>
+            $(document).ready(function () {
+                $('#paymentsTable').DataTable({
+                    "pageLength": 5,
+                    "order": [[0, "desc"]],
+                    language: {
+                        paginate: {
+                            next: '&raquo;',
+                            previous: '&laquo;'
+                        }
+                    }
+                });
+            });
+        </script>
+                        }

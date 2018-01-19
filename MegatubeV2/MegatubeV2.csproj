@@ -308,12 +308,14 @@
     <Content Include="assets\javascript\app\main.js" />
     <Content Include="assets\javascript\app\rightSidebar.js" />
     <Content Include="assets\javascript\app\sidebar.js" />
+    <Content Include="assets\javascript\bootstrap-select.min.js" />
     <Content Include="assets\javascript\highchart-themes\analytics-theme.js" />
     <Content Include="assets\javascript\highchart-themes\highcharts&amp;highstock-theme.js" />
     <Content Include="assets\javascript\highchart-themes\highcharts-settings.js" />
     <Content Include="assets\javascript\highchart-themes\highstock-settings.js" />
     <Content Include="assets\javascript\highchart-themes\stock-theme.js" />
     <Content Include="assets\javascript\plugins-init.js" />
+    <Content Include="assets\javascript\select2.min.js" />
     <Content Include="assets\javascript\switchery-settings.js" />
     <Content Include="assets\stylesheets\app.css" />
     <Content Include="assets\stylesheets\app.min.e0bb64e7.css" />

@@ -18,7 +18,7 @@
         firstAccreditation = ((DateTime)Model.FirstAccredationDate).ToShortDateString();
     }
 
-    if (Model.LastPaymentDate !=null)
+    if (Model.LastPaymentDate != null)
     {
         lastPayment = ((DateTime)Model.LastPaymentDate).ToShortDateString();
     }
@@ -56,7 +56,7 @@
             </div>
         }
 
-        <div class="row m-t-1">
+        <div class="row m-t-3">
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default b-a-0 bg-gray-dark">
                     <div class="panel-heading">Total Gross Earnings</div>
@@ -103,12 +103,16 @@
         </div>
         <!-- END ROWs #1 -->
         <!-- START ROW Report Statisticts & Latest Transactions -->
-        <div class="row m-t-3">
+        <div class="row">
             <div class="col-lg-12 m-b-3 @extraClass">
                 <!-- START Header -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 col-xs-6">
-                        <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <span class="text-gray-lighter">Period: <strong>@period</strong></span>
+                    <div class="col-sm-12">
+                        <div class="page-header">
+                            <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-line-chart" aria-hidden="true"></i>Accreditations statistics</h2>
+                        </div>
+                        <span class="text-gray-lighter">Period: <strong>@period</strong></span>
+
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
                         <div class="btn-group" role="group" aria-label="...">
@@ -121,19 +125,19 @@
                 <!-- START Chart Higcharts -->
 
                 <div class="highcharts-basic-column m-t-2"></div>
-
+                <hr />
                 <!-- END Chart Higcharts -->
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                        <h2 class="m-b-2 m-t-0 f-w-300">Contact Informations</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-sm-6 text-right">
-
-                        <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-user" aria-hidden="true"></i>
+                                Contact Informations
+                                <a title="Edit" class="btn btn-default text-primary btn-sm action-button editNote headerButton" href="@Url.Action("Edit", "Users", new { id = Model.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                            </h2>
+                        </div>
                     </div>
                 </div>
                 @if (Model.Administrator != null)
@@ -146,20 +150,17 @@
                 <table id="userDetailsTable" class="table table-condensed table-hover table-striped">
                     <tbody>
                         <tr>
-                            <td>
+                            <td class="col-xs-2">
                                 @Html.DisplayNameFor(model => model.Name)
                             </td>
-                            <td class="userDetails">
+                            <td class="userDetails col-xs-4">
                                 @Html.DisplayFor(model => model.Name)
                             </td>
-                        </tr>
-
-                        <tr>
-                            <td>
+                            <td class="col-xs-2">
                                 @Html.DisplayNameFor(model => model.LastName)
                             </td>
 
-                            <td class="userDetails">
+                            <td class="userDetails col-xs-4">
                                 @Html.DisplayFor(model => model.LastName)
                             </td>
                         </tr>
@@ -172,9 +173,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.Mobile)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.EMail)
                             </td>
@@ -192,9 +190,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.Skype)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.BirthDate)
                             </td>
@@ -215,9 +210,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.BirthPlace)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.CompanyName)
                             </td>
@@ -235,9 +227,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.CompanyKind)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.IBAN)
                             </td>
@@ -255,9 +244,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.PIVAorVAT)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.FullAddress)
                             </td>
@@ -275,9 +261,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.PostalCode)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.PaymentMethod)
                             </td>
@@ -298,9 +281,6 @@
                             <td class="userDetails">
                                 @Html.DisplayFor(model => model.BICSWIFT)
                             </td>
-                        </tr>
-
-                        <tr>
                             <td>
                                 @Html.DisplayNameFor(model => model.RegistrationDate)
                             </td>
@@ -322,6 +302,11 @@
                                     <a href="@Url.Action("Details", "Users", new { id = Model.Administrator.Id })">@(adminfullName)</a>
                                 }
                             </td>
+                            <td>
+                            </td>
+
+                            <td class="userDetails">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -331,20 +316,17 @@
                     <table id="tutorDetailsTable" class="table table-condensed table-hover table-striped hidden">
                         <tbody>
                             <tr>
-                                <td>
+                                <td class="col-xs-2">
                                     @Html.DisplayNameFor(model => model.Name)
                                 </td>
-                                <td class="userDetails">
+                                <td class="userDetails col-xs-4">
                                     @Html.DisplayFor(model => model.Administrator.Name)
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td>
+                                <td class="col-xs-2">
                                     @Html.DisplayNameFor(model => model.LastName)
                                 </td>
 
-                                <td class="userDetails">
+                                <td class="userDetails col-xs-4">
                                     @Html.DisplayFor(model => model.Administrator.LastName)
                                 </td>
                             </tr>
@@ -357,9 +339,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.Mobile)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.EMail)
                                 </td>
@@ -377,9 +356,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.Skype)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.BirthDate)
                                 </td>
@@ -400,9 +376,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.BirthPlace)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.CompanyName)
                                 </td>
@@ -420,9 +393,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.CompanyKind)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.IBAN)
                                 </td>
@@ -440,9 +410,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.PIVAorVAT)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.FullAddress)
                                 </td>
@@ -460,9 +427,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.PostalCode)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.PaymentMethod)
                                 </td>
@@ -480,9 +444,6 @@
                                 <td class="userDetails">
                                     @Html.DisplayFor(model => model.Administrator.BICSWIFT)
                                 </td>
-                            </tr>
-
-                            <tr>
                                 <td>
                                     @Html.DisplayNameFor(model => model.RegistrationDate)
                                 </td>
@@ -494,34 +455,37 @@
                         </tbody>
                     </table>
                 }
+                <hr />
             </div>
 
-            @{
-                Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
-            }
+           
             <div class="highcharts-basic-column m-t-2"></div>
         </div>
-        <div class="row m-t-3">
+        <div class="row">
             @{
                 Html.RenderPartial("~/Views/_PartialUserChannels.cshtml", Model.OwnedChannels);
                 Html.RenderPartial("~/Views/_PartialUserRecChannels.cshtml", Model.RecruitedChannels);
             }
-        </div>
-        <div class="row m-t-3">
+
             @{
+                
                 Html.RenderPartial("~/Views/_PartialAdministratedUsers.cshtml", Model.AdministratorOf);
             }
-        </div>
-        <div class="row m-t-3">
+
             @{
-                Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
+                Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
             }
         </div>
-        <div class="row m-t-3">
-            @{
-                Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
-            }
-        </div>
+
+        @{
+            Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
+        }
+
+
+        @{
+            Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
+        }
+
     </div>
 </div>
 <!-- END EDIT CONTENT -->
@@ -532,14 +496,18 @@
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</li>');
 
-        $('#userChannelsTable').DataTable({
-            "pageLength": 5
-        });
-        $('#userRecChannelsTable').DataTable({
-            "pageLength": 5
-        });
-        $('#administratedUsersTable').DataTable({
-            "pageLength": 5
+        $('#userChannelsTable, #userRecChannelsTable, #administratedUsersTable').DataTable({
+            responsive: true,
+            "pageLength": 5,
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            },
+            "drawCallback": function () {
+                //$('.dataTables_paginate > .pagination').addClass('pagination-sm');
+            }
         });
 
         Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {

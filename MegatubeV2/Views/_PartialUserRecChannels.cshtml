@@ -3,37 +3,40 @@
 <div class="col-md-6 col-sm-6 col-xs-6">
     @if (Model.Count() > 0)
     {
-    <div><h2 class="m-b-2 m-t-0 f-w-300">User's recruited channels</h2></div>
-    <table class="table table-condensed table-hover table-striped" id="userRecChannelsTable">
-        <thead>
-            <tr>
-                <th>
-                    Channels
-                </th>
-                <th class="userDetails">
-                    Owner
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="v-a-m">
-                            <div class="media media-auto">
-                                <div class="media-body media-middle">
-                                    <span class="media-heading text-white"><a href="@Url.Action("Edit", "Channels", new { id = item.Id })">@item.Name</a></span>
+        <div class="page-header">
+            <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-percent" aria-hidden="true"></i>User's recruited channels</h2>
+        </div>
+        <table class="table table-condensed table-hover table-striped" id="userRecChannelsTable">
+            <thead>
+                <tr>
+                    <th>
+                        Channels
+                    </th>
+                    <th class="userDetails">
+                        Owner
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="v-a-m">
+                                <div class="media media-auto">
+                                    <div class="media-body media-middle">
+                                        <span class="media-heading text-white"><a href="@Url.Action("Edit", "Channels", new { id = item.Id })">@item.Name</a></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="v-a-m">
-                            <span class="text-white"><a href="@Url.Action("Details", "Users", new { id = item.OwnerId })">@(item.Owner.LastName + " " + item.Owner.Name)</a></span>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="v-a-m">
+                                <span class="text-white"><a href="@Url.Action("Details", "Users", new { id = item.OwnerId })">@(item.Owner.LastName + " " + item.Owner.Name)</a></span>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <hr />
      }
 </div>

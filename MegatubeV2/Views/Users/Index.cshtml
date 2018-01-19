@@ -10,14 +10,21 @@
 <script language="javascript">
 
     $(document).ready(function () {
-        $('#userTable').DataTable();
+        $('#userTable').DataTable({
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            }
+        });
     });
 </script>
-
-<h2>Index</h2>
-
+<div class="page-header">
+    <h2>Users</h2>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New User", "Create")
 </p>
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
@@ -79,4 +86,4 @@
         }
     </tbody>
 </table>
-
+<hr/ >

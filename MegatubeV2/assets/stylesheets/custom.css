@@ -1,13 +1,22 @@
-﻿/*--------------------  Blocco search ------------------------*/
+﻿
+/*--------------------  Classi generiche  ----------------------------*/
+
+.content {
+    padding-bottom: 50px !important;
+}
+
+.headerButton {
+    float: right;
+    margin-top: 5px;
+}
+.page-header h2 .fa {
+    display:inline-block;
+    width: 35px;
+}
+/*--------------------  Blocco search ------------------------*/
 
 .dataTables_filter {
     text-align: right;
-}
-
-/*--------------------  Blocco pagination ------------------------*/
-
-.pagination {
-    margin: 0 0 19px 0;
 }
 
 /*--------------------  ViewChannels  ----------------------------*/
@@ -26,13 +35,29 @@ table#userTable td {/* stesso ide della tabella users*/
     margin-left: 13px;
 }
 
-/*--------------------  Colori ------------------------*/
+/*--------------------  Table Pagination  ----------------------------*/
 
+.dataTablePagination {
+    border-top: 1px solid #383838;
+    padding: 5px;
+}
+.pagination {
+    margin: 0;
+}
+.dataTablePag, .dataTableNum {
+    display: inline-block;
+}
+.dataTableNum {
+    margin-top: 5px;
+    float: right;
+}
+
+/*--------------------  Colori ------------------------*/
 body {
     color: #888888;
 }
 
-table#userDetailsTable td.userDetails {
+td.userDetails {
     color: #eeeeee;
 }
 
