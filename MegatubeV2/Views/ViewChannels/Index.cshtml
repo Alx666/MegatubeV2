@@ -13,7 +13,9 @@
 
 <script language="javascript">
     $(document).ready(function () {
-        $('#userTable').DataTable();
+        $('#userTable').DataTable({
+            "pageLength": 100
+        });
     });
 
     function UpdateFilter(){
