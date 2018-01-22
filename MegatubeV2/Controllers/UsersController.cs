@@ -173,7 +173,7 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -203,25 +203,17 @@ namespace MegatubeV2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
-        }
 
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Manager)]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {
