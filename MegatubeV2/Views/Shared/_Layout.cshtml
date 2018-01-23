@@ -1,17 +1,19 @@
 ﻿@{
-
-
-    Dictionary<String, String[]> MenuDict = new Dictionary<string, string[]>();
-    Dictionary<String, String> NamesDict = new Dictionary<string, string>();
-    Dictionary<String, String> IcoDict = new Dictionary<string, string>();
-
     List<MenuItem> Menu = new List<MenuItem>();
 
-    MenuItem adminItem = new MenuItem("Admin", "", "", "fa-wrench");
-    adminItem.AddChild(new MenuItem("Add User", "Create", "Users"));
-    adminItem.AddChild(new MenuItem("Import Data", "Index", "Import data"));
 
-    Menu.Add(adminItem);
+    if (Session.GetUser().IsManager) {
+        MenuItem adminItem = new MenuItem("Admin", "", "", "fa-wrench");
+        adminItem.AddChild(new MenuItem("Add User", "Create", "Users"));
+        adminItem.AddChild(new MenuItem("Import Data", "Index", "Import data"));
+
+        if (Session.GetUser().IsDeveloper)
+        {
+            adminItem.AddChild(new MenuItem("Logs", "Index", "EventLogs"));
+        }
+
+        Menu.Add(adminItem);
+    }
 
     MenuItem balanceItem = new MenuItem("Balance", "", "", "fa-bar-chart");
     balanceItem.AddChild(new MenuItem("Users Balance", "Balance", "Users"));
@@ -27,24 +29,6 @@
 
     Menu.Add(registryItem);
 
-
-
-
-    MenuDict.Add("Menu", new string[] { "Users", "ViewChannels", "PaymentAlerts", "Payments" });
-    IcoDict.Add("Menu", "fa-folder-open-o");
-
-    //relationship between controller and text to show in the menu
-    NamesDict.Add("Users", "Users");
-    NamesDict.Add("ViewChannels", "Channels");
-    NamesDict.Add("PaymentAlerts", "Alerts");
-    NamesDict.Add("Payments", "Payments");
-    NamesDict.Add("Channels", "Channels");
-
-    MenuDict.Add("Utilities", new string[] { "Csv" });
-    IcoDict.Add("Utilities", "fa-wrench");
-
-    NamesDict.Add("Csv", "Upload");
-
     String activeChildClasses = "active expanded nested-active";
     String activeParentClasses = "nested-active primary-submenu has-submenu expanded";
 
@@ -53,7 +37,7 @@
     string currentController = rd.GetRequiredString("controller");
     //string currentArea = rd.Values["area"] as string;
 
-            }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,17 +67,17 @@
             transition: opacity .2s ease-out
         }
 
-#initial-loader .initial-loader-top {
-        display: flex;
+            #initial-loader .initial-loader-top {
+                display: flex;
                 align-items: center;
                 justify-content: space-between;
                 width: 200px;
                 border-bottom: 1px solid #2d2d2d;
                 padding-bottom: 5px
-    }
+            }
 
-#initial-loader .initial-loader-top > * {
-    display: block;
+                #initial-loader .initial-loader-top > * {
+                    display: block;
                     flex-shrink: 0;
                     flex-grow: 0
                 }
@@ -107,12 +91,12 @@
 
         @@keyframes spin {
             100% {
-            transform: rotate(360deg)
+                transform: rotate(360deg)
             }
-    }
+        }
 
-#initial-loader .loader g {
-    transform-origin: 50% 50%;
+        #initial-loader .loader g {
+            transform-origin: 50% 50%;
             animation: spin .5s linear infinite
         }
 
@@ -234,7 +218,391 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <path fill="#2c97de" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -391,78 +759,36 @@
                     <!-- START Tree -->
                     <ul class="side-menu m-t-2">
                         @{
+                            string currentPageName = "";
+
                             for (int i = 0; i < Menu.Count; i++)
                             {
                                 string itemUrl = Menu[i].HasChildren ? "#" : @Url.Action(Menu[i].ActionName, Menu[i].ControllerName);
-                                <li class="Dashboards @if (Menu[i].ChildMatches(currentController,currentAction)) { @activeParentClasses }">
+                                <li class="Dashboards @if (Menu[i].ChildMatches(currentController,currentAction,ref currentPageName)) { @activeParentClasses }">
                                     <a href="@itemUrl" title="Dashboards">
-                                        @if (Menu[i].Icon != "") { 
-                                        <i class="fa @Menu[i].Icon fa-lg fa-fw"></i>}<span class="nav-label">@Menu[i].Name</span>
-                                        @if (Menu[i].HasChildren)
+                                        @if (Menu[i].Icon != "")
                                         {
-                                            <i class="fa arrow"></i>
-                                        }
-                                    </a>
-                                    <ul>
-                                        @{
-                                            for(int j=0;j<Menu[i].Children.Count;j++)
+                                            <i class="fa @Menu[i].Icon fa-lg fa-fw"></i>}<span class="nav-label">@Menu[i].Name</span>
+                                            @if (Menu[i].HasChildren)
                                             {
-                                                <li class="@if (currentController == Menu[i].Children[j].ControllerName && currentAction==Menu[i].Children[j].ActionName){ @activeChildClasses}">
-                                                    <a href="@Url.Action(Menu[i].Children[j].ActionName, Menu[i].Children[j].ControllerName)">
-                                                        <span class="nav-label">@Menu[i].Children[j].Name</span>
-                                                    </a>
-                                                </li>
+                                                <i class="fa arrow"></i>
                                             }
-                                        }
-                                    </ul>
-                                </li>
-                            }
-
-                                            foreach (KeyValuePair<string, string[]> entry in MenuDict)
-                                            {
-                                                <li class="Dashboards @if (entry.Value.Contains(currentController)) { @activeParentClasses }">
-                                                    <a href="#" title="Dashboards">
-                                                        <i class="fa @IcoDict[entry.Key] fa-lg fa-fw"></i><span class="nav-label">@entry.Key</span><i class="fa arrow"></i>
-                                                    </a>
-                                                    <ul>
-                                                        @{
-                                                            foreach (string pageName in entry.Value)
-                                                            {
-                                                                <li class="@if (currentController == pageName){ @activeChildClasses}">
-                                                                    <a href="@Url.Action("Index", pageName)">
-                                                                        <span class="nav-label">@NamesDict[pageName]</span>
-                                                                    </a>
-                                                                </li>
-                                                            }
-                                                        }
-                                                    </ul>
-                                                </li>
-                                                            }
-                        }
-
-                        @*<li>
-                                <a href="#" title="Page">
-                                    <i class="fa fa-lg fa-file-o fa-fw"></i><span class="nav-label">Page</span>
-                                    <span class="pull-right label label-primary label-outline text-uppercase">New</span>
-                                </a>
-                            </li>*@
-                        @*<li>
-                                <a href="#" title="Apps">
-                                    <i class="fa fa-files-o fa-fw fa-lg"></i><span class="nav-label">Levels</span> <i class="fa arrow"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <span class="nav-label">Level One</span> <i class="fa arrow"></i>
                                         </a>
                                         <ul>
-                                            <li>
-                                                <a href="#"><span class="nav-label">Sub-level</span></a>
-                                            </li>
+                                            @{
+                                                for (int j = 0; j < Menu[i].Children.Count; j++)
+                                                {
+                                                    <li class="@if (currentController == Menu[i].Children[j].ControllerName && currentAction==Menu[i].Children[j].ActionName){ @activeChildClasses}">
+                                                        <a href="@Url.Action(Menu[i].Children[j].ActionName, Menu[i].Children[j].ControllerName)">
+                                                            <span class="nav-label">@Menu[i].Children[j].Name</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
                                         </ul>
                                     </li>
-                                </ul>
-                            </li>*@
+                                                }
+                        }
                     </ul>
                     <!-- END Tree  -->
                     <div class="sidebar-default-visible"><hr></div>
@@ -505,23 +831,21 @@
                                     string bcPath;
                                     string controllerURL;
 
-                                    try
+                                    bcPath = currentPageName;
+                                    controllerURL = currentController;
+                                    switch (bcPath)
                                     {
-                                        bcPath = NamesDict[currentController];
-                                        switch (currentController)
-                                        {
-                                            case "Channels"://the only case when it's different (until now... that's why I use a switch!)
-                                                controllerURL = "ViewChannels";
-                                                break;
-                                            default:
-                                                controllerURL = currentController;
-                                                break;
-                                        }
+                                        case "ViewChannels"://the only case when it's different (until now... that's why I use a switch!)
+                                            bcPath = "Channels";
+                                            break;
                                     }
-                                    catch (Exception)
+                                    switch (controllerURL)
                                     {
-                                        controllerURL = bcPath = "";
+                                        case "Channels"://the only case when it's different (until now... that's why I use a switch!)
+                                            controllerURL = "ViewChannels";
+                                            break;
                                     }
+
                                 }
 
                                 <li>

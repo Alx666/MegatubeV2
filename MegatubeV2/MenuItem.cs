@@ -39,12 +39,16 @@ namespace MegatubeV2
             return Children.Contains(child);
         }
 
-        public bool ChildMatches(string controller, string action)
+        public bool ChildMatches(string controller, string action, ref string pageName)
         {
             for (int i = 0; i < Children.Count; i++)
             {
-                if (Children[i].ActionName == action && Children[i].ControllerName == controller)
-                    return true;
+                if (Children[i].ControllerName == controller)
+                {
+                    pageName = controller;
+                    if (Children[i].ActionName == action)
+                        return true;
+                }
             }
             return false;
         }
