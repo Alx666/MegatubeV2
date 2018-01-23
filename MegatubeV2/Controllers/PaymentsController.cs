@@ -176,7 +176,7 @@ namespace MegatubeV2.Controllers
 
                 return RedirectToAction("index", "Payments");
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
                 ViewBag.Exception = e;
                 return View("Error");
