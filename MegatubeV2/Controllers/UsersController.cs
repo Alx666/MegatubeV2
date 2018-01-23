@@ -18,22 +18,22 @@ namespace MegatubeV2.Controllers
 
         // GET: Users
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Index(string userType = "all")
+        public ActionResult Index(string SearchType = "all")
         {
             try
             {                
-                ViewBag.SearchType = new SelectList(new List<string>() { "Partner", "Recruiter", "Manager", "All" }, userType);
+                ViewBag.SearchType = new SelectList(new List<string>() { "Partner", "Recruiter", "Manager", "All" }, SearchType);
                 int netid = Session.GetUser().NetworkId;
 
-                if (userType == "Partner")
+                if (SearchType == "Partner")
                 {
                     return View(db.Users.Where(x => x.NetworkId == netid && x.OwnedChannels.Count() > 0).OrderBy(x => x.LastName).ToList());
                 }
-                else if (userType == "Recruiter")
+                else if (SearchType == "Recruiter")
                 {
                     return View(db.Users.Where(x => x.NetworkId == netid && x.RecruitedChannels.Count() > 0).OrderBy(x => x.LastName).ToList());
                 }
-                else if (userType == "Manager")
+                else if (SearchType == "Manager")
                 {
                     return View(db.Users.Where(x => x.NetworkId == netid && x.RoleId == 1).OrderBy(x => x.LastName).ToList());
                 }
