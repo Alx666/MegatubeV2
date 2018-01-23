@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MegatubeV2.User>
 
-@{    
+@{
     ViewBag.Title = "Index";
 }
 
@@ -28,13 +28,22 @@
     @Html.ActionLink("Create New User", "Create")
 </p>
 
-@using (Html.BeginForm("Index", "Users", FormMethod.Post, new { @class = "", id="userTypeSelect", enctype = "multipart/form-data" }))
-{
-    <div class="col-sm-4">
-        @Html.DropDownList("SearchType");
-    </div>
-}
+<div class="row m-b-3">
+    @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { @class = "", id = "userTypeSelect", enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Show users of type:</label>
+            <div class="col-sm-5">
 
+                @Html.DropDownList("SearchType", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-5">
+                <input type="submit" value="Show" class="btn btn-default" />
+
+            </div>
+        </div>
+    }
+</div>
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
@@ -85,11 +94,11 @@
                 </td>
                 <td nowrap="nowrap">
                     @*@if (item.AdministratorOf.Count == 0 && item.OwnedChannels.Count == 0 && item.RecruitedChannels.Count == 0)
-                    {
-                        <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Delete",new { Id = item.Id })"><i class="glyphicon glyphicon-trash"></i></a>
-                    }*@
+                        {
+                            <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Delete",new { Id = item.Id })"><i class="glyphicon glyphicon-trash"></i></a>
+                        }*@
                     <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { Id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a title="Details" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Details",new { Id = item.Id })"><i class="glyphicon glyphicon-arrow-right"></i></a>                            
+                    <a title="Details" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Details",new { Id = item.Id })"><i class="glyphicon glyphicon-arrow-right"></i></a>
                 </td>
             </tr>
         }
