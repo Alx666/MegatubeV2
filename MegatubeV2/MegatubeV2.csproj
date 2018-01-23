@@ -153,12 +153,16 @@
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
+    <Compile Include="EventLog.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="IPaymentMethod.cs" />
     <Compile Include="IReferenceable.cs" />
     <Compile Include="MegatubeExtensions.cs" />
     <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\DataFile.cs" />
+    <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentData.cs" />
     <Compile Include="Models\User.cs" />

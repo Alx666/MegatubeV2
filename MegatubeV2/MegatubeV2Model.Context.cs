@@ -38,5 +38,6 @@ namespace MegatubeV2
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ViewChannel> ViewChannels { get; set; }
         public virtual DbSet<ViewNote> ViewNotes { get; set; }
+        public virtual DbSet<EventLog> EventLogs { get; set; }
     }
 }

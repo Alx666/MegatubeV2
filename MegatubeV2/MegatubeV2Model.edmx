@@ -62,6 +62,16 @@
           <Property Name="DollarToEuroConv" Type="float" />
           <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Network">
           <Key>
             <PropertyRef Name="Id" />
@@ -294,6 +304,20 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EventLog" Type="Self.EventLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Note_ToUserAuthor">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Note" Type="Self.Note" Multiplicity="*" />
@@ -431,6 +455,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataFile" EntityType="Self.DataFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventLog" EntityType="Self.EventLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Network" EntityType="Self.Network" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -497,6 +522,10 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_DataFile_ToNetwork" Association="Self.FK_DataFile_ToNetwork">
             <End Role="Network" EntitySet="Network" />
             <End Role="DataFile" EntitySet="DataFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_ToUser" Association="Self.FK_Event_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="EventLog" EntitySet="EventLog" />
           </AssociationSet>
           <AssociationSet Name="FK_Note_ToUserAuthor" Association="Self.FK_Note_ToUserAuthor">
             <End Role="User" EntitySet="User" />
@@ -636,6 +665,11 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <AssociationSet Name="FK_PaymentAlert_ToNetwork" Association="MegatubeV2Model.FK_PaymentAlert_ToNetwork">
             <End Role="Network" EntitySet="Networks" />
             <End Role="PaymentAlert" EntitySet="PaymentAlerts" />
+          </AssociationSet>
+          <EntitySet Name="EventLogs" EntityType="MegatubeV2Model.EventLog" />
+          <AssociationSet Name="FK_Event_ToUser" Association="MegatubeV2Model.FK_Event_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="EventLog" EntitySet="EventLogs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Accreditation">
@@ -820,6 +854,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Administrator" Relationship="MegatubeV2Model.FK_User_ToUser" FromRole="User1" ToRole="User" />
           <Property Name="NetworkId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Network" Relationship="MegatubeV2Model.FK_User_ToNetwork" FromRole="User" ToRole="Network" />
+          <NavigationProperty Name="EventLogs" Relationship="MegatubeV2Model.FK_Event_ToUser" FromRole="User" ToRole="EventLog" />
         </EntityType>
         <Association Name="FK_Accreditation_ToChannel">
           <End Type="MegatubeV2Model.Channel" Role="Channel" Multiplicity="0..1" />
@@ -1093,6 +1128,31 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_Event_ToUser" FromRole="EventLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Event_ToUser">
+          <End Type="MegatubeV2Model.User" Role="User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MegatubeV2Model.EventLog" Role="EventLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1283,6 +1343,17 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLogs">
+            <EntityTypeMapping TypeName="MegatubeV2Model.EventLog">
+              <MappingFragment StoreEntitySet="EventLog">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
