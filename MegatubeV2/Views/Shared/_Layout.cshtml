@@ -5,7 +5,7 @@
     if (Session.GetUser().IsManager) {
         MenuItem adminItem = new MenuItem("Admin", "", "", "fa-wrench");
         adminItem.AddChild(new MenuItem("Add User", "Create", "Users"));
-        adminItem.AddChild(new MenuItem("Import Data", "Index", "Import data"));
+        adminItem.AddChild(new MenuItem("Import Data", "Index", "Csv"));
 
         if (Session.GetUser().IsDeveloper)
         {
