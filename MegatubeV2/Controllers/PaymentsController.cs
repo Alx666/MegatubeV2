@@ -62,7 +62,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -115,9 +115,9 @@ namespace MegatubeV2.Controllers
 
                 return View(p);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -141,9 +141,9 @@ namespace MegatubeV2.Controllers
 
                 return RedirectToAction("index", "PaymentAlerts");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -178,7 +178,7 @@ namespace MegatubeV2.Controllers
             }
             catch(Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -194,9 +194,9 @@ namespace MegatubeV2.Controllers
                 
                 return File(r.Data, "application/pdf", $"{p.User.Name}{p.User.LastName}_{p.ReceiptCount}{DateTime.Now.Year}.pdf");                                
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }

@@ -26,9 +26,9 @@ namespace MegatubeV2.Controllers
                 var users = db.Users.Where(x => x.NetworkId == netid);
                 return View(users.OrderBy(x => x.LastName).ToList());
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -98,7 +98,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
    
@@ -117,7 +117,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -161,9 +161,9 @@ namespace MegatubeV2.Controllers
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
                 return View(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -195,7 +195,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -231,7 +231,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -261,7 +261,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }

@@ -27,7 +27,17 @@ namespace MegatubeV2
             {
                 EventLog.Log(db, null, EventLogType.ApplicationError, exception.ToString(), true);
             }
-                
+
+            try
+            {
+                Session["LastError"] = exception;                
+            }
+            catch (Exception)
+            {
+                //we can't do anything more
+            }
+
+
             Response.Redirect("/Home/Error");
         }
     }

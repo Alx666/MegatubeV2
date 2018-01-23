@@ -148,6 +148,7 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\EventLogsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
@@ -439,6 +440,7 @@
     <Content Include="Views\_PartialUserChannels.cshtml" />
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
     <Content Include="Views\_PartialAdministratedUsers.cshtml" />
+    <Content Include="Views\EventLogs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,9 +28,9 @@ namespace MegatubeV2.Controllers
 
                 return RedirectToAction(operation.ReturnActionName, operation.ReturnControllerName, operation.ReturnRouteValues);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -44,7 +44,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
