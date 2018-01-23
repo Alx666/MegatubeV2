@@ -18,6 +18,8 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(bool referenced = true, bool active = true)
         {
+            ViewBag.Referenced = referenced;
+            ViewBag.Active = active;
             try
             {
                 int networkId = Session.GetUser().NetworkId;

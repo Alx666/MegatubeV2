@@ -4,6 +4,17 @@
     ViewBag.Title = "Index";
     string[] ViewTypeArr = { "Associated", "Not associated", "Not active" };
     int selectedViewType = 0;
+
+    if (ViewBag.Active == false)
+    {
+        selectedViewType = 2;
+    }
+    else if (ViewBag.Referenced == false)
+    {
+        selectedViewType = 1;
+    }
+
+
 }
 
 @*https://stackoverflow.com/questions/19819597/datatables-setting-column-width*@
