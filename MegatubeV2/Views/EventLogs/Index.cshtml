@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MegatubeV2.EventLog>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+
+    $(document).ready(function () {
+        $('#userTable').DataTable({
+            "pageLength": 100,
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            }
+        });
+    });
+</script>
+<div class="page-header">
+    <h2>Event Logs</h2>
+</div>
+
+<table class="table table-condensed table-hover table-striped" id="userTable">
+    <thead>
+        <tr>
+            <th class="small text-muted text-uppercase">
+                <strong>@Html.DisplayNameFor(model => model.Id)</strong>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-white">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr/ >

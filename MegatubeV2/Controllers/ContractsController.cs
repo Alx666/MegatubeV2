@@ -24,9 +24,9 @@ namespace MegatubeV2.Controllers
                 var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId);
                 return View(contracts.ToList());
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -48,9 +48,9 @@ namespace MegatubeV2.Controllers
 
                 return View(contract);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -64,9 +64,9 @@ namespace MegatubeV2.Controllers
                 return View();
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }            
         }
@@ -99,7 +99,7 @@ namespace MegatubeV2.Controllers
             }
             catch(Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -126,7 +126,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -152,7 +152,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -175,7 +175,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -200,7 +200,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }

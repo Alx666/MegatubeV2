@@ -8,9 +8,20 @@
     <hgroup>
         <h1>Error.</h1>     
         @{
-            string errorText = ViewBag.ErrorMessage ?? "Error";
+            string errorMessage;
+
+            try
+            {
+                errorMessage = ViewBag.Exception.Message;
+            }
+            catch (Exception)
+            {
+                errorMessage = (Session["LastError"] as Exception).Message;
+                Session["LastError"] = null;
+            }
+
          }
-        <h2>@errorText</h2>
+        <h2>@errorMessage</h2>
     </hgroup>
 </body>
 </html>

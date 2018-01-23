@@ -148,11 +148,15 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\EventLogsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PaymentAlertsController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
+    <Compile Include="EventLog.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="IPaymentMethod.cs" />
     <Compile Include="IReferenceable.cs" />
     <Compile Include="MegatubeExtensions.cs" />
@@ -160,6 +164,7 @@
     <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\DataFile.cs" />
+    <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentData.cs" />
     <Compile Include="Models\User.cs" />
@@ -436,6 +441,7 @@
     <Content Include="Views\_PartialUserChannels.cshtml" />
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
     <Content Include="Views\_PartialAdministratedUsers.cshtml" />
+    <Content Include="Views\EventLogs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

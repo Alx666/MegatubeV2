@@ -22,6 +22,22 @@ namespace MegatubeV2
         {
             Exception exception = Server.GetLastError();
             Server.ClearError();
+
+            using (MegatubeV2Entities db = new MegatubeV2Entities())
+            {
+                EventLog.Log(db, null, EventLogType.ApplicationError, exception.ToString(), true);
+            }
+
+            try
+            {
+                Session["LastError"] = exception;                
+            }
+            catch (Exception)
+            {
+                //we can't do anything more
+            }
+
+
             Response.Redirect("/Home/Error");
         }
     }

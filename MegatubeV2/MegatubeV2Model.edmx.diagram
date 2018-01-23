@@ -37,6 +37,8 @@
         <AssociationConnector Association="MegatubeV2Model.FK_DataFile_ToNetwork" />
         <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToNetworkId" />
         <AssociationConnector Association="MegatubeV2Model.FK_PaymentAlert_ToNetwork" />
+        <EntityTypeShape EntityType="MegatubeV2Model.EventLog" Width="1.5" PointX="13.75" PointY="15.375" />
+        <AssociationConnector Association="MegatubeV2Model.FK_Event_ToUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,17 +18,33 @@ namespace MegatubeV2.Controllers
 
         // GET: Users
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Index()
+        public ActionResult Index(string userType = "all")
         {
             try
-            {
+            {                
+                ViewBag.SearchType = new SelectList(new List<string>() { "Partner", "Recruiter", "Manager", "All" }, userType);
                 int netid = Session.GetUser().NetworkId;
-                var users = db.Users.Where(x => x.NetworkId == netid);
-                return View(users.OrderBy(x => x.LastName).ToList());
+
+                if (userType == "Partner")
+                {
+                    return View(db.Users.Where(x => x.NetworkId == netid && x.OwnedChannels.Count() > 0).OrderBy(x => x.LastName).ToList());
+                }
+                else if (userType == "Recruiter")
+                {
+                    return View(db.Users.Where(x => x.NetworkId == netid && x.RecruitedChannels.Count() > 0).OrderBy(x => x.LastName).ToList());
+                }
+                else if (userType == "Manager")
+                {
+                    return View(db.Users.Where(x => x.NetworkId == netid && x.RoleId == 1).OrderBy(x => x.LastName).ToList());
+                }
+                else
+                {
+                    return View(db.Users.Where(x => x.NetworkId == netid).OrderBy(x => x.LastName).ToList());
+                }                                
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -98,7 +114,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
    
@@ -117,7 +133,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }
@@ -161,9 +177,9 @@ namespace MegatubeV2.Controllers
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
                 return View(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -195,7 +211,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -231,7 +247,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -261,7 +277,7 @@ namespace MegatubeV2.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
         }

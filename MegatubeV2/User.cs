@@ -27,6 +27,7 @@ namespace MegatubeV2
             this.AdministratorPayments = new HashSet<Payment>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
             this.AdministratorOf = new HashSet<User>();
+            this.EventLogs = new HashSet<EventLog>();
         }
     
         public int Id { get; set; }
@@ -74,5 +75,7 @@ namespace MegatubeV2
         public virtual ICollection<User> AdministratorOf { get; set; }
         public virtual User Administrator { get; set; }
         public virtual Network Network { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventLog> EventLogs { get; set; }
     }
 }

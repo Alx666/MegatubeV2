@@ -22,11 +22,11 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password, string network)
         {
-#if DEBUG
-            username = "alxeyesoul@live.com";
-            password = "lamalama";
-            network  = "growup";
-#endif
+//#if DEBUG
+//            username = "alxeyesoul@live.com";
+//            password = "lamalama";
+//            network  = "growup";
+//#endif            
 
             try
             {
@@ -46,6 +46,8 @@ namespace MegatubeV2.Controllers
 
                 Session.SetUser(user);
 
+                EventLog.Log(db, user, EventLogType.LoginSuccess, "Login Success", true);
+
                 if (user.IsDeveloper || user.IsManager)
                 {
                     return RedirectToAction("Index", "Users");
@@ -56,21 +58,10 @@ namespace MegatubeV2.Controllers
                 }
 
             }
-            catch(InvalidOperationException)
+            catch(Exception)
             {
-                //Piu di un utente
+                EventLog.Log(db, null, EventLogType.LoginFailed, $"Login Failed: \"{Request.UserHostAddress}\" on (\"{username}\",\"{password}\", \"{network}\",)", true);
                 return RedirectToAction("Index", "Account");
-            }
-            catch(ArgumentNullException)
-            {
-                
-                //utente non esiste oppure username/psw errati
-                return RedirectToAction("Index", "Account");
-            }
-            catch(Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Error");
             }     
 
         }

@@ -27,6 +27,14 @@
 <p>
     @Html.ActionLink("Create New User", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Users", FormMethod.Post, new { @class = "", id="userTypeSelect", enctype = "multipart/form-data" }))
+{
+    <div class="col-sm-4">
+        @Html.DropDownList("SearchType");
+    </div>
+}
+
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>

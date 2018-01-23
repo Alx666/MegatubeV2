@@ -43,9 +43,9 @@ namespace MegatubeV2.Controllers
                 ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
                 return View(channel);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
@@ -82,9 +82,9 @@ namespace MegatubeV2.Controllers
 
                 return View(channel);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.Exception = e;
                 return View("Error");
             }
 
