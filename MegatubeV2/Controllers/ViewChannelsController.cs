@@ -18,15 +18,23 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(bool referenced = true, bool active = true)
         {
-            int networkId = Session.GetUser().NetworkId;
-            IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active && x.NetworkId == networkId);
+            try
+            {
+                int networkId = Session.GetUser().NetworkId;
+                IEnumerable<ViewChannel> channels = db.ViewChannels.Where(x => x.IsActive == active && x.NetworkId == networkId);
 
-            if (referenced)
-                channels = channels.Where(x => x.OwnerId != null);
-            else
-                channels = channels.Where(x => x.OwnerId == null);
-                      
-            return View(channels.OrderBy(x => x.Name));
+                if (referenced)
+                    channels = channels.Where(x => x.OwnerId != null);
+                else
+                    channels = channels.Where(x => x.OwnerId == null);
+
+                return View(channels.OrderBy(x => x.Name));
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
         }
     
         protected override void Dispose(bool disposing)

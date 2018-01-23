@@ -19,44 +19,52 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index(int? Months, int? Years)
         {
-            int networkId = Session.GetUser().NetworkId;
-
-            var payments = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
-
-            ViewBag.SelectedYear = 0;
-            ViewBag.SelectedMonth = 0;
-
-            if (Months.HasValue)
+            try
             {
-                payments.Where(x => x.Date.Month == Months.Value);
-                ViewBag.SelectedMonth = Months;
-            }
+                int networkId = Session.GetUser().NetworkId;
 
-            if (Years.HasValue)
-            {
-                payments.Where(x => x.Date.Year == Years.Value);
-                ViewBag.SelectedYear = Years;
-            }
+                var payments = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
 
-            ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
+                ViewBag.SelectedYear = 0;
+                ViewBag.SelectedMonth = 0;
 
-            if (db.Payments.Any())
-            {
-                int oldYear   = db.Payments.Min(x => x.Date.Year);
-                int current   = DateTime.Now.Year;
-                var years     = Enumerable.Range(oldYear, current - oldYear);
-                ViewBag.Years = new SelectList(years, years.Last());
-            }
-            else
-            {
-                if(Years.HasValue)
-                    ViewBag.Years = new SelectList(Enumerable.Range(2018, 1), Years.Value);
+                if (Months.HasValue)
+                {
+                    payments.Where(x => x.Date.Month == Months.Value);
+                    ViewBag.SelectedMonth = Months;
+                }
+
+                if (Years.HasValue)
+                {
+                    payments.Where(x => x.Date.Year == Years.Value);
+                    ViewBag.SelectedYear = Years;
+                }
+
+                ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
+
+                if (db.Payments.Any())
+                {
+                    int oldYear = db.Payments.Min(x => x.Date.Year);
+                    int current = DateTime.Now.Year;
+                    var years = Enumerable.Range(oldYear, current - oldYear);
+                    ViewBag.Years = new SelectList(years, years.Last());
+                }
                 else
-                    ViewBag.Years = new SelectList(Enumerable.Range(2018, 1));
-            }
-                
+                {
+                    if (Years.HasValue)
+                        ViewBag.Years = new SelectList(Enumerable.Range(2018, 1), Years.Value);
+                    else
+                        ViewBag.Years = new SelectList(Enumerable.Range(2018, 1));
+                }
 
-            return View(payments.ToList());
+
+                return View(payments.ToList());
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
         }
 
         // GET: Payments/Details/5

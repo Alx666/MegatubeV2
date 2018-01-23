@@ -17,29 +17,38 @@ namespace MegatubeV2.Controllers
         // GET: Channels/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Channel channel = db.Channels.Find(id);
+                channel.PercentMegatube *= 100d;
+                channel.PercentOwner *= 100d;
+                channel.PercentRecruiter *= 100d;
+
+                channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).ToList().Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
+
+
+                if (channel == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+
+                ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
+                ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
+                return View(channel);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
             }
 
-            Channel channel              = db.Channels.Find(id);
-            channel.PercentMegatube     *= 100d;
-            channel.PercentOwner        *= 100d;
-            channel.PercentRecruiter    *= 100d;
-
-            channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).ToList().Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
-
-
-            if (channel         == null)
-            {
-                return HttpNotFound();
-            }
-
-            var users           = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
-
-            ViewBag.OwnerId     = new SelectList(users, "Id", "Name", channel.OwnerId);
-            ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
-            return View(channel);
         }
 
         // POST: Channels/Edit/5
@@ -49,27 +58,36 @@ namespace MegatubeV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,RegistrationDate,OwnerId,RecruiterId,PercentOwner,PercentRecruiter,PercentMegatube")] Channel channel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Channel c = db.Channels.Find(channel.Id);
+                if (ModelState.IsValid)
+                {
+                    Channel c = db.Channels.Find(channel.Id);
 
-                c.PercentMegatube   = channel.PercentMegatube     / 100d;
-                c.PercentOwner      = channel.PercentOwner        / 100d;
-                c.PercentRecruiter  = channel.PercentRecruiter    / 100d;
-                c.RecruiterId       = channel.RecruiterId;
-                c.OwnerId           = channel.OwnerId;
+                    c.PercentMegatube = channel.PercentMegatube / 100d;
+                    c.PercentOwner = channel.PercentOwner / 100d;
+                    c.PercentRecruiter = channel.PercentRecruiter / 100d;
+                    c.RecruiterId = channel.RecruiterId;
+                    c.OwnerId = channel.OwnerId;
 
-                //db.Entry(channel).State      = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", "ViewChannels");
+                    //db.Entry(channel).State      = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "ViewChannels");
+                }
+
+                var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+
+                ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
+                ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
+
+                return View(channel);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
             }
 
-            var users                        = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
-
-            ViewBag.OwnerId                  = new SelectList(users, "Id", "Name", channel.OwnerId);
-            ViewBag.RecruiterId              = new SelectList(users, "Id", "Name", channel.RecruiterId);
-
-            return View(channel);
         }
   
         protected override void Dispose(bool disposing)

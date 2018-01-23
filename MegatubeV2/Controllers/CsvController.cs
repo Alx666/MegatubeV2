@@ -37,8 +37,17 @@ namespace MegatubeV2.Controllers
 
         public ActionResult UpdatePaymentAlerts()
         {
-            db.UpdatePaymentAlerts(Session.GetUser().NetworkId);
-            return RedirectToAction("Index", "PaymentAlerts");
+            try
+            {
+                db.UpdatePaymentAlerts(Session.GetUser().NetworkId);
+                return RedirectToAction("Index", "PaymentAlerts");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

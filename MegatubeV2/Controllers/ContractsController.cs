@@ -18,32 +18,57 @@ namespace MegatubeV2.Controllers
         // GET: Contracts
         public ActionResult Index()
         {
-            int networkId = Session.GetUser().NetworkId;
-            var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId);
-            return View(contracts.ToList());
+            try
+            {
+                int networkId = Session.GetUser().NetworkId;
+                var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId);
+                return View(contracts.ToList());
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
         }
 
         // GET: Contracts/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Contract contract = db.Contracts.Find(id);
+                if (contract == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(contract);
             }
-            Contract contract = db.Contracts.Find(id);
-            if (contract == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
             }
-            return View(contract);
         }
 
         // GET: Contracts/Create
         public ActionResult Create()
         {
-           
-            ViewBag.UserId = new SelectList(db.Users.ToList().Select(x => new { Id = x.Id, Name = $"{x.Name} {x.LastName}" }), "Id", "Name");
-            return View();
+            try
+            {
+                ViewBag.UserId = new SelectList(db.Users.ToList().Select(x => new { Id = x.Id, Name = $"{x.Name} {x.LastName}" }), "Id", "Name");
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }            
         }
 
         [HttpPost]
@@ -82,20 +107,28 @@ namespace MegatubeV2.Controllers
         // GET: Contracts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Contract contract = db.Contracts.Find(id);
+
+                if (contract == null)
+                {
+                    return HttpNotFound();
+                }
+
+                ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
+                return View(contract);
             }
-
-            Contract contract = db.Contracts.Find(id);
-
-            if (contract == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
             }
-
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
-            return View(contract);
         }
 
         // POST: Contracts/Edit/5
@@ -105,29 +138,46 @@ namespace MegatubeV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserId,FilenName,UploadDate,ExpireDate")] Contract contract)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(contract).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(contract).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
+                return View(contract);
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
-            return View(contract);
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
         }
 
         // GET: Contracts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Contract contract = db.Contracts.Find(id);
+                if (contract == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(contract);
             }
-            Contract contract = db.Contracts.Find(id);
-            if (contract == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
             }
-            return View(contract);
         }
 
         // POST: Contracts/Delete/5

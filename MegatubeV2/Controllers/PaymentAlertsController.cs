@@ -21,40 +21,57 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult Index()
         {
-            int netId = Session.GetUser().NetworkId;
+            try
+            {
+                int netId = Session.GetUser().NetworkId;
 
-            var paymentAlerts = db.PaymentAlerts.Where(x => x.NetworkId == netId).ToList();
-            return View(paymentAlerts);
+                var paymentAlerts = db.PaymentAlerts.Where(x => x.NetworkId == netId).ToList();
+                return View(paymentAlerts);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }
+
         }
 
         [HttpPost]
         [CustomAuthorize(RoleType.Manager)]
         public ActionResult GenerateSepa(int[] ids)
         {
-            PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();
-
-            XmlSerializer serializer    = new XmlSerializer(typeof(Sepa));
-            Sepa document = new Sepa("GROWUP", "Grow Up Network SRL", "IT", DateTime.Now, "SIAB8VPN", "IT45G0306901798100000005467", toPay, "Pagamento Traffico Growup");
-
-            byte[] data;
-
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                serializer.Serialize(ms, document);
-                data = new byte[ms.GetBuffer().Length];
-                Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
+                PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();
 
+                XmlSerializer serializer = new XmlSerializer(typeof(Sepa));
+                Sepa document = new Sepa("GROWUP", "Grow Up Network SRL", "IT", DateTime.Now, "SIAB8VPN", "IT45G0306901798100000005467", toPay, "Pagamento Traffico Growup");
 
-                for (int i = 0; i < toPay.Length; i++)
+                byte[] data;
+
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, out PaymentAlert toRemove);
-                    db.Payments.Add(p);
-                    db.PaymentAlerts.Remove(toRemove);
-                    db.SaveChanges();
-                }
+                    serializer.Serialize(ms, document);
+                    data = new byte[ms.GetBuffer().Length];
+                    Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
 
-                return File(data, "application/xml", "sepa.xml");
-            }                                        
+
+                    for (int i = 0; i < toPay.Length; i++)
+                    {
+                        Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, out PaymentAlert toRemove);
+                        db.Payments.Add(p);
+                        db.PaymentAlerts.Remove(toRemove);
+                        db.SaveChanges();
+                    }
+
+                    return File(data, "application/xml", "sepa.xml");
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View("Error");
+            }                                   
         }
     
 
