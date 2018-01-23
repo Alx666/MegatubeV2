@@ -22,11 +22,11 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password, string network)
         {
-#if DEBUG
-            username = "alxeyesoul@live.com";
-            password = "lamalama";
-            network  = "growup";
-#endif            
+//#if DEBUG
+//            username = "alxeyesoul@live.com";
+//            password = "lamalama";
+//            network  = "growup";
+//#endif            
 
             try
             {
