@@ -16,6 +16,15 @@ namespace MegatubeV2
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            if (httpContext.Session.GetUser() == null)
+                httpContext.Response.RedirectToRoute(new
+                {
+                    controller = "Account",
+                    action = "Index"
+                });
+                        
+                    
+
             try
             {
                 if (httpContext.Session.GetUser().RoleId == 0)
