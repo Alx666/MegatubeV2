@@ -26,5 +26,6 @@ namespace MegatubeDataMigrator.ModelNew
         public string RecruiterName { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime LatestActivity { get; set; }
+        public int NetworkId { get; set; }
     }
 }

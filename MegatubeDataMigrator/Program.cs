@@ -211,22 +211,40 @@ namespace MegatubeDataMigrator
 
                     List<int> users = newDb.Users.Select(x => x.Id).ToList();
 
+                    var oldOnes = (from a in oldDb.Accreditations
+                                   where !a.Payed && users.Contains(a.UserId)
+                                   group a by a.UserId into g
+                                   select new
+                                   {
+                                       UserId = g.Key,
+                                       DateFrom = g.Min(x => x.DateFrom),
+                                       DateTo = g.Max(x => x.DateTo),
+                                       GrossAmount = g.Sum(x => x.GrossAmmount)
 
-                    MigrateTable(oldDb.Accreditations.Where(x => !x.Payed && users.Contains(x.UserId)), newDb.Accreditations, t =>
-                    {
-                        ModelNew.Accreditation record = new ModelNew.Accreditation();
-                        record.Id = t.Id;
-                        record.DateFrom = t.DateFrom;
-                        record.DateTo = t.DateTo;
-                        //record.ChannelId = t.ChannelId;
-                        record.GrossAmmount = t.GrossAmmount;
-                        record.UserId = t.UserId;
-                        record.Type = mapping[t.Type].Item1;
-                        record.SubType = mapping[t.Type].Item2;
-                        record.PaymentId = null;
-                        return record;
+                                   }).ToList();
 
-                    }, newDb, (index, total, entity) => OutPercentage(index, total));
+                    //oldDb.Accreditations.Where(x => !x.Payed && users.Contains(x.UserId)).ToList().gr
+
+
+
+
+
+                    //MigrateTable(oldDb.Accreditations.Where(x => !x.Payed && users.Contains(x.UserId)), newDb.Accreditations, t =>
+                    //{
+                    //    ModelNew.Accreditation record = new ModelNew.Accreditation();
+                    //    record.Id = t.Id;
+                    //    record.DateFrom = t.DateFrom;
+                    //    record.DateTo = t.DateTo;
+                    //    //record.ChannelId = t.ChannelId;
+                    //    record.GrossAmmount = t.GrossAmmount;
+                    //    record.UserId = t.UserId;
+                    //    record.Type = mapping[t.Type].Item1;
+                    //    record.SubType = mapping[t.Type].Item2;
+                    //    record.PaymentId = null;
+
+                    //    return record;
+
+                    //}, newDb, (index, total, entity) => OutPercentage(index, total));
                 }
             }
         }

@@ -18,6 +18,7 @@
           <Property Name="DateTo" Type="datetime" Nullable="false" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="SubType" Type="tinyint" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -33,6 +34,7 @@
           <Property Name="PercentMegatube" Type="float" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LatestActivity" Type="date" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Contract">
           <Key>
@@ -58,6 +60,7 @@
           <Property Name="TrafficIncomeNetwork" Type="money" />
           <Property Name="TotalChannels" Type="int" />
           <Property Name="DollarToEuroConv" Type="float" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -83,6 +86,7 @@
           <Property Name="DateTo" Type="date" Nullable="false" />
           <Property Name="ReceiptCount" Type="int" Nullable="false" />
           <Property Name="AdministratorId" Type="int" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentAlert">
           <Key>
@@ -94,6 +98,7 @@
           <Property Name="Net" Type="money" Nullable="false" />
           <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -133,9 +138,10 @@
           <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
           <Property Name="PaymentMethod" Type="smallint" />
           <Property Name="BICSWIFT" Type="nvarchar" MaxLength="50" />
-          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
           <Property Name="FiscalAdministratorId" Type="int" />
           <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -149,6 +155,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
             <PropertyRef Name="PercentRecruiter" />
             <PropertyRef Name="IsActive" />
             <PropertyRef Name="LatestActivity" />
+            <PropertyRef Name="NetworkId" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -162,6 +169,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LatestActivity" Type="date" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -394,7 +402,8 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
     [ViewChannel].[RecruiterId] AS [RecruiterId], 
     [ViewChannel].[RecruiterName] AS [RecruiterName], 
     [ViewChannel].[IsActive] AS [IsActive], 
-    [ViewChannel].[LatestActivity] AS [LatestActivity]
+    [ViewChannel].[LatestActivity] AS [LatestActivity], 
+    [ViewChannel].[NetworkId] AS [NetworkId]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ViewNotes" EntityType="Self.ViewNotes" store:Type="Views" store:Schema="dbo">
@@ -577,6 +586,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Channel" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Accreditation" ToRole="Channel" />
           <NavigationProperty Name="Payment" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Accreditation" ToRole="Payment" />
           <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="Accreditation" ToRole="User" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -595,6 +605,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToChannel" FromRole="Channel" ToRole="Accreditation" />
           <NavigationProperty Name="Owner" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="Channel" ToRole="User" />
           <NavigationProperty Name="Recruiter" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="Channel" ToRole="User" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Contract">
           <Key>
@@ -621,6 +632,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="TrafficIncomeNetwork" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalChannels" Type="Int32" />
           <Property Name="DollarToEuroConv" Type="Double" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -651,6 +663,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
           <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_Payment_ToUser" FromRole="Payment" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="MegatubeV2Model.FK_Payment_ToUserAdministrator" FromRole="Payment" ToRole="User" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentAlert">
           <Key>
@@ -663,6 +676,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="User" Relationship="MegatubeV2Model.FK_PaymentAlert_ToUser" FromRole="PaymentAlert" ToRole="User" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -703,7 +717,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PaymentMethod" Type="Int16" />
           <Property Name="BICSWIFT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FiscalAdministratorId" Type="Int32" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
           <NavigationProperty Name="ChannelsOwned" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
@@ -718,6 +732,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <NavigationProperty Name="FiscalAdministrator" Relationship="MegatubeV2Model.FK_User_ToUser" FromRole="User1" ToRole="User" />
           <Property Name="Role" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role1" Relationship="MegatubeV2Model.FK_User_ToRole" FromRole="User" ToRole="Role" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ViewChannel">
           <Key>
@@ -729,6 +744,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <PropertyRef Name="PercentRecruiter" />
             <PropertyRef Name="IsActive" />
             <PropertyRef Name="LatestActivity" />
+            <PropertyRef Name="NetworkId" />
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -742,6 +758,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LatestActivity" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ViewNote">
           <Key>
@@ -937,6 +954,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Accreditations">
             <EntityTypeMapping TypeName="MegatubeV2Model.Accreditation">
               <MappingFragment StoreEntitySet="Accreditation">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="SubType" ColumnName="SubType" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
@@ -952,6 +970,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="MegatubeV2Model.Channel">
               <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
@@ -979,6 +998,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="DataFiles">
             <EntityTypeMapping TypeName="MegatubeV2Model.DataFile">
               <MappingFragment StoreEntitySet="DataFile">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="DollarToEuroConv" ColumnName="DollarToEuroConv" />
                 <ScalarProperty Name="TotalChannels" ColumnName="TotalChannels" />
                 <ScalarProperty Name="TrafficIncomeNetwork" ColumnName="TrafficIncomeNetwork" />
@@ -1006,6 +1026,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="MegatubeV2Model.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="AdministratorId" ColumnName="AdministratorId" />
                 <ScalarProperty Name="ReceiptCount" ColumnName="ReceiptCount" />
                 <ScalarProperty Name="DateTo" ColumnName="DateTo" />
@@ -1022,6 +1043,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="PaymentAlerts">
             <EntityTypeMapping TypeName="MegatubeV2Model.PaymentAlert">
               <MappingFragment StoreEntitySet="PaymentAlert">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Net" ColumnName="Net" />
@@ -1053,6 +1075,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MegatubeV2Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="FiscalAdministratorId" ColumnName="FiscalAdministratorId" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
@@ -1079,6 +1102,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="ViewChannels">
             <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannel">
               <MappingFragment StoreEntitySet="ViewChannel">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="LatestActivity" ColumnName="LatestActivity" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />

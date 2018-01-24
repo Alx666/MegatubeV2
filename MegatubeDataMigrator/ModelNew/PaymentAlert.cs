@@ -20,6 +20,7 @@ namespace MegatubeDataMigrator.ModelNew
         public decimal Net { get; set; }
         public System.DateTime CreationDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
+        public int NetworkId { get; set; }
     
         public virtual User User { get; set; }
     }

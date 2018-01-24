@@ -24,5 +24,6 @@ namespace MegatubeDataMigrator.ModelNew
         public Nullable<decimal> TrafficIncomeNetwork { get; set; }
         public Nullable<int> TotalChannels { get; set; }
         public Nullable<double> DollarToEuroConv { get; set; }
+        public int NetworkId { get; set; }
     }
 }
