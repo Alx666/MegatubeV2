@@ -19,7 +19,7 @@ namespace MegatubeV2.Controllers
 
         // GET: Users
         [CustomAuthorize(RoleType.Manager)]
-        public ActionResult Index(string SearchType = "all")
+        public ActionResult Index(string SearchType = "Partner")
         {
             try
             {                
@@ -117,8 +117,7 @@ namespace MegatubeV2.Controllers
             {
                 ViewBag.Exception = e;
                 return View("Error");
-            }
-   
+            }   
         }
 
         // GET: Users/Create
@@ -230,12 +229,33 @@ namespace MegatubeV2.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    
+                    User toEdit                  = db.Users.Find(user.Id);
+                    toEdit.Name                  = user.Name;
+                    toEdit.LastName              = user.LastName;
+                    toEdit.Mobile                = user.Mobile;
+                    toEdit.EMail                 = user.EMail;
+                    toEdit.Skype                 = user.Skype;
+                    toEdit.BirthDate             = user.BirthDate;
+                    toEdit.BirthPlace            = user.BirthPlace;
+                    toEdit.CompanyName           = user.CompanyName;
+                    toEdit.CompanyKind           = user.CompanyKind;
+                    toEdit.IBAN                  = user.IBAN;
+                    toEdit.PIVAorVAT             = user.PIVAorVAT;
+                    toEdit.FullAddress           = user.FullAddress;
+                    toEdit.PostalCode            = user.PostalCode;
+                    toEdit.PaymentMethod         = user.PaymentMethod;
+                    toEdit.BICSWIFT              = user.BICSWIFT;
+                    toEdit.FiscalAdministratorId = user.FiscalAdministratorId;
+                    toEdit.RoleId                = user.RoleId;
+
+
                     if (!string.IsNullOrEmpty(user.Password))
                     {
-                        user.Password = user.Password.ToMD5();
+                        toEdit.Password = user.Password.ToMD5();
                     }
+                    
 
-                    db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -282,6 +302,31 @@ namespace MegatubeV2.Controllers
                 return View("Error");
             }
         }
+
+        //[CustomAuthorize(RoleType.Manager)]
+        //public ActionResult Balance(int? year)
+        //{            
+        //    int network = Session.GetUser().NetworkId;
+        //    try
+        //    {
+        //        if (!year.HasValue)
+        //            year = DateTime.Now.Year;
+
+        //        throw new NotImplementedException("Accreditation Data Required to implement");
+
+        //        group x by new { x.Column1, x.Column2 }
+
+        //        var res = from a in db.Accreditations
+        //                  where a.DateFrom.Year == year.Value && a.NetworkId == network
+        //                  group a by new { a.UserId, a.DateFrom }
+        //                  select new { UserId = g.Key, MontlyCredits = g.}
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //    }
+        //}
 
         protected override void Dispose(bool disposing)
         {
