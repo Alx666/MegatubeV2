@@ -11,6 +11,7 @@ using MegatubeV2.Models;
 
 namespace MegatubeV2.Controllers
 {
+    [SessionTimeout]
     public class PaymentsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();

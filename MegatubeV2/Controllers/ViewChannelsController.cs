@@ -10,6 +10,7 @@ using MegatubeV2;
 
 namespace MegatubeV2.Controllers
 {
+    [SessionTimeout]
     public class ViewChannelsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();

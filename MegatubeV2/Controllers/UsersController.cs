@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Objects;
 
 namespace MegatubeV2.Controllers
 {
+    [SessionTimeout]
     public class UsersController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();

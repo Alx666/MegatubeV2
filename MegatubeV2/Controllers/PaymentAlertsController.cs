@@ -13,6 +13,7 @@ using System.IO;
 
 namespace MegatubeV2.Controllers
 {
+    [SessionTimeout]
     public class PaymentAlertsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();

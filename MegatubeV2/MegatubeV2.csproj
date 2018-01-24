@@ -178,6 +178,7 @@
     <Compile Include="Receipt.cs" />
     <Compile Include="RoleType.cs" />
     <Compile Include="Sepa.cs" />
+    <Compile Include="SessionTimeoutAttribute.cs" />
     <Compile Include="SmartParser.cs" />
     <Compile Include="OperationSelector.cs" />
     <Compile Include="IOperation.cs" />
