@@ -15,7 +15,15 @@ namespace MegatubeV2
         public decimal TotalGrossToPay                      { get; set; }
         public decimal TotalNetToPay                        { get; set; }
         public List<AccreditationsPerMonth> CreditHistory   { get; set; }
+
+        [DisplayName("First Accreditation Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? FirstAccredationDate               { get; set; }
+
+        [DisplayName("Last Payment Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? LastPaymentDate                    { get; set; }
 
 
@@ -87,5 +95,15 @@ namespace MegatubeV2
         
         [EmailAddress]
         string EMail { get; }
+
+        [DisplayName("Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        DateTime? BirthDate { get; }
+
+        [DisplayName("Registration Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        DateTime RegistrationDate { get; }
     }
 }
