@@ -52,20 +52,28 @@ namespace MegatubeV2
 
             var credits = (from a in db.Accreditations
                            where a.PaymentId == null && a.NetworkId == netId
-                           group a by a.UserId into g
-                           select new { UserId = g.Key, Gross = g.Sum(x => x.GrossAmmount) }).Where(x => x.Gross > 100).ToList();
+                           group a by a.User into g
+                           select new { User = g.Key, Gross = g.Sum(x => x.GrossAmmount) }).ToList();
 
             foreach (var item in credits)
             {
-                PaymentAlert p  = new PaymentAlert();
-                p.CreationDate  = DateTime.Now;
-                p.UpdateDate    = DateTime.Now;
-                p.UserId        = item.UserId;
-                p.Gross         = item.Gross;
-                p.Net           = p.Gross;
-                p.NetworkId     = netId;
+                if (item.User.PaymentMethod.HasValue)
+                {
+                    IPaymentMethod  method  = PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value);
+                    decimal         net     = method.ComputeNet(item.Gross);
 
-                db.PaymentAlerts.Add(p);
+                    if (net > 100m)
+                    {
+                        db.PaymentAlerts.Add(new PaymentAlert(DateTime.Now, item.User.Id, item.Gross, netId));
+                    }
+                }
+                else
+                {
+                    if (item.Gross > 130m)
+                    {
+                        db.PaymentAlerts.Add(new PaymentAlert(DateTime.Now, item.User.Id, item.Gross, netId));
+                    }
+                }                
             }
         }
     }

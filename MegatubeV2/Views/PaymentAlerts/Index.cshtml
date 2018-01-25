@@ -24,13 +24,10 @@
                 @Html.DisplayNameFor(model => model.Gross)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Net)
+                Net
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateDate)
             </th>
             <th></th>
         </tr>
@@ -47,31 +44,27 @@
                 </td>
                 <td>
                     @{
-                        string mode;
+                        IPaymentMethod payMethod = item.User.PaymentMethod.HasValue ? PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value) : null;
 
-                        try
-                        {
-                            mode = PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value).ToString();
-                        }
-                        catch (Exception)
-                        {
-                            mode = "-";
-                        }
+                        string modeText = payMethod != null ? payMethod.ToString() : "-";
+
                     }   
                     
-                    @mode
+                    @modeText
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Gross)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Net)
+                    @{ 
+
+                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString() : "-";
+                    }
+
+                    @netAmount
                 </td>
                 <td>
                     @item.CreationDate.ToShortDateString()
-                </td>
-                <td>
-                    @item.UpdateDate.ToShortDateString()
                 </td>
                 <td>
                     @if ((item.User.FiscalAdministratorId != null && item.User.Administrator.PaymentMethod != null) || (item.User.FiscalAdministratorId == null && item.User.PaymentMethod != null))

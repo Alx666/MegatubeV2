@@ -32,12 +32,12 @@ namespace MegatubeV2
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
-        public virtual DbSet<PaymentAlert> PaymentAlerts { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ViewChannel> ViewChannels { get; set; }
         public virtual DbSet<ViewNote> ViewNotes { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
+        public virtual DbSet<PaymentAlert> PaymentAlerts { get; set; }
     }
 }

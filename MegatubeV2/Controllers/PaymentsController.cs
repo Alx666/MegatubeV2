@@ -157,17 +157,7 @@ namespace MegatubeV2.Controllers
             try
             {
                 Payment p           = db.Payments.Find(id);
-
-                PaymentAlert alert  = new PaymentAlert();
-                alert.Gross         = p.Accreditations.Sum(x => x.GrossAmmount);
-                alert.CreationDate  = p.DateFrom;
-                alert.UpdateDate    = DateTime.Now;
-                alert.UserId        = p.UserId;
-
-                if (p.User.PaymentMethod != null)
-                    alert.Net       = PaymentMethodFactory.GetMethodFromDBCode(p.User.PaymentMethod.Value).ComputeNet(alert.Gross);
-                else
-                    alert.Net       = alert.Gross;
+                PaymentAlert alert  = new PaymentAlert(DateTime.Now, p.UserId, p.Gross, p.NetworkId);
 
                 p.Accreditations.Clear();
 

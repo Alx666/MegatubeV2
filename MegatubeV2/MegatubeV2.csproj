@@ -166,6 +166,7 @@
     <Compile Include="Models\DataFile.cs" />
     <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentAlert.cs" />
     <Compile Include="Models\PaymentData.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Month.cs" />

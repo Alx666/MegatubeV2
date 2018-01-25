@@ -94,7 +94,7 @@ namespace MegatubeV2
                             newOne.Name = null;
                         }
 
-                        newChannels.Add(newOne);
+                        //newChannels.Add(newOne);
                     }
                 }
                 

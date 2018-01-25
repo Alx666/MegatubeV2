@@ -25,9 +25,9 @@ namespace MegatubeV2
             this.NotesReceived = new HashSet<Note>();
             this.Payments = new HashSet<Payment>();
             this.AdministratorPayments = new HashSet<Payment>();
-            this.PaymentAlerts = new HashSet<PaymentAlert>();
             this.AdministratorOf = new HashSet<User>();
             this.EventLogs = new HashSet<EventLog>();
+            this.PaymentAlerts = new HashSet<PaymentAlert>();
         }
     
         public int Id { get; set; }
@@ -68,8 +68,6 @@ namespace MegatubeV2
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> AdministratorPayments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> AdministratorOf { get; set; }
@@ -77,5 +75,7 @@ namespace MegatubeV2
         public virtual Network Network { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventLog> EventLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
     }
 }
