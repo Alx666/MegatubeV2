@@ -58,7 +58,7 @@
                 <td>
                     @{ 
 
-                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString() : "-";
+                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString("n2") : "-";
                     }
 
                     @netAmount
