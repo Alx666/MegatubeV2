@@ -10,12 +10,14 @@ using MegatubeV2;
 
 namespace MegatubeV2.Controllers
 {
-    [SessionTimeout]
+    
     public class ChannelsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
-        // GET: Channels/Edit/5
+        
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Edit(string id)
         {
             try
@@ -57,6 +59,8 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Edit([Bind(Include = "Id,Name,RegistrationDate,OwnerId,RecruiterId,PercentOwner,PercentRecruiter,PercentMegatube")] Channel channel)
         {
             try

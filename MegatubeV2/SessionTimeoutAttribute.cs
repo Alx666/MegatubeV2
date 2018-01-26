@@ -6,9 +6,21 @@ using System.Web.Mvc;
 
 namespace MegatubeV2
 {
-    public class SessionTimeoutAttribute : ActionFilterAttribute
+    public class SessionTimeoutAttribute : AuthorizeAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //{
+        //    //HttpContext ctx = HttpContext.Current;
+        //    //if (HttpContext.Current.Session["User"] == null)
+        //    //{
+        //    //    filterContext.Result = new RedirectResult("~/Account/Index");
+        //    //    return;
+        //    //}
+
+        //    //base.OnActionExecuting(filterContext);
+        //}
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
             HttpContext ctx = HttpContext.Current;
             if (HttpContext.Current.Session["User"] == null)
@@ -16,8 +28,6 @@ namespace MegatubeV2
                 filterContext.Result = new RedirectResult("~/Account/Index");
                 return;
             }
-
-            base.OnActionExecuting(filterContext);
         }
     }
 }

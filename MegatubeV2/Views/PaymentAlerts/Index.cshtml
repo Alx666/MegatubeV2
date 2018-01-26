@@ -43,6 +43,7 @@
                     @(item.User.LastName + " " + item.User.Name)
                 </td>
                 <td>
+                    
                     @{
                         IPaymentMethod payMethod = item.User.PaymentMethod.HasValue ? PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value) : null;
 
@@ -58,7 +59,7 @@
                 <td>
                     @{ 
 
-                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString("n2") : "-";
+                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString() : "-";
                     }
 
                     @netAmount

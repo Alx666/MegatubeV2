@@ -8,17 +8,21 @@ using MegatubeV2;
 
 namespace MegatubeV2.Controllers
 {
-    [SessionTimeout]
+    
     public class CsvController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Index()
         {
             int netId = Session.GetUser().NetworkId;
             return View(db.DataFiles.Where(x => x.NetworkId == netId).OrderByDescending(x => x.UploadDate));
         }
 
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult UploadChannels(HttpPostedFileBase file, float dollarToEuro = 0f)
         {
             try
@@ -36,6 +40,8 @@ namespace MegatubeV2.Controllers
             }
         }
 
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Developer, Order = 2)]
         public ActionResult UpdatePaymentAlerts()
         {
             try

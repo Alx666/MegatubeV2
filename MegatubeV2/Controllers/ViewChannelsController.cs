@@ -10,13 +10,14 @@ using MegatubeV2;
 
 namespace MegatubeV2.Controllers
 {
-    [SessionTimeout]
+    
     public class ViewChannelsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: ViewChannels
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Index(bool referenced = true, bool active = true)
         {
             ViewBag.Referenced = referenced;

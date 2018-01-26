@@ -10,15 +10,15 @@ using MegatubeV2;
 using System.Data.Entity.Core.Objects;
 
 namespace MegatubeV2.Controllers
-{
-    [SessionTimeout]
+{    
     public class UsersController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
-        
+
 
         // GET: Users
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Index(string SearchType = "Partner")
         {
             try
@@ -51,7 +51,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Details/5
-        [CustomAuthorize(RoleType.Standard, RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
         public ActionResult Details(int? id)
         {
             try
@@ -121,7 +122,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Create
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Create()
         {
             try
@@ -143,7 +145,8 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Create([Bind(Include = "Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId,RoleId")] User user)
         {
             try
@@ -186,7 +189,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Edit/5
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Edit(int? id)
         {
             try
@@ -222,7 +226,8 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId,RoleId")] User user)
         {
             try
@@ -275,7 +280,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Users/Delete/5
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Delete(int? id)
         {
             try
