@@ -11,13 +11,14 @@ using MegatubeV2.Models;
 
 namespace MegatubeV2.Controllers
 {
-    [SessionTimeout]
+    
     public class PaymentsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: Payments
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Index(int? Months, int? Years)
         {
             try
@@ -69,7 +70,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Details/5
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -85,7 +87,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Create
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Create(int? userId)
         {
             try
@@ -128,7 +131,8 @@ namespace MegatubeV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Create(int userId, int receiptCounter)
         {
             try
@@ -151,7 +155,8 @@ namespace MegatubeV2.Controllers
 
 
         // GET: Payments/Delete/5
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Revert(int? id)
         {
             try
@@ -175,7 +180,8 @@ namespace MegatubeV2.Controllers
         }
 
         // GET: Payments/Delete/5
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
         public ActionResult DownloadReceipt(int? id)
         {
             try

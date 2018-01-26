@@ -13,13 +13,15 @@ using System.IO;
 
 namespace MegatubeV2.Controllers
 {
-    [SessionTimeout]
+    
     public class PaymentAlertsController : Controller
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
         // GET: PaymentAlerts
-        [CustomAuthorize(RoleType.Manager)]
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Index()
         {
             try
@@ -38,7 +40,8 @@ namespace MegatubeV2.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorize(RoleType.Manager)]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult GenerateSepa(int[] ids)
         {
             try
