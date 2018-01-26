@@ -2,122 +2,135 @@
 
 @{
     IPaymentMethod method = PaymentMethodFactory.GetMethodFromDBCode(Model.Administrator.PaymentMethod.Value);
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
 }
 
-@using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { @class = "m-t-3", id = "paymentsCreate", enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Payment</h4>
+        <div class="page-header">
+            <h2 class="m-b-2 m-t-0 f-w-300">Payment</h2>
+        </div>
+
+        <table class="table table-condensed table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td class="col-xs-2">
+                        User:
+                    </td>
+                    <td class="userDetails col-xs-4">
+                        @{
+                            string Name = Model.User.Name + " " + Model.User.LastName;
+                            @Html.Raw(Name)
+                        }
+                    </td>
+                    <td class="col-xs-2">
+                        Payment method:
+                    </td>
+
+                    <td class="userDetails col-xs-4">
+                        @method.ToString()
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-xs-2">
+                        From:
+                    </td>
+                    <td class="userDetails col-xs-4">
+                        @Model.From.ToShortDateString()
+                    </td>
+                    <td class="col-xs-2">
+                        To:
+                    </td>
+
+                    <td class="userDetails col-xs-4">
+                        @Model.To.ToShortDateString()
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-xs-2">
+                        Gross:
+                    </td>
+                    <td class="userDetails col-xs-4">
+                        @Model.Gross.ToString("C", ci_IT)
+                    </td>
+                    <td class="col-xs-2">
+                        Net:
+                    </td>
+
+                    <td class="userDetails col-xs-4">
+                        @Model.Net.ToString("C", ci_IT)
+                    </td>
+                </tr>
+        </table>
         <hr />
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">User</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @{
-                        string Name = Model.User.Name + " " + Model.User.LastName;
-                        @Html.Raw(Name)
-                    }
-                </p>
-            </div>
-        </div>
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">Payment mode</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @method.ToString()
-                </p>
-            </div>
-        </div>
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">From</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @Model.From
-                </p>
-            </div>
-        </div>
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">To</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @Model.To
-                </p>
-            </div>
-        </div>
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">Gross</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @Model.Gross
-                </p>
-            </div>
-        </div>
-        <div class="form-group m-b-0">
-            <label class="col-xs-4 control-label">Net</label>
-            <div class="col-xs-8">
-                <p class="form-control-static">
-                    @Model.Net
-                </p>
-            </div>
-        </div>
 
         <table class="table table-condensed table-hover table-striped" id="paymentCreateTable">
             <thead>
                 <tr>
-                    <th>
+                    <th class="small text-muted text-uppercase">
                         Reason
                     </th>
-                    <th>
+                    <th class="small text-muted text-uppercase">
                         Gross
                     </th>
-                    <th>
+                    <th class="small text-muted text-uppercase">
                         Date From
                     </th>
-                    <th>
+                    <th class="small text-muted text-uppercase">
                         Date To
                     </th>
-                    <th>
+                    <th class="small text-muted text-uppercase">
                         Type
                     </th>
                 </tr>
             </thead>
             <tbody>
 
-            @foreach (var item in Model.Accreditations)
-            {
-                Accreditation.AccreditationMainType mainType    = (Accreditation.AccreditationMainType)item.Type;
-                Accreditation.AccreditationSubType subType      = (Accreditation.AccreditationSubType)item.SubType;
-                string mainTypeText                             = Accreditation.AccreditationMainTypeText(mainType);
-                string subTypeText                              = Accreditation.AccreditationSubTypeText(subType);
+                @foreach (var item in Model.Accreditations)
+                {
+                    Accreditation.AccreditationMainType mainType = (Accreditation.AccreditationMainType)item.Type;
+                    Accreditation.AccreditationSubType subType = (Accreditation.AccreditationSubType)item.SubType;
+                    string mainTypeText = Accreditation.AccreditationMainTypeText(mainType);
+                    string subTypeText = Accreditation.AccreditationSubTypeText(subType);
 
-                <tr>
-                    <td>@mainTypeText @item.Channel.Name</td>
-                    <td>@item.GrossAmmount</td>
-                    <td>@item.DateFrom.ToShortDateString()</td>
-                    <td>@item.DateTo.ToShortDateString()</td>
-                    <td>@subTypeText</td>
-                </tr>
-            }
+                    <tr>
+                        <td>@mainTypeText @item.Channel.Name</td>
+                        <td>@item.GrossAmmount.ToString("C", ci_IT)</td>
+                        <td>@item.DateFrom.ToShortDateString()</td>
+                        <td>@item.DateTo.ToShortDateString()</td>
+                        <td>@subTypeText</td>
+                    </tr>
+                }
             </tbody>
         </table>
-        
-        @{ 
+        <hr />
+        @{
             DateTime currentDate = DateTime.Today;
             string currentDateStr = currentDate.ToString("yyyy-MM-dd");//.Year.ToString("YYYY") + "-" + currentDate.Month.ToString("MM") + "-" + currentDate.Day.ToString("dd");
 
         }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="hidden" name="userId" value="@Model.User.Id" />
-                <input type="text" name="receiptCounter" class="form-inline" style="width:60px" value="@Model.ReceiptCount" />
-                <input type="date" value="@currentDateStr" class="btn btn-default" />
-                <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-default">Proceed</a>
+       @using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { @class = "m-t-3", id = "paymentsCreate", enctype = "multipart/form-data" }))
+       {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="receiptCounter">Invoice number</label>
+                <div class="col-md-2">
+                    <input type="hidden" name="userId" value="@Model.User.Id" />
+                    <input type="text" name="receiptCounter" id="receiptCounter" class="form-control" style="width:60px" value="@Model.ReceiptCount" />
+                </div>
+
+                <label class="control-label col-md-2">Date</label>
+                <div class="col-md-2">
+                    <input type="date" value="@currentDateStr" class="form-control btn btn-default" />
+                </div>
+                <div class="col-md-4">
+                    <a href="javasctipt:{}" onclick="$('#paymentsCreate').submit(); return false;" role="button" class="btn btn-primary">Proceed</a>
+                </div>
             </div>
         </div>
-    </div>
-  }
+       }
 <script language="javascript">
 
     $(document).ready(function () {

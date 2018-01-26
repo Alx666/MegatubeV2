@@ -104,6 +104,11 @@ ol.breadcrumb li {
     color: #ff0000;
 }
 
+/*--------------------  User ------------------------*/
+.userBlock{
+    min-height:400px;
+}
+
 
 /*--  Classi generiche
 a {
