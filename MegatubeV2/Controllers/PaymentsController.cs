@@ -25,20 +25,21 @@ namespace MegatubeV2.Controllers
             {
                 int networkId = Session.GetUser().NetworkId;
 
-                var payments = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
+                IEnumerable<Payment> result;
+                result = db.Payments.Where(x => x.NetworkId == networkId).Include(p => p.User).Include(x => x.Accreditations).OrderBy(x => x.Date);
 
                 ViewBag.SelectedYear = 0;
                 ViewBag.SelectedMonth = 0;
 
                 if (Months.HasValue)
                 {
-                    payments.Where(x => x.Date.Month == Months.Value);
+                    result = result.Where(x => x.Date.Month == Months.Value);
                     ViewBag.SelectedMonth = Months;
                 }
 
                 if (Years.HasValue)
                 {
-                    payments.Where(x => x.Date.Year == Years.Value);
+                    result = result.Where(x => x.Date.Year == Years.Value);
                     ViewBag.SelectedYear = Years;
                 }
 
@@ -63,7 +64,7 @@ namespace MegatubeV2.Controllers
                 }
 
 
-                return View(payments.ToList());
+                return View(result.ToList());
             }
             catch (Exception e)
             {
