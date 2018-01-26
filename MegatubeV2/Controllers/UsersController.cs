@@ -248,12 +248,15 @@ namespace MegatubeV2.Controllers
                     toEdit.IBAN                  = user.IBAN;
                     toEdit.PIVAorVAT             = user.PIVAorVAT;
                     toEdit.FullAddress           = user.FullAddress;
-                    toEdit.PostalCode            = user.PostalCode;
-                    toEdit.PaymentMethod         = user.PaymentMethod;
+                    toEdit.PostalCode            = user.PostalCode;   
                     toEdit.BICSWIFT              = user.BICSWIFT;
                     toEdit.FiscalAdministratorId = user.FiscalAdministratorId;
                     toEdit.RoleId                = user.RoleId;
 
+                    if (user.PaymentMethod != 0)
+                        toEdit.PaymentMethod = user.PaymentMethod;
+                    else
+                        toEdit.PaymentMethod = null;
 
                     if (!string.IsNullOrEmpty(user.Password))
                     {
