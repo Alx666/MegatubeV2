@@ -62,7 +62,7 @@
                         <input name="ids" type="checkbox" value="@item.UserId" />
                     </td>
                     <td>
-                        <a href="@Url.Action("Edit", "Users", new { id = item.UserId })">@(item.User.LastName + " " + item.User.Name)</a>
+                        <a href="@Url.Action("Details", "Users", new { Id = item.UserId })">@(item.User.LastName + " " + item.User.Name)</a>
                     </td>
                     <td @if (missingPaymentMethod) { @Html.Raw("class=\"alertContainer\"") ; }>
 
@@ -84,7 +84,7 @@
                     <td>
                         @{
 
-                            string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString("n2") : "-";
+                            string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString() : "-";
                         }
 
                         @netAmount
