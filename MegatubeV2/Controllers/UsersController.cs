@@ -317,11 +317,17 @@ namespace MegatubeV2.Controllers
         //public ActionResult Balance(int? year)
         //{
         //    int network = Session.GetUser().NetworkId;
+
         //    try
         //    {
         //        if (!year.HasValue)
         //            year = DateTime.Now.Year;
 
+        //        //var creditsByMonts = from a in db.Accreditations
+        //        //                     where a.NetworkId == network && a.DateFrom.Year == year
+        //        //                     join m in Enumerable.Range(1, 12) on a.DateFrom.Month equals m
+                                     
+        //        //                     select new { };
 
 
         //    }

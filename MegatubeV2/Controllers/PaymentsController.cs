@@ -44,11 +44,14 @@ namespace MegatubeV2.Controllers
 
                 ViewBag.Months = new SelectList(Enum.GetValues(typeof(Month)));
 
+
+
+
                 if (db.Payments.Any())
                 {
                     int oldYear = db.Payments.Min(x => x.Date.Year);
                     int current = DateTime.Now.Year;
-                    var years = Enumerable.Range(oldYear, current - oldYear);
+                    var years = Enumerable.Range(oldYear, current - oldYear + 1);
                     ViewBag.Years = new SelectList(years, years.Last());
                 }
                 else

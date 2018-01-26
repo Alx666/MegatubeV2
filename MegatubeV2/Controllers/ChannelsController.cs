@@ -39,13 +39,6 @@ namespace MegatubeV2.Controllers
                     channel.CreditHistory.Reverse();
                 }
 
-
-                //channel.CreditHistory = from a in db.Accreditations
-                //                        where a.ChannelId == id
-                //                        group a by 
-                //channel.CreditHistory = db.Accreditations.Where(x => x.ChannelId == id).ToList().Select(x => new AccreditationsPerMonth(x.DateFrom, x.GrossAmmount)).OrderByDescending(x => x.Date).ToList();
-
-
                 if (channel == null)
                 {
                     return HttpNotFound();
