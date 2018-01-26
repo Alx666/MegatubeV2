@@ -95,7 +95,7 @@ namespace MegatubeV2.Controllers
                     user.TotalNetToPay = 0;
 
 
-                if (user.Accreditations.Count() > 0)
+                if (user.Accreditations.Any())
                 {
                     var accr = (from p in db.Accreditations where p.UserId == user.Id group p by p.DateFrom into g select new { Date = g.Key, Amount = g.Sum(x => x.GrossAmmount) }).OrderByDescending(x => x.Date).Take(12).ToList();
                     user.CreditHistory = accr.Select(x => new AccreditationsPerMonth(x.Date, x.Amount)).ToList();
@@ -312,23 +312,17 @@ namespace MegatubeV2.Controllers
             }
         }
 
-        //[CustomAuthorize(RoleType.Manager)]
+        //[SessionTimeout(Order = 1)]
+        //[CustomAuthorize(RoleType.Manager, Order = 2)]
         //public ActionResult Balance(int? year)
-        //{            
+        //{
         //    int network = Session.GetUser().NetworkId;
         //    try
         //    {
         //        if (!year.HasValue)
         //            year = DateTime.Now.Year;
 
-        //        throw new NotImplementedException("Accreditation Data Required to implement");
 
-        //        group x by new { x.Column1, x.Column2 }
-
-        //        var res = from a in db.Accreditations
-        //                  where a.DateFrom.Year == year.Value && a.NetworkId == network
-        //                  group a by new { a.UserId, a.DateFrom }
-        //                  select new { UserId = g.Key, MontlyCredits = g.}
 
         //    }
         //    catch (Exception e)

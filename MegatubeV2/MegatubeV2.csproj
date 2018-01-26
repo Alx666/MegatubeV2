@@ -162,6 +162,7 @@
     <Compile Include="MegatubeExtensions.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Models\Accreditation.cs" />
+    <Compile Include="Models\BalanceData.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\DataFile.cs" />
     <Compile Include="Models\EventLog.cs" />
