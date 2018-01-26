@@ -17,7 +17,11 @@
                     next: '&raquo;',
                     previous: '&laquo;'
                 }
-            }
+            },
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }]
         });
     });
 </script>
@@ -50,24 +54,22 @@
             <th class="small text-muted text-uppercase">
                 <strong>@Html.DisplayNameFor(model => model.EMail)</strong>
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Mobile)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.CompanyKind)
             </th>
-            <th>
-
-            </th>
+            <th class="no-sort"> </th>
         </tr>
     </thead>
     <tbody>

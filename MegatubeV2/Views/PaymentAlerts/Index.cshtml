@@ -8,93 +8,125 @@
 
 @using (Html.BeginForm("GenerateSepa", "PaymentAlerts", FormMethod.Post, new { @class = "m-t-3", id = "payAlerts", enctype = "multipart/form-data" }))
 {
-<table class="table" id="alertsTable">
-    <thead>
-        <tr>
-            <th>
-
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.PaymentMethod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gross)
-            </th>
-            <th>
-                Net
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table" id="alertsTable">
+        <thead>
             <tr>
-                <td>
-                    <input name="ids" type="checkbox" value="@item.UserId" />
-                </td>
-                <td>
-                    @(item.User.LastName + " " + item.User.Name)
-                </td>
-                <td>
-                    @{
-                        IPaymentMethod payMethod = item.User.PaymentMethod.HasValue ? PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value) : null;
-
-                        string modeText = payMethod != null ? payMethod.ToString() : "-";
-
-                    }   
-                    
-                    @modeText
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gross)
-                </td>
-                <td>
-                    @{ 
-
-                        string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString("n2") : "-";
-                    }
-
-                    @netAmount
-                </td>
-                <td>
-                    @item.CreationDate.ToShortDateString()
-                </td>
-                <td>
-                    @if ((item.User.FiscalAdministratorId != null && item.User.Administrator.PaymentMethod != null) || (item.User.FiscalAdministratorId == null && item.User.PaymentMethod != null))
-                    {
-                        <a href="/Payments/Create?userId=@item.UserId" role="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-euro"></span> Pay
-                        </a>
-                    }
-                    else
-                    {
-                        <p>Missing Payment Method</p>
-                    }
-                </td>
+                <th class="no-sort"> </th>
+                <th class="small text-muted text-uppercase">
+                    @Html.DisplayNameFor(model => model.User.Name)
+                </th>
+                <th class="small text-muted text-uppercase">
+                    @Html.DisplayNameFor(model => model.User.PaymentMethod)
+                </th>
+                <th class="small text-muted text-uppercase">
+                    @Html.DisplayNameFor(model => model.Gross)
+                </th>
+                <th class="small text-muted text-uppercase">
+                    Net
+                </th>
+                <th class="small text-muted text-uppercase">
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th class="no-sort"> </th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                bool missingPaymentMethod = false;
+                IPaymentMethod payMethod = null;
+                string modeText = "";
 
-</table>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <a href="javasctipt:{}" onclick="$('#payAlerts').submit(); return false;" role="button" class="btn btn-default">Pay selected</a>
+                if (item.User.PaymentMethod!=null && item.User.PaymentMethod!=0)
+                {
+                    payMethod = PaymentMethodFactory.GetMethodFromDBCode(item.User.PaymentMethod.Value);
+                }
+                else if (item.User.FiscalAdministratorId != null && item.User.Administrator.PaymentMethod!=null && item.User.Administrator.PaymentMethod!=0)
+                {
+                    payMethod = PaymentMethodFactory.GetMethodFromDBCode(item.User.Administrator.PaymentMethod.Value);
+                }
+                else
+                {
+                    modeText = "Missing payment method";
+                    missingPaymentMethod = true;
+                }
+
+                if (payMethod != null)
+                {
+                    modeText = payMethod.ToString();
+                }
+
+
+                <tr>
+                    <td>
+                        <input name="ids" type="checkbox" value="@item.UserId" />
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Users", new { id = item.UserId })">@(item.User.LastName + " " + item.User.Name)</a>
+                    </td>
+                    <td @if (missingPaymentMethod) { @Html.Raw("class=\"alertContainer\"") ; }>
+
+                        @if (missingPaymentMethod)
+                    {
+                            <i class="fa fa-fw fa-exclamation-triangle m-r-1"></i>@modeText
+                            <a href="@Url.Action("Edit", "Users", new { id=item.UserId })" role="button" class="btn btn-default btn-sm m-l-1">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add
+                            </a>
+                        }
+                        else
+                        {
+                            @modeText
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gross)
+                    </td>
+                    <td>
+                        @{
+
+                            string netAmount = payMethod != null ? payMethod.ComputeNet(item.Gross).ToString("n2") : "-";
+                        }
+
+                        @netAmount
+                    </td>
+                    <td>
+                        @item.CreationDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @if (!missingPaymentMethod)
+                        {
+                            <a href="/Payments/Create?userId=@item.UserId" role="button" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-euro"></span> Pay
+                            </a>
+                        }
+                    </td>
+                </tr>
+             }
+        </tbody>
+
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href="javasctipt:{}" onclick="$('#payAlerts').submit(); return false;" role="button" class="btn btn-default">Pay selected</a>
+        </div>
     </div>
-</div>
 
-}
+                            }
 <script language="javascript">
 
     $(document).ready(function () {
         $('#alertsTable').DataTable({
-            "pageLength": 100
+            "pageLength": 100,
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            },
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }]
         });
     });
 </script>

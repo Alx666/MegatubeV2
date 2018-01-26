@@ -71,28 +71,28 @@
 <table class="table" id="paymentsTable">
     <thead>
         <tr>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Date)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 Receiver
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Gross)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Net)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.PaymentType)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.DateFrom)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.DateTo)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.ReceiptCount)
             </th>
             <th>
@@ -141,7 +141,6 @@
                 </td>
                 @{ 
                     bool fullData = item.Accreditations.Count > 0;
-
                 }
 
                 <td>
@@ -170,7 +169,13 @@
     $(document).ready(function () {
         $('#paymentsTable').DataTable({
             "pageLength": 100,
-            "order": [[0, "desc"]]
+            "order": [[0, "desc"]],
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            }
         });
     });
 </script>

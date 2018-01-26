@@ -25,7 +25,13 @@
 <script language="javascript">
     $(document).ready(function () {
         $('#userTable').DataTable({
-            "pageLength": 100
+            "pageLength": 100,
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            },
         });
     });
 
@@ -83,7 +89,7 @@
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th class="small text-muted text-uppercase">
@@ -91,22 +97,22 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </strong>
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.OwnerName)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.RecruiterName)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.RegistrationDate)
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 %Owner
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 %Recruiter
             </th>
-            <th>
+            <th class="small text-muted text-uppercase">
                 %Megatube
             </th>
             <th>
