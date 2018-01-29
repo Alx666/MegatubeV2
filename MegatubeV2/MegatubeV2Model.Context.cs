@@ -39,5 +39,6 @@ namespace MegatubeV2
         public virtual DbSet<ViewNote> ViewNotes { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
         public virtual DbSet<PaymentAlert> PaymentAlerts { get; set; }
+        public virtual DbSet<ViewFullUserBalance> ViewFullUserBalances { get; set; }
     }
 }

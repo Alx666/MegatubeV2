@@ -147,10 +147,17 @@
     <Compile Include="Contract.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChannelsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\CsvController.cs" />
     <Compile Include="Controllers\EventLogsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PaymentAlertsController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ViewChannelsController.cs" />
+    <Compile Include="Controllers\ViewUserBalancesController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
@@ -191,12 +198,6 @@
     <Compile Include="Channel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChannelsController.cs" />
-    <Compile Include="Controllers\CsvController.cs" />
-    <Compile Include="Controllers\PaymentsController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ViewChannelsController.cs" />
     <Compile Include="DataFile.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
@@ -237,10 +238,19 @@
     <Compile Include="User.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewAccreditationsOverYear.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewChannel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewNote.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewTotalYearPayment.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewUserBalance.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -445,6 +455,7 @@
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
     <Content Include="Views\_PartialAdministratedUsers.cshtml" />
     <Content Include="Views\EventLogs\Index.cshtml" />
+    <Content Include="Views\ViewUserBalances\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -282,6 +282,16 @@ namespace MegatubeV2.Controllers
 
         }
 
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        public ActionResult Balance(int? year)
+        {
+            int netId = Session.GetUser().NetworkId;
+
+            return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == year).ToList());
+        }
+
         // GET: Users/Delete/5
         [SessionTimeout(Order = 1)]
         [CustomAuthorize(RoleType.Manager, Order = 2)]
@@ -311,31 +321,6 @@ namespace MegatubeV2.Controllers
                 return View("Error");
             }
         }
-
-        //[SessionTimeout(Order = 1)]
-        //[CustomAuthorize(RoleType.Manager, Order = 2)]
-        //public ActionResult Balance(int? year)
-        //{
-        //    int network = Session.GetUser().NetworkId;
-
-        //    try
-        //    {
-        //        if (!year.HasValue)
-        //            year = DateTime.Now.Year;
-
-        //        //var creditsByMonts = from a in db.Accreditations
-        //        //                     where a.NetworkId == network && a.DateFrom.Year == year
-        //        //                     join m in Enumerable.Range(1, 12) on a.DateFrom.Month equals m
-                                     
-        //        //                     select new { };
-
-
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //}
 
         protected override void Dispose(bool disposing)
         {

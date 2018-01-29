@@ -187,6 +187,44 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'MegatubeV2.dbo.ViewFullUserBalance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewFullUserBalance">
+          <Key>
+            <PropertyRef Name="NetworkId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Jan" />
+            <PropertyRef Name="Fev" />
+            <PropertyRef Name="Mar" />
+            <PropertyRef Name="Apr" />
+            <PropertyRef Name="May" />
+            <PropertyRef Name="Jun" />
+            <PropertyRef Name="Jul" />
+            <PropertyRef Name="Aug" />
+            <PropertyRef Name="Sep" />
+            <PropertyRef Name="Oct" />
+            <PropertyRef Name="Nov" />
+            <PropertyRef Name="Dec" />
+            <PropertyRef Name="TotalPaid" />
+          </Key>
+          <Property Name="NetworkId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Jan" Type="money" Nullable="false" />
+          <Property Name="Fev" Type="money" Nullable="false" />
+          <Property Name="Mar" Type="money" Nullable="false" />
+          <Property Name="Apr" Type="money" Nullable="false" />
+          <Property Name="May" Type="money" Nullable="false" />
+          <Property Name="Jun" Type="money" Nullable="false" />
+          <Property Name="Jul" Type="money" Nullable="false" />
+          <Property Name="Aug" Type="money" Nullable="false" />
+          <Property Name="Sep" Type="money" Nullable="false" />
+          <Property Name="Oct" Type="money" Nullable="false" />
+          <Property Name="Nov" Type="money" Nullable="false" />
+          <Property Name="Dec" Type="money" Nullable="false" />
+          <Property Name="TotalPaid" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewNotes">
           <Key>
@@ -478,6 +516,27 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
     [ViewChannel].[NetworkId] AS [NetworkId]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ViewFullUserBalance" EntityType="Self.ViewFullUserBalance" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewFullUserBalance].[NetworkId] AS [NetworkId], 
+    [ViewFullUserBalance].[Name] AS [Name], 
+    [ViewFullUserBalance].[UserId] AS [UserId], 
+    [ViewFullUserBalance].[Year] AS [Year], 
+    [ViewFullUserBalance].[Jan] AS [Jan], 
+    [ViewFullUserBalance].[Fev] AS [Fev], 
+    [ViewFullUserBalance].[Mar] AS [Mar], 
+    [ViewFullUserBalance].[Apr] AS [Apr], 
+    [ViewFullUserBalance].[May] AS [May], 
+    [ViewFullUserBalance].[Jun] AS [Jun], 
+    [ViewFullUserBalance].[Jul] AS [Jul], 
+    [ViewFullUserBalance].[Aug] AS [Aug], 
+    [ViewFullUserBalance].[Sep] AS [Sep], 
+    [ViewFullUserBalance].[Oct] AS [Oct], 
+    [ViewFullUserBalance].[Nov] AS [Nov], 
+    [ViewFullUserBalance].[Dec] AS [Dec], 
+    [ViewFullUserBalance].[TotalPaid] AS [TotalPaid]
+    FROM [dbo].[ViewFullUserBalance] AS [ViewFullUserBalance]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ViewNotes" EntityType="Self.ViewNotes" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewNotes].[Id] AS [Id], 
@@ -669,6 +728,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="User" EntitySet="Users" />
             <End Role="PaymentAlert" EntitySet="PaymentAlerts" />
           </AssociationSet>
+          <EntitySet Name="ViewFullUserBalances" EntityType="MegatubeV2Model.ViewFullUserBalance" />
         </EntityContainer>
         <EntityType Name="Accreditation">
           <Key>
@@ -1149,6 +1209,42 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ViewFullUserBalance">
+          <Key>
+            <PropertyRef Name="NetworkId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Jan" />
+            <PropertyRef Name="Fev" />
+            <PropertyRef Name="Mar" />
+            <PropertyRef Name="Apr" />
+            <PropertyRef Name="May" />
+            <PropertyRef Name="Jun" />
+            <PropertyRef Name="Jul" />
+            <PropertyRef Name="Aug" />
+            <PropertyRef Name="Sep" />
+            <PropertyRef Name="Oct" />
+            <PropertyRef Name="Nov" />
+            <PropertyRef Name="Dec" />
+            <PropertyRef Name="TotalPaid" />
+          </Key>
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Jan" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Fev" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Mar" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Apr" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="May" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Jun" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Jul" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Aug" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Sep" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Oct" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Nov" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Dec" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalPaid" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1349,6 +1445,29 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="Gross" ColumnName="Gross" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewFullUserBalances">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewFullUserBalance">
+              <MappingFragment StoreEntitySet="ViewFullUserBalance">
+                <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
+                <ScalarProperty Name="Dec" ColumnName="Dec" />
+                <ScalarProperty Name="Nov" ColumnName="Nov" />
+                <ScalarProperty Name="Oct" ColumnName="Oct" />
+                <ScalarProperty Name="Sep" ColumnName="Sep" />
+                <ScalarProperty Name="Aug" ColumnName="Aug" />
+                <ScalarProperty Name="Jul" ColumnName="Jul" />
+                <ScalarProperty Name="Jun" ColumnName="Jun" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="Apr" ColumnName="Apr" />
+                <ScalarProperty Name="Mar" ColumnName="Mar" />
+                <ScalarProperty Name="Fev" ColumnName="Fev" />
+                <ScalarProperty Name="Jan" ColumnName="Jan" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
