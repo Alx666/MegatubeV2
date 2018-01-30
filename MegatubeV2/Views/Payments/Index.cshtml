@@ -150,9 +150,7 @@
                 <td>
                     @if (fullData)
                     {
-                        <a href="/Payments/Revert/@item.Id" role="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-trash"></span> Revert
-                        </a>
+                        <button type="button" class="btn btn-default btn-sm revertButton" data-paymentid="@item.Id"><span class="glyphicon glyphicon-trash"></span> Revert</button>
                     }
                 </td>
             </tr>
@@ -177,5 +175,37 @@
                 "orderable": false,
             }]
         });
+
+        $(".revertButton").click(function myfunction() {
+            var paymentId = $(this).data("paymentid");
+            $('#revertLink').prop("href", "/Payments/Revert/" + paymentId);
+            $('#noteModal').modal('show');
+        });
     });
 </script>
+<!-- Modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post">
+                <input type="hidden" id="noteModalId" name="noteModalId" />
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#xD7;</span></button>
+                    <h4 class="modal-title" id="noteModalLabel"></h4>
+                </div>
+                <div class="modal-body" style="min-height:140px">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h1 class="text-danger">Are you sure you want to revert the payment?</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="#" id="revertLink" role="button" class="btn btn-danger">Revert</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal -->

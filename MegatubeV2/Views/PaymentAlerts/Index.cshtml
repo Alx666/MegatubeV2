@@ -90,6 +90,7 @@
                         @netAmount
                     </td>
                     <td>
+                        <span class='hide'>@item.CreationDate.Ticks</span>
                         @item.CreationDate.ToShortDateString()
                     </td>
                     <td>
@@ -117,6 +118,7 @@
     $(document).ready(function () {
         $('#alertsTable').DataTable({
             "pageLength": 100,
+            "order": [[5, "desc"]],
             language: {
                 paginate: {
                     next: '&raquo;',
