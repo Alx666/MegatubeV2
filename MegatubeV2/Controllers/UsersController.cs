@@ -289,6 +289,9 @@ namespace MegatubeV2.Controllers
         {
             int netId = Session.GetUser().NetworkId;
 
+            if (!year.HasValue)
+                year = DateTime.Now.Year - 1;
+
             return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == year).ToList());
         }
 

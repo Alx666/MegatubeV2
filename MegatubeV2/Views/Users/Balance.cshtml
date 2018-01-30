@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<MegatubeV2.ViewFullUserBalance>
 
 @{
-    ViewBag.Title = "Index";
+
+
+
 }
+
+@*https://stackoverflow.com/questions/19819597/datatables-setting-column-width*@
 
 <script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
 <script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
 
 <script language="javascript">
-
     $(document).ready(function () {
         $('#userTable').DataTable({
-            "pageLength": 500,
+            "pageLength": 100,
             language: {
                 paginate: {
                     next: '&raquo;',
@@ -24,71 +27,143 @@
             }]
         });
     });
-</script>
-<div class="page-header">
-    <h2>Users</h2>
-</div>
-<p>
-    @Html.ActionLink("Create New User", "Create")
-</p>
 
-<div class="row m-b-3">
-    @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { @class = "", id = "userTypeSelect", enctype = "multipart/form-data" }))
-    {
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Show users of type:</label>
-            <div class="col-sm-5">
+    function UpdateFilter(){
 
-                @Html.DropDownList("SearchType", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-5">
-                <input type="submit" value="Show" class="btn btn-default" />
+        var referenced = "true";
+        var active = "true";
 
-            </div>
-        </div>
+        if ($("#channelsType").val() == "2")
+            active = "false";
+        else if ($("#channelsType").val() == "1")
+            referenced = "false";
+
+        $('#referenced').val(referenced);
+        $('#active').val(active);
+        $('#viewChannelsForm').submit();
+
     }
+</script>
+
+<div class="row">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Show me:</label>
+
+    @using (Html.BeginForm("Balance", "Channel", FormMethod.Post, new { @class = "form-horizontal", id = "viewChannelsForm", enctype = "multipart/form-data" }))
+    {
+            <div class="col-sm-4">
+                <input type="hidden" name="referenced" id="referenced" value="true" />
+                <input type="hidden" name="active" id="active" value="true" />
+                <a href="javasctipt:{}" onclick="UpdateFilter(); return false;" role="button" class="btn btn-default">Show</a>
+            </div>
+    }
+        </div>
 </div>
+
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
             <th class="small text-muted text-uppercase">
-                <strong>@Html.DisplayNameFor(model => model.UserId)</strong>
+                <strong>
+                    @Html.DisplayNameFor(model => model.Name)
+                </strong>
+            </th>            
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jan)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Fev)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Mar)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Apr)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.May)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jun)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jul)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Aug)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Sep)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Oct)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Nov)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Dec)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.TotalPaid)
             </th>
             <th class="no-sort"> </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+         {
             <tr>
-                <td class="text-white">
-                    @Html.DisplayFor(modelItem => item.EMail)
+                <td>
+                    <a href="@Url.Action("Details", "User", new { id = item.UserId })">@(item.Name)</a>                    
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.Jan)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Fev)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Mobile)
+                    @Html.DisplayFor(modelItem => item.Mar)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
+                    @Html.DisplayFor(modelItem => item.Apr)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CompanyKind)
+                    @Html.DisplayFor(modelItem => item.May)
                 </td>
-                <td nowrap="nowrap">
-                    @*@if (item.AdministratorOf.Count == 0 && item.OwnedChannels.Count == 0 && item.RecruitedChannels.Count == 0)
-                        {
-                            <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Delete",new { Id = item.Id })"><i class="glyphicon glyphicon-trash"></i></a>
-                        }*@
-                    <a title="Edit" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { Id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a title="Details" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Details",new { Id = item.Id })"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jun)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aug)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sep)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oct)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nov)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dec)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPaid)
+                </td>
+                <td nowrap="nowrap"></td>
             </tr>
-        }
+         }
     </tbody>
 </table>
-<hr/ >
