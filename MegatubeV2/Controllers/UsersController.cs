@@ -285,14 +285,18 @@ namespace MegatubeV2.Controllers
 
         [SessionTimeout(Order = 1)]
         [CustomAuthorize(RoleType.Manager, Order = 2)]
-        public ActionResult Balance(int? year)
+        [HttpGet]
+        public ActionResult Balance(int? Years)
         {
-            int netId = Session.GetUser().NetworkId;
+            int netId       = Session.GetUser().NetworkId;
+            int minYear     = db.Accreditations.Min(x => x.DateFrom.Year);
+            int currentYear = DateTime.Now.Year;
+            ViewBag.Years   = new SelectList(Enumerable.Range(minYear, currentYear - minYear + 1), Years);
 
-            if (!year.HasValue)
-                year = DateTime.Now.Year - 1;
+            if (!Years.HasValue)
+                Years = DateTime.Now.Year;
 
-            return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == year).ToList());
+            return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == Years).ToList());
         }
 
         // GET: Users/Delete/5

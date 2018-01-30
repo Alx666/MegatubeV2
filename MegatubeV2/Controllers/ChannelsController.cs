@@ -101,14 +101,20 @@ namespace MegatubeV2.Controllers
 
         [SessionTimeout(Order = 1)]
         [CustomAuthorize(RoleType.Manager, Order = 2)]
-        public ActionResult Balance(int? year)
+        [HttpGet]
+        public ActionResult Balance(int? Years)
         {
-            if (!year.HasValue)
-                year = DateTime.Now.Year - 1;
+            if (!Years.HasValue)
+                Years = DateTime.Now.Year;
+
+            int netId       = Session.GetUser().NetworkId;
+            int minYear     = db.Accreditations.Min(x => x.DateFrom.Year);
+            int currentYear = DateTime.Now.Year;
+            ViewBag.Years   = new SelectList(Enumerable.Range(minYear, currentYear - minYear + 1), Years);
 
             int networkId = Session.GetUser().NetworkId;
 
-            return View(db.ViewChannelBalances.Where(x => x.NetworkId == networkId && x.Year == year.Value));
+            return View(db.ViewChannelBalances.Where(x => x.NetworkId == networkId && x.Year == Years.Value));
         }
 
 

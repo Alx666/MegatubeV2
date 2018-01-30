@@ -46,18 +46,16 @@
 </script>
 
 <div class="row">
+    @using (Html.BeginForm("Balance", "Users", FormMethod.Get, new { @class = "form-horizontal", id="userBalanceForm", enctype = "multipart/form-data" }))
+    {
         <div class="form-group">
             <label class="col-sm-3 control-label">Show me:</label>
-
-    @using (Html.BeginForm("Balance", "Channel", FormMethod.Post, new { @class = "form-horizontal", id = "viewChannelsForm", enctype = "multipart/form-data" }))
-    {
             <div class="col-sm-4">
-                <input type="hidden" name="referenced" id="referenced" value="true" />
-                <input type="hidden" name="active" id="active" value="true" />
-                <a href="javasctipt:{}" onclick="UpdateFilter(); return false;" role="button" class="btn btn-default">Show</a>
+                @Html.DropDownList("Years");
+                <input type="submit" class="btn btn-default" value="Show">
             </div>
-    }
         </div>
+    }
 </div>
 
 <table class="table table-condensed table-hover table-striped" id="userTable">
