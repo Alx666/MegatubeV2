@@ -10,7 +10,7 @@ namespace MegatubeV2
         public PaymentAlert(DateTime creationDate, int userId, decimal gross, int networkId)
         {
             this.CreationDate = creationDate;
-            this.UserId = UserId;
+            this.UserId = userId;
             this.Gross = gross;
             this.NetworkId = networkId;
         }

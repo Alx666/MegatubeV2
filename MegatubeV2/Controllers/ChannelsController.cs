@@ -98,7 +98,17 @@ namespace MegatubeV2.Controllers
             }
 
         }
-  
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        public ActionResult Balance(int? year)
+        {
+            int networkId = Session.GetUser().NetworkId;
+
+            return View(db.ViewChannelBalances.Where(x => x.NetworkId == networkId && x.Year == year.Value));
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

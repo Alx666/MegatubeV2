@@ -187,6 +187,55 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewChannel' does not have a primar
           <Property Name="NetworkId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'MegatubeV2.dbo.ViewChannelBalance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewChannelBalance">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="OwnerName" />
+            <PropertyRef Name="Jan" />
+            <PropertyRef Name="Feb" />
+            <PropertyRef Name="Mar" />
+            <PropertyRef Name="Apr" />
+            <PropertyRef Name="May" />
+            <PropertyRef Name="Jun" />
+            <PropertyRef Name="Jul" />
+            <PropertyRef Name="Aug" />
+            <PropertyRef Name="Sep" />
+            <PropertyRef Name="Oct" />
+            <PropertyRef Name="Nov" />
+            <PropertyRef Name="Dec" />
+            <PropertyRef Name="TotalYearEarnings" />
+            <PropertyRef Name="PercentOwner" />
+            <PropertyRef Name="PercentRecruiter" />
+            <PropertyRef Name="PercentMegatube" />
+            <PropertyRef Name="NetworkId" />
+          </Key>
+          <Property Name="ChannelId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnerId" Type="int" />
+          <Property Name="OwnerName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="RecruiterId" Type="int" />
+          <Property Name="RecruiterName" Type="nvarchar" MaxLength="101" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Jan" Type="money" Nullable="false" />
+          <Property Name="Feb" Type="money" Nullable="false" />
+          <Property Name="Mar" Type="money" Nullable="false" />
+          <Property Name="Apr" Type="money" Nullable="false" />
+          <Property Name="May" Type="money" Nullable="false" />
+          <Property Name="Jun" Type="money" Nullable="false" />
+          <Property Name="Jul" Type="money" Nullable="false" />
+          <Property Name="Aug" Type="money" Nullable="false" />
+          <Property Name="Sep" Type="money" Nullable="false" />
+          <Property Name="Oct" Type="money" Nullable="false" />
+          <Property Name="Nov" Type="money" Nullable="false" />
+          <Property Name="Dec" Type="money" Nullable="false" />
+          <Property Name="TotalYearEarnings" Type="money" Nullable="false" />
+          <Property Name="PercentOwner" Type="float" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="float" Nullable="false" />
+          <Property Name="PercentMegatube" Type="float" Nullable="false" />
+          <Property Name="NetworkId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'MegatubeV2.dbo.ViewFullUserBalance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewFullUserBalance">
           <Key>
@@ -516,6 +565,34 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
     [ViewChannel].[NetworkId] AS [NetworkId]
     FROM [dbo].[ViewChannel] AS [ViewChannel]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ViewChannelBalance" EntityType="Self.ViewChannelBalance" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewChannelBalance].[ChannelId] AS [ChannelId], 
+    [ViewChannelBalance].[Name] AS [Name], 
+    [ViewChannelBalance].[OwnerId] AS [OwnerId], 
+    [ViewChannelBalance].[OwnerName] AS [OwnerName], 
+    [ViewChannelBalance].[RecruiterId] AS [RecruiterId], 
+    [ViewChannelBalance].[RecruiterName] AS [RecruiterName], 
+    [ViewChannelBalance].[Year] AS [Year], 
+    [ViewChannelBalance].[Jan] AS [Jan], 
+    [ViewChannelBalance].[Feb] AS [Feb], 
+    [ViewChannelBalance].[Mar] AS [Mar], 
+    [ViewChannelBalance].[Apr] AS [Apr], 
+    [ViewChannelBalance].[May] AS [May], 
+    [ViewChannelBalance].[Jun] AS [Jun], 
+    [ViewChannelBalance].[Jul] AS [Jul], 
+    [ViewChannelBalance].[Aug] AS [Aug], 
+    [ViewChannelBalance].[Sep] AS [Sep], 
+    [ViewChannelBalance].[Oct] AS [Oct], 
+    [ViewChannelBalance].[Nov] AS [Nov], 
+    [ViewChannelBalance].[Dec] AS [Dec], 
+    [ViewChannelBalance].[TotalYearEarnings] AS [TotalYearEarnings], 
+    [ViewChannelBalance].[PercentOwner] AS [PercentOwner], 
+    [ViewChannelBalance].[PercentRecruiter] AS [PercentRecruiter], 
+    [ViewChannelBalance].[PercentMegatube] AS [PercentMegatube], 
+    [ViewChannelBalance].[NetworkId] AS [NetworkId]
+    FROM [dbo].[ViewChannelBalance] AS [ViewChannelBalance]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ViewFullUserBalance" EntityType="Self.ViewFullUserBalance" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewFullUserBalance].[NetworkId] AS [NetworkId], 
@@ -729,6 +806,7 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
             <End Role="PaymentAlert" EntitySet="PaymentAlerts" />
           </AssociationSet>
           <EntitySet Name="ViewFullUserBalances" EntityType="MegatubeV2Model.ViewFullUserBalance" />
+          <EntitySet Name="ViewChannelBalances" EntityType="MegatubeV2Model.ViewChannelBalance" />
         </EntityContainer>
         <EntityType Name="Accreditation">
           <Key>
@@ -1245,6 +1323,53 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="Dec" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="TotalPaid" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
+        <EntityType Name="ViewChannelBalance">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="OwnerName" />
+            <PropertyRef Name="Jan" />
+            <PropertyRef Name="Feb" />
+            <PropertyRef Name="Mar" />
+            <PropertyRef Name="Apr" />
+            <PropertyRef Name="May" />
+            <PropertyRef Name="Jun" />
+            <PropertyRef Name="Jul" />
+            <PropertyRef Name="Aug" />
+            <PropertyRef Name="Sep" />
+            <PropertyRef Name="Oct" />
+            <PropertyRef Name="Nov" />
+            <PropertyRef Name="Dec" />
+            <PropertyRef Name="TotalYearEarnings" />
+            <PropertyRef Name="PercentOwner" />
+            <PropertyRef Name="PercentRecruiter" />
+            <PropertyRef Name="PercentMegatube" />
+            <PropertyRef Name="NetworkId" />
+          </Key>
+          <Property Name="ChannelId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OwnerId" Type="Int32" />
+          <Property Name="OwnerName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="RecruiterId" Type="Int32" />
+          <Property Name="RecruiterName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Jan" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Feb" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Mar" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Apr" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="May" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Jun" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Jul" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Aug" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Sep" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Oct" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Nov" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Dec" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalYearEarnings" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PercentOwner" Type="Double" Nullable="false" />
+          <Property Name="PercentRecruiter" Type="Double" Nullable="false" />
+          <Property Name="PercentMegatube" Type="Double" Nullable="false" />
+          <Property Name="NetworkId" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1468,6 +1593,36 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewChannelBalances">
+            <EntityTypeMapping TypeName="MegatubeV2Model.ViewChannelBalance">
+              <MappingFragment StoreEntitySet="ViewChannelBalance">
+                <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
+                <ScalarProperty Name="PercentMegatube" ColumnName="PercentMegatube" />
+                <ScalarProperty Name="PercentRecruiter" ColumnName="PercentRecruiter" />
+                <ScalarProperty Name="PercentOwner" ColumnName="PercentOwner" />
+                <ScalarProperty Name="TotalYearEarnings" ColumnName="TotalYearEarnings" />
+                <ScalarProperty Name="Dec" ColumnName="Dec" />
+                <ScalarProperty Name="Nov" ColumnName="Nov" />
+                <ScalarProperty Name="Oct" ColumnName="Oct" />
+                <ScalarProperty Name="Sep" ColumnName="Sep" />
+                <ScalarProperty Name="Aug" ColumnName="Aug" />
+                <ScalarProperty Name="Jul" ColumnName="Jul" />
+                <ScalarProperty Name="Jun" ColumnName="Jun" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="Apr" ColumnName="Apr" />
+                <ScalarProperty Name="Mar" ColumnName="Mar" />
+                <ScalarProperty Name="Feb" ColumnName="Feb" />
+                <ScalarProperty Name="Jan" ColumnName="Jan" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="RecruiterName" ColumnName="RecruiterName" />
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
