@@ -240,6 +240,9 @@
     <Compile Include="ViewChannel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewChannelBalance.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewFullUserBalance.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
@@ -448,8 +451,8 @@
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
     <Content Include="Views\_PartialAdministratedUsers.cshtml" />
     <Content Include="Views\EventLogs\Index.cshtml" />
-    <Content Include="Views\ViewUserBalances\Index.cshtml" />
     <Content Include="Views\Users\Balance.cshtml" />
+    <Content Include="Views\Channels\Balance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,205 @@
+﻿@model IEnumerable<MegatubeV2.ViewChannelBalance>
+
+@{
+
+
+
+}
+
+@*https://stackoverflow.com/questions/19819597/datatables-setting-column-width*@
+
+<script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+    $(document).ready(function () {
+        $('#userTable').DataTable({
+            "pageLength": 100,
+            language: {
+                paginate: {
+                    next: '&raquo;',
+                    previous: '&laquo;'
+                }
+            },
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }]
+        });
+    });
+
+    function UpdateFilter(){
+
+        var referenced = "true";
+        var active = "true";
+
+        if ($("#channelsType").val() == "2")
+            active = "false";
+        else if ($("#channelsType").val() == "1")
+            referenced = "false";
+
+        $('#referenced').val(referenced);
+        $('#active').val(active);
+        $('#viewChannelsForm').submit();
+
+    }
+</script>
+
+<div class="row">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Show me:</label>
+
+    @using (Html.BeginForm("Balance", "Channel", FormMethod.Post, new { @class = "form-horizontal", id = "viewChannelsForm", enctype = "multipart/form-data" }))
+    {
+            <div class="col-sm-4">
+                <input type="hidden" name="referenced" id="referenced" value="true" />
+                <input type="hidden" name="active" id="active" value="true" />
+                <a href="javasctipt:{}" onclick="UpdateFilter(); return false;" role="button" class="btn btn-default">Show</a>
+            </div>
+    }
+        </div>
+</div>
+
+<table class="table table-condensed table-hover table-striped" id="userTable">
+    <thead>
+        <tr>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.ChannelId)
+            </th>
+            <th class="small text-muted text-uppercase">
+                <strong>
+                    @Html.DisplayNameFor(model => model.Name)
+                </strong>
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.RecruiterName)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jan)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Feb)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Mar)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Apr)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.May)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jun)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Jul)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Aug)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Sep)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Oct)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Nov)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Dec)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.TotalYearEarnings)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.PercentOwner)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.PercentRecruiter)
+            </th>
+            <th class="small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.PercentMegatube)
+            </th>
+            <th class="no-sort"> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+         {
+            <tr>
+                <td class="text-mint-green">
+                    @Html.DisplayFor(modelItem => item.ChannelId)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Channel", new { id = item.ChannelId })">@(item.Name)</a>                    
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "User", new { id = item.OwnerId })">@(item.OwnerName)</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "User", new { id = item.RecruiterId })">@(item.RecruiterName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Feb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.May)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jun)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jul)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aug)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sep)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oct)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nov)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dec)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalYearEarnings)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PercentOwner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PercentRecruiter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PercentMegatube)
+                </td>
+                <td nowrap="nowrap"></td>
+            </tr>
+         }
+    </tbody>
+</table>

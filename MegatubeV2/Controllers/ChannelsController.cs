@@ -103,6 +103,9 @@ namespace MegatubeV2.Controllers
         [CustomAuthorize(RoleType.Manager, Order = 2)]
         public ActionResult Balance(int? year)
         {
+            if (!year.HasValue)
+                year = DateTime.Now.Year - 1;
+
             int networkId = Session.GetUser().NetworkId;
 
             return View(db.ViewChannelBalances.Where(x => x.NetworkId == networkId && x.Year == year.Value));
