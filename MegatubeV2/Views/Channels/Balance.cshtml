@@ -6,8 +6,6 @@
 
 }
 
-@*https://stackoverflow.com/questions/19819597/datatables-setting-column-width*@
-
 <script src="~/assets/vendor/js/jquery.dataTables.min.js"></script>
 <script src="~/assets/vendor/js/dataTables.bootstrap.min.js"></script>
 
@@ -28,7 +26,7 @@
         });
     });
 
-    function UpdateFilter(){
+    function UpdateFilter() {
 
         var referenced = "true";
         var active = "true";
@@ -48,11 +46,15 @@
 <div class="row">
     @using (Html.BeginForm("Balance", "Channels", FormMethod.Get, new { @class = "form-horizontal", id = "channelsBalanceForm", enctype = "multipart/form-data" }))
     {
-        <div class="form-group">
-            <label class="col-sm-3 control-label">Show me:</label>
-            <div class="col-sm-4">
-                @Html.DropDownList("Years");
-                <input type="submit" class="btn btn-default" value="Show">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Select year:</label>
+                <div class="col-sm-2">
+                    @Html.DropDownList("Years", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-default">Show</button>
+                </div>
             </div>
         </div>
     }
@@ -112,35 +114,35 @@
                 @Html.DisplayNameFor(model => model.Dec)
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.TotalYearEarnings)
+                Total Earnings
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.PercentOwner)
+                %Owner
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.PercentRecruiter)
+                %Recruiter
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.PercentMegatube)
+                %Network
             </th>
             <th class="no-sort"> </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
-         {
+        {
             <tr>
                 <td class="text-mint-green">
                     @Html.DisplayFor(modelItem => item.ChannelId)
                 </td>
                 <td>
-                    <a href="@Url.Action("Details", "Channel", new { id = item.ChannelId })">@(item.Name)</a>                    
+                    <a href="@Url.Action("Edit", "Channels", new { id = item.ChannelId })">@(item.Name)</a>
                 </td>
                 <td>
-                    <a href="@Url.Action("Details", "User", new { id = item.OwnerId })">@(item.OwnerName)</a>
+                    <a href="@Url.Action("Details", "Users", new { id = item.OwnerId })">@(item.OwnerName)</a>
                 </td>
                 <td>
-                    <a href="@Url.Action("Details", "User", new { id = item.RecruiterId })">@(item.RecruiterName)</a>
+                    <a href="@Url.Action("Details", "Users", new { id = item.RecruiterId })">@(item.RecruiterName)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Jan)
@@ -159,12 +161,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Jun)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Jul)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Jul)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Jul)
@@ -198,6 +194,6 @@
                 </td>
                 <td nowrap="nowrap"></td>
             </tr>
-         }
+        }
     </tbody>
 </table>
