@@ -19,7 +19,7 @@ namespace MegatubeV2
         public Nullable<int> UserId { get; set; }
         public Nullable<int> Year { get; set; }
         public decimal Jan { get; set; }
-        public decimal Fev { get; set; }
+        public decimal Feb { get; set; }
         public decimal Mar { get; set; }
         public decimal Apr { get; set; }
         public decimal May { get; set; }

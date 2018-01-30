@@ -44,7 +44,7 @@ namespace MegatubeV2.Controllers
                     return HttpNotFound();
                 }
 
-                var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+                var users = db.Users.ToList().Select(t => new { Id = t.Id, Name = t.ToString() });
 
                 ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
                 ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
@@ -84,7 +84,7 @@ namespace MegatubeV2.Controllers
                     return RedirectToAction("Index", "ViewChannels");
                 }
 
-                var users = db.Users.Select(t => new { Id = t.Id, Name = t.LastName + " " + t.Name });
+                var users = db.Users.ToList().Select(t => new { Id = t.Id, Name = t.ToString() });
 
                 ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
                 ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);

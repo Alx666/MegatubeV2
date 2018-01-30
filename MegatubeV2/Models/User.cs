@@ -81,6 +81,14 @@ namespace MegatubeV2
             return p;
         }
 
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(this.CompanyName))
+                return this.CompanyName;
+            else
+                return $"{this.LastName ?? ""} {this.Name ?? ""} - {this.PostalCode ?? ""} ";
+        } 
+
     }
 
     public interface IUserMetaData

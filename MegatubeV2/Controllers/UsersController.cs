@@ -128,7 +128,7 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+                var userSelection = db.Users.ToList().Select(x => new { Id = x.Id, Name = x.ToString() }).OrderBy(x => x.Name);
                 ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", 2);
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name");
                 return View();
@@ -174,7 +174,7 @@ namespace MegatubeV2.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+                var userSelection = db.Users.ToList().Select(x => new { Id = x.Id, Name = x.ToString() }).OrderBy(x => x.Name);
 
                 ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
@@ -207,7 +207,7 @@ namespace MegatubeV2.Controllers
                     return HttpNotFound();
                 }
 
-                var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+                var userSelection = db.Users.ToList().Select(x => new { Id = x.Id, Name = x.ToString()  }).OrderBy(x => x.Name);
 
                 ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
@@ -268,7 +268,7 @@ namespace MegatubeV2.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var userSelection = db.Users.Select(x => new { Id = x.Id, Name = x.LastName + " " + x.Name }).OrderBy(x => x.Name);
+                var userSelection = db.Users.ToList().Select(x => new { Id = x.Id, Name = x.ToString() }).OrderBy(x => x.Name);
 
                 ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
@@ -288,13 +288,13 @@ namespace MegatubeV2.Controllers
         [HttpGet]
         public ActionResult Balance(int? Years)
         {
+            if (!Years.HasValue)
+                Years = DateTime.Now.Year;
+
             int netId       = Session.GetUser().NetworkId;
             int minYear     = db.Accreditations.Min(x => x.DateFrom.Year);
             int currentYear = DateTime.Now.Year;
             ViewBag.Years   = new SelectList(Enumerable.Range(minYear, currentYear - minYear + 1), Years);
-
-            if (!Years.HasValue)
-                Years = DateTime.Now.Year;
 
             return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == Years).ToList());
         }
