@@ -289,8 +289,7 @@ namespace MegatubeV2.Controllers
         {
             int netId = Session.GetUser().NetworkId;
 
-            //return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == year).ToList());
-            return null;
+            return View(db.ViewFullUserBalances.Where(x => x.NetworkId == netId && x.Year == year).ToList());
         }
 
         // GET: Users/Delete/5
