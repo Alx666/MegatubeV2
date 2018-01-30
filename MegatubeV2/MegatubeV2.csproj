@@ -231,6 +231,7 @@
     <Compile Include="Role.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SomeClass.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
