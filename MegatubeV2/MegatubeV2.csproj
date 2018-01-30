@@ -157,7 +157,6 @@
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ViewChannelsController.cs" />
-    <Compile Include="Controllers\ViewUserBalancesController.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
@@ -238,19 +237,10 @@
     <Compile Include="User.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewAccreditationsOverYear.cs">
-      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewChannel.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewNote.cs">
-      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewTotalYearPayment.cs">
-      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewUserBalance.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>
