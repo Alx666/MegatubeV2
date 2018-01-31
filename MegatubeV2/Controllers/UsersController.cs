@@ -251,7 +251,9 @@ namespace MegatubeV2.Controllers
                     toEdit.PostalCode            = user.PostalCode;   
                     toEdit.BICSWIFT              = user.BICSWIFT;
                     toEdit.FiscalAdministratorId = user.FiscalAdministratorId;
-                    toEdit.RoleId                = user.RoleId;
+
+                    if(toEdit.RoleId != 0)
+                        toEdit.RoleId            = user.RoleId;
 
                     if (user.PaymentMethod != 0)
                         toEdit.PaymentMethod = user.PaymentMethod;
