@@ -16,7 +16,7 @@
             <tr>
                 <th class="small text-muted text-uppercase">Date</th>
                 <th class="small text-muted text-uppercase">Author</th>
-                <th class="small text-muted"></th>
+                <th class="no-sort"></th>
             </tr>
         </thead>
         <tbody>
@@ -26,16 +26,12 @@
                     <tr>
                         <td>
                             <span class="media-heading">
+                                <span class='hide'>@item.Date.Ticks</span>
                                 <span>@item.Date.ToShortDateString()</span>
                             </span>
                         </td>
                         <td>
                             <div class="media media-auto">
-                                <div class="media-left">
-                                    <a href="javascript: void(0)">
-                                        <img class="media-object img-circle" style="width: 35px" src="https://s3.amazonaws.com/uifaces/faces/twitter/kiwiupover/128.jpg" alt="Avatar">
-                                    </a>
-                                </div>
                                 <div class="media-body">
                                     @{
                                         string name = item.Author.Name + " " + item.Author.LastName;
@@ -64,13 +60,12 @@
     </div>
 </div>
 <!-- Modal -->
-@using (Html.BeginForm("Create", "Notes"))
+@using (Html.BeginForm("Dispatch", "Notes", FormMethod.Post, new { id = "notesForm" }))
 {
 <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form method="post">
-                <input type="hidden" id="noteModalId" name="id" />
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#xD7;</span></button>
                     <h4 class="modal-title" id="noteModalLabel"></h4>
@@ -84,6 +79,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" id="noteModalId" name="noteId" value="" />
                     <input type="hidden" id="noteModalUserId" name="userId" value="@ViewBag.UserId" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="noteModalButSave">Save changes</button>
@@ -106,16 +102,21 @@
     $(document).ready(function () {
         $('#notesTable').DataTable({
             "pageLength": 5,
+            "order": [[0, "desc"]],
             language: {
                 paginate: {
                     next: '&raquo;',
                     previous: '&laquo;'
                 }
-            }
+            },
+            "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+            }]
         });
 
         $("#addNote").click(function myfunction() {
-            $("#noteModalId").val(0);
+            $("#noteModalId").val("");
             $("#noteModalLabel").html("Create a note");
             $("#noteModalText").val("");
             loadModal("Save", "Delete", false);
@@ -138,6 +139,13 @@
             $("#noteModalText").val($("#txt_" + noteId).html());
             loadModal("Delete", "Save", true);
             $('#noteModal').modal('show');
+        });
+
+        $("#noteModalButDelete").click(function myfunction() {
+           
+            $("#noteModalText").val("");
+            $("#notesForm").submit();
+
         });
     });
 </script>
