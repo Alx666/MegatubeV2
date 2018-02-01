@@ -14,6 +14,8 @@
     string firstAccreditation = "-";
     string lastPayment = "-";
 
+    bool loggedUsrIsManager = Session.GetUser().IsManager;
+
     if (Model.FirstAccredationDate != null)
     {
         firstAccreditation = ((DateTime)Model.FirstAccredationDate).ToShortDateString();
@@ -472,7 +474,8 @@
                 Html.RenderPartial("~/Views/_PartialAdministratedUsers.cshtml", Model.AdministratorOf);
             }
 
-            @{
+            @if(loggedUsrIsManager)
+            {
                 Html.RenderPartial("~/Views/_PartialNotes.cshtml", Model.NotesReceived);
             }
         </div>

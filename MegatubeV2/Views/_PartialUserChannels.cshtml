@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<MegatubeV2.Channel>
+@{
+    bool loggedUsrIsManager = Session.GetUser().IsManager;
+}
 
 <div class="col-md-6 col-sm-6 col-xs-6 userBlock">
     <div class="page-header">
@@ -23,7 +26,17 @@
                         <td class="v-a-m">
                             <div class="media media-auto">
                                 <div class="media-body media-middle">
-                                    <span class="media-heading text-white"><a href="@Url.Action("Edit", "Channels", new { id = item.Id })">@item.Name</a></span>
+                                    <span class="media-heading text-white">
+                                        @if (loggedUsrIsManager)
+                                        {
+                                            <a href="@Url.Action("Edit", "Channels", new { id = item.Id })">@item.Name</a>
+
+                                        }
+                                        else
+                                        {
+                                            @item.Name
+                                        }
+                                    </span>
                                 </div>
                             </div>
                         </td>
