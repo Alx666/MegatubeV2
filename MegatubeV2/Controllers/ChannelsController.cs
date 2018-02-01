@@ -73,11 +73,11 @@ namespace MegatubeV2.Controllers
                 {
                     Channel c = db.Channels.Find(channel.Id);
 
-                    c.PercentMegatube = channel.PercentMegatube / 100d;
-                    c.PercentOwner = channel.PercentOwner / 100d;
-                    c.PercentRecruiter = channel.PercentRecruiter / 100d;
-                    c.RecruiterId = channel.RecruiterId;
-                    c.OwnerId = channel.OwnerId;
+                    c.PercentMegatube  = channel.PercentMegatube    / 100d;
+                    c.PercentOwner     = channel.PercentOwner       / 100d;
+                    c.PercentRecruiter = channel.PercentRecruiter   / 100d;
+                    c.RecruiterId      = channel.RecruiterId;
+                    c.OwnerId          = channel.OwnerId;
 
                     //db.Entry(channel).State      = EntityState.Modified;
                     db.SaveChanges();
@@ -96,7 +96,6 @@ namespace MegatubeV2.Controllers
                 ViewBag.Exception = e;
                 return View("Error");
             }
-
         }
 
         [SessionTimeout(Order = 1)]

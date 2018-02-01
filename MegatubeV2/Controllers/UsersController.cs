@@ -190,7 +190,7 @@ namespace MegatubeV2.Controllers
 
         // GET: Users/Edit/5
         [SessionTimeout(Order = 1)]
-        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
         public ActionResult Edit(int? id)
         {
             try
@@ -227,7 +227,7 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionTimeout(Order = 1)]
-        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
         public ActionResult Edit([Bind(Include = "Id,Name,LastName,Mobile,EMail,Password,Skype,BirthDate,BirthPlace,CompanyName,CompanyKind,IBAN,PIVAorVAT,FullAddress,PostalCode,PaymentMethod,BICSWIFT,FiscalAdministratorId,RoleId")] User user)
         {
             try

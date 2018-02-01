@@ -14,8 +14,33 @@ namespace MegatubeV2.Controllers
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        public ActionResult Dispatch(string text, int userId, int? noteId)
+        {
+            if (!noteId.HasValue)
+            {
+                this.Create(text, userId);
+            }
+            else if (noteId.HasValue)
+            {
+                if (!string.IsNullOrEmpty(text))
+                {
+                    this.Edit(noteId.Value, text);
+                }
+                else
+                {
+                    this.Delete(noteId);
+                }
+            }
+
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+
         public void Create(string text, int userId)
         {
             Note n = new Note();
