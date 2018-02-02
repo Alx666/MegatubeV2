@@ -58,6 +58,29 @@ namespace MegatubeV2.Controllers
 
         }
 
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
+        public ActionResult Details(string id)
+        {            
+            Channel channel = db.Channels.Find(id);
+            User    current = Session.GetUser();
+            channel.PercentMegatube     *= 100;
+            channel.PercentOwner        *= 100;
+            channel.PercentRecruiter    *= 100;
+
+            if (current.Id == channel.OwnerId || current.Id == channel.RecruiterId || current.IsManager)
+            {
+                var users = db.Users.ToList().Select(t => new { Id = t.Id, Name = t.ToString() });
+                ViewBag.OwnerId = new SelectList(users, "Id", "Name", channel.OwnerId);
+                ViewBag.RecruiterId = new SelectList(users, "Id", "Name", channel.RecruiterId);
+                return View(db.Channels.Find(id));
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+            }
+        }
+
         // POST: Channels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

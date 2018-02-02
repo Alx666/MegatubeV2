@@ -1,0 +1,363 @@
+﻿@model MegatubeV2.Channel
+
+@{
+    ViewBag.Title = "Edit";
+
+    string extraClass = "";
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
+    System.Globalization.CultureInfo ci_EN = new System.Globalization.CultureInfo("en-GB");
+
+    bool hasCredit = Model.CreditHistory != null;
+
+    string period = "-";
+    string firstAccreditation = "-";
+
+    if (hasCredit && Model.CreditHistory.Count > 0)
+    {
+        period = Model.CreditHistory.Last().Date.Year.ToString();
+
+    }
+    else
+    {
+        Model.CreditHistory = new List<AccreditationsPerMonth>();
+        extraClass = "hidden";
+    }
+}
+
+
+<div class="page-header">
+    <h2>Channel edit</h2>
+</div>
+
+<div class="row m-t-1">
+    <div class="col-lg-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="OwnerId">
+                        <a class="" href="@Url.Action("Details","Users", new { id=Model.OwnerId })">Owner</a>
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @*Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label class="col-sm-4 control-label" for="RecruiterId">
+                        @if (Model.RecruiterId != null)
+                        {
+                            <a class="" href="@Url.Action("Details","Users", new { id=Model.RecruiterId })">Recruiter</a>
+                        }
+                        else
+                        {
+                            @Html.Raw("Recruiter")
+                        }
+
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("RecruiterId", null, "-", htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control percentage", id = "ownerInput" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control percentage", id = "recruiterInput" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control percentage", id = "networkInput" } })
+                    </div>
+                </div>
+                <hr />
+            </div>
+        }
+    </div>
+    <div class="col-lg-6">
+        <div id="channel-pieChartPerc" class="highcharts-basic-pie m-t-2" style="height: 300px;"></div>
+    </div>
+</div>
+
+<div class="row m-t-3">
+    <div class="col-lg-12 m-b-3 @extraClass">
+        <!-- START Header -->
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-6">
+                <h2 class="m-b-2 m-t-0 f-w-300">Report Statisticts</h2> <small class="text-gray-lighter">Period: @period</small>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 col-sm-offset-4 col-xs-offset-2 col-md-offset-4 text-right">
+            </div>
+        </div>
+        <!-- END Header -->
+        <!-- START Chart Higcharts -->
+        <div class="highcharts-basic-column m-t-2"></div>
+        <!-- END Chart Higcharts -->
+    </div>
+</div>
+
+<div class="row m-t-3">
+    @*{
+
+            Html.RenderPartial("~/Views/_PartialNotes.cshtml", ViewBag.Notes as IEnumerable<ViewNote>);
+        }*@
+</div>
+
+<!-- END EDIT CONTENT -->
+<script src="~/assets/vendor/js/highstock.min.js"></script>
+<script src="~/assets/vendor/js/chartist.min.js"></script>
+<script src="~/assets/javascript/highchart-themes/highcharts&highstock-theme.js"></script>
+
+<script language="javascript">
+    function checkPercent() {
+        if (Number($('#ownerInput').val().replace(',', '.')) + Number($('#recruiterInput').val().replace(',', '.')) + Number($('#networkInput').val().replace(',', '.')) != 100) {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').html("Check the percentage values: the sum must be 100");
+            $('#channelErrMsg').show();
+            return false;
+        }
+        return true;
+        //else {
+        //    $('#saveChannelButton').show();
+        //    $('#channelErrMsg').hide();
+        //}
+    }
+
+    function checkRecruiter() {
+        if ($("#RecruiterId").val() == "" && parseInt($('#recruiterInput').val())!=0) {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').html("You can't specify recruiter's percentage if no recruiter is selected");
+            $('#channelErrMsg').show();
+            return false;
+
+        }
+        return true;
+    }
+
+    function checkErrors() {
+        if (checkPercent() && checkRecruiter()) {
+            $('#saveChannelButton').show();
+            $('#channelErrMsg').hide();
+        }
+        else {
+            $('#saveChannelButton').hide();
+            $('#channelErrMsg').show();
+        }
+    }
+
+    $(document).ready(function () {
+        $('#breadCrumbOl').append('<li class="active">@Html.DisplayFor(model => model.Name)</li>');
+
+        @{
+            string pieCharSeriesString = "";
+            string pieCharLabelsString = "";
+            if (Model.PercentOwner != 0)
+            {
+                pieCharSeriesString += Model.PercentOwner.ToString().Replace(',', '.');
+                pieCharLabelsString += "'Owner'";
+            }
+            if (Model.PercentRecruiter != 0)
+            {
+                pieCharSeriesString += ","+Model.PercentRecruiter.ToString().Replace(',', '.');
+                pieCharLabelsString += ",'Recruiter'";
+            }
+            if (Model.PercentMegatube != 0)
+            {
+                pieCharSeriesString += "," + Model.PercentMegatube.ToString().Replace(',', '.');
+                pieCharLabelsString += ",'Network'";
+            }
+
+
+        }
+
+        var labels = [@Html.Raw(pieCharLabelsString)];
+        var data = {
+            series: [@pieCharSeriesString],
+
+        };
+
+        // Pie Chart with Custom Labels
+        var sum = function (a, b) { return a + b };
+
+        new Chartist.Pie('#channel-pieChartPerc', data, {
+            labelInterpolationFnc: function (value,idx) {
+                var percentage = Math.round(value / data.series.reduce(sum) * 100) + '%';
+                return labels[idx] + ': ' + percentage;
+            }
+        });
+
+        checkErrors();
+
+        $('.percentage').change(function () { checkErrors(); });
+        $('#RecruiterId').change(function () { checkErrors(); });
+
+         Dashboard.Helpers.elementExists('.highcharts-basic-column', function () {
+            $(this).highcharts({
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'transparent',
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: [
+                        @for(int i=0;i< Model.CreditHistory.Count;i++)
+                        {
+                            @Html.Raw((i > 0 ? "," : "") + "'" + Model.CreditHistory[i].Date.ToString("MMM", ci_EN) + "'");
+                        }
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                        },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.2f} &euro;</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Gross',
+                    data: [
+                        @for(int i=0;i< Model.CreditHistory.Count;i++)
+                        {
+                            @Html.Raw((i > 0 ? "," : "") + Model.CreditHistory[i].Amount.ToString().Replace(',', '.'));
+                        }
+                    ]
+
+                }]
+            });
+        });
+
+    });
+</script>
+
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Channel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OwnerId, "OwnerId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecruiterId, "RecruiterId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RecruiterId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RecruiterId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentOwner, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentOwner, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentOwner, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentRecruiter, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentRecruiter, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentRecruiter, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentMegatube, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentMegatube, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PercentMegatube, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@

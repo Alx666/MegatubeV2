@@ -453,6 +453,7 @@
     <Content Include="Views\EventLogs\Index.cshtml" />
     <Content Include="Views\Channels\Balance.cshtml" />
     <Content Include="Views\Users\Balance.cshtml" />
+    <Content Include="Views\Channels\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
