@@ -195,6 +195,10 @@ namespace MegatubeV2.Controllers
             {
                 Payment p = db.Payments.Find(id);
                 Receipt r = p.Receipt;
+
+                if (p.UserId != Session.GetUser().Id && !Session.GetUser().IsManager)
+                    throw new Exception("Unauthorized");
+
                 
                 return File(r.Data, "application/pdf", $"{p.User.Name}{p.User.LastName}_{p.ReceiptCount}{DateTime.Now.Year}.pdf");                                
             }
