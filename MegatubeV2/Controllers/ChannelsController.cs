@@ -69,6 +69,8 @@ namespace MegatubeV2.Controllers
         {
             try
             {
+                User current = Session.GetUser();
+
                 if (ModelState.IsValid)
                 {
                     Channel c = db.Channels.Find(channel.Id);
@@ -79,7 +81,7 @@ namespace MegatubeV2.Controllers
                     c.RecruiterId      = channel.RecruiterId;
                     c.OwnerId          = channel.OwnerId;
 
-                    //db.Entry(channel).State      = EntityState.Modified;
+                    EventLog.Log(db, db.Users.Find(current.Id), EventLogType.UserChanged, $"{current.LastName} {current.Name} Changed Channel Record {c.Id} {c.Name}");
                     db.SaveChanges();
                     return RedirectToAction("Index", "ViewChannels");
                 }

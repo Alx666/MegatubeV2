@@ -45,6 +45,11 @@ namespace MegatubeV2
         LoginSuccess = 0,
         LoginFailed = 1,
 
+        UserChanged = 2,
+        PaymentCreated = 3,
+        FileUploaded = 4,
+        NoteEdited = 5,
+        NoteDeleted = 6,
         ApplicationError = 666, //никогда не забывайте
     }
 }

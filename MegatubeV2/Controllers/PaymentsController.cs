@@ -146,6 +146,8 @@ namespace MegatubeV2.Controllers
 
                 db.Payments.Add(p);
                 db.PaymentAlerts.Remove(toRemove);
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.PaymentCreated, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Payment Created for {toPay.Id} {toPay.EMail}");
                 db.SaveChanges();
 
                 return RedirectToAction("index", "PaymentAlerts");
@@ -172,6 +174,7 @@ namespace MegatubeV2.Controllers
 
                 db.Payments.Remove(p);
                 db.PaymentAlerts.Add(alert);
+                EventLog.Log(db, Session.GetUser(), EventLogType.PaymentCreated, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Payment Reverted for {p.UserId}");
                 db.SaveChanges();
 
                 return RedirectToAction("index", "Payments");

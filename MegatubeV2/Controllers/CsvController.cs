@@ -31,6 +31,8 @@ namespace MegatubeV2.Controllers
 
                 operation.Execute();
 
+                EventLog.Log(db, Session.GetUser(), EventLogType.FileUploaded, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} File Uploaded {file.FileName}");
+
                 return RedirectToAction(operation.ReturnActionName, operation.ReturnControllerName, operation.ReturnRouteValues);
             }
             catch (Exception e)

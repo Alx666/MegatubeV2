@@ -151,10 +151,6 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                //if (Session.GetUser().RoleId > )
-                //    throw new Exception("Requested priviledges are greater than loggred user");
-
-                //Look for duplicated email
                 if(!string.IsNullOrEmpty(user.EMail))
                     user.EMail = user.EMail.ToLower().Trim();
 
@@ -170,6 +166,8 @@ namespace MegatubeV2.Controllers
                     user.RegistrationDate = DateTime.Now;
                     user.NetworkId = Session.GetUser().NetworkId;
                     db.Users.Add(user);
+
+                    EventLog.Log(db, Session.GetUser(), EventLogType.UserChanged, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Created User Record for {user.EMail}");
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -264,8 +262,8 @@ namespace MegatubeV2.Controllers
                     {
                         toEdit.Password = user.Password.ToMD5();
                     }
-                    
 
+                    EventLog.Log(db, Session.GetUser(), EventLogType.UserChanged, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Changed User Record for {user.EMail}");
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

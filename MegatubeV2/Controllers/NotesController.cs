@@ -20,24 +20,35 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         public ActionResult Dispatch(string text, int userId, int? noteId)
         {
-            if (!noteId.HasValue)
+            try
             {
-                this.Create(text, userId);
-            }
-            else if (noteId.HasValue)
-            {
-                if (!string.IsNullOrEmpty(text))
+                if (!noteId.HasValue)
                 {
-                    this.Edit(noteId.Value, text);
+                    EventLog.Log(db, Session.GetUser(), EventLogType.NoteEdited, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Note Created");
+                    this.Create(text, userId);
                 }
-                else
+                else if (noteId.HasValue)
                 {
-                    this.Delete(noteId);
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        EventLog.Log(db, Session.GetUser(), EventLogType.NoteEdited, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Note Edited");
+                        this.Edit(noteId.Value, text);
+                    }
+                    else
+                    {
+                        EventLog.Log(db, Session.GetUser(), EventLogType.NoteDeleted, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Note Deleted");
+                        this.Delete(noteId);
+                    }
                 }
-            }
 
 
-            return Redirect(Request.UrlReferrer.ToString());
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e;
+                return View("Error");
+            }
         }
 
 
