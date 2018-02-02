@@ -7,7 +7,8 @@
     var rd = HttpContext.Current.Request.RequestContext.RouteData;
     string currentAction = rd.GetRequiredString("action");
     string currentController = rd.GetRequiredString("controller");
-    string currentPageName = "User";
+    string currentPageName="";
+    string homePageUrl = "/Users";
 
     bool loggedUsrIsManager = Session.GetUser().IsManager;
 
@@ -36,6 +37,23 @@
     registryItem.AddChild(new MenuItem("Payments History", "Index", "Payments"));
 
     Menu.Add(registryItem);
+
+    if (Session.GetUser().IsStandard)
+    {
+        switch (currentController)
+        {
+            case "Channels":
+                currentPageName = "Channel";
+                break;
+            case "Users":
+                currentPageName = "User";
+                break;
+            default:
+                break;
+        }
+
+        homePageUrl = "/Users/Details/" + Session.GetUser().Id;
+    }
 
 
 }
@@ -2226,7 +2244,7 @@
                 <div class="container-fluid">
 
                     <div class="navbar-header">
-                        <a class="current navbar-brand" href="~/Users">
+                        <a class="current navbar-brand" href="@homePageUrl">
                             <img alt="Spin Logo Inverted" class="h-20" src="~/assets/images/spin-logo-inverted-2X.png">
                         </a>
                         <button class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
@@ -2360,7 +2378,7 @@
                             </div>
                             <ol class="breadcrumb navbar-text navbar-right no-bg" id="breadCrumbOl">
                                 <li class="current-parent">
-                                    <a class="current-parent" href="~/Users">
+                                    <a class="current-parent" href="@homePageUrl">
                                         <i class="fa fa-fw fa-home"></i>
                                     </a>
                                 </li>
@@ -2451,73 +2469,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>*@
