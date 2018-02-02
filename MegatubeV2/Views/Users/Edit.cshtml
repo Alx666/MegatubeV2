@@ -10,6 +10,12 @@
     {
         paymentMethodArr[i] = PaymentMethodFactory.GetMethodFromDBCode((short)i).ToString();
     }
+    bool loggedUsrIsManager = Session.GetUser().IsManager;
+    string disabledInput = "";
+    if (!loggedUsrIsManager)
+    {
+       disabledInput = " disabledInput";
+    }
 }
 
 <div class="page-header">
@@ -29,13 +35,13 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control"+disabledInput} })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
 
                 @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" + disabledInput } })
                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -49,7 +55,7 @@
 
                 @Html.LabelFor(model => model.EMail, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.EMail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.EMail, new { htmlAttributes = new { @class = "form-control" + disabledInput } })
                     @Html.ValidationMessageFor(model => model.EMail, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -79,13 +85,13 @@
                             birthDate = ((DateTime)Model.BirthDate).ToString("yyyy-MM-dd");
                         }
                     }
-                    <input class="form-control text-box single-line" data-val="true" data-val-date="Il campo Birth Date deve essere una data." id="BirthDate" name="BirthDate" type="date" value=@birthDate />
+                    <input class="form-control text-box single-line @disabledInput" data-val="true" data-val-date="Il campo Birth Date deve essere una data." id="BirthDate" name="BirthDate" type="date" value=@birthDate />
                     @*@Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })*@
                 </div>
 
                 @Html.LabelFor(model => model.BirthPlace, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.BirthPlace, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.BirthPlace, new { htmlAttributes = new { @class = "form-control" + disabledInput } })
                     @Html.ValidationMessageFor(model => model.BirthPlace, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -135,7 +141,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    <select class="form-control" id="FiscalAdministratorId" name="PaymentMethod" id="PaymentMethod">
+                    <select class="form-control @disabledInput" id="FiscalAdministratorId" name="PaymentMethod" id="PaymentMethod">
                         @{
                             string selected = "";
                             for (int i = 0; i < paymentMethodArr.Length; i++)
@@ -155,6 +161,8 @@
                 </div>
             </div>
 
+            @if (loggedUsrIsManager)
+            {
             <div class="form-group">
                 <label class="control-label col-md-2" for="FiscalAdministratorId">Administrator</label>
                 <div class="col-md-4">
@@ -168,6 +176,7 @@
                     @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                 </div>
             </div>
+            }
 
 
             <hr />
@@ -191,6 +200,8 @@
     $(document).ready(function () {
         $('#breadCrumbOl').append('<li><a href="@Url.Action("Details", new { Id = Model.Id })">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)</a></li>');
         $('#breadCrumbOl').append('<li class="active">Edit</li>');
+
+        $(".disabledInput").attr('disabled', 'disabled');
 
         $('.select2-input').select2();
 

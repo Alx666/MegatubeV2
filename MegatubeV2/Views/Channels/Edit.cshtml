@@ -249,7 +249,8 @@
                     categories: [
                         @for(int i=0;i< Model.CreditHistory.Count;i++)
                         {
-                            @Html.Raw((i > 0 ? "," : "") + "'" + Model.CreditHistory[i].Date.ToString("MMM", ci_EN) + "'");
+                           string monthVal = String.Format("{0:F}", Model.CreditHistory[i].Amount).Replace(',', '.');
+                           @Html.Raw((i > 0 ? "," : "") + "'" + Model.CreditHistory[i].Date.ToString("MMM", ci_EN)+ "<br><span>" + monthVal + " €</span>'");
                         }
                     ],
                     crosshair: true
