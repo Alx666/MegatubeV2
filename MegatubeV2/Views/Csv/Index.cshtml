@@ -40,7 +40,7 @@
 
         <script language="javascript">
             $(document).ready(function () {
-                $('#userTable').DataTable({
+                $('#csvTable').DataTable({
                     language: {
                         paginate: {
                             next: '&raquo;',
@@ -51,11 +51,11 @@
             });
         </script>
 
-        <table class="table table-condensed table-hover table-striped" id="userTable">
+        <table class="table table-condensed table-hover table-striped" id="csvTable">
             <thead>
                 <tr>
                     <th class="small text-muted text-uppercase">
-                        <strong>
+                        <strong class="text-info">
                             File Name
                         </strong>
                     </th>
@@ -75,10 +75,10 @@
                         <strong>Conversion Rate</strong>
                     </th>
                     <th class="small text-muted text-uppercase">
-                        <strong>Network Traffic Performance (€)</strong>
+                        <strong>Traffic Performance</strong>
                     </th>
                     <th class="small text-muted text-uppercase">
-                        <strong>Network Traffic Total (€)</strong>
+                        <strong>Traffic Total</strong>
                     </th>
                     <th class="small text-muted text-uppercase">
                         <strong>Processing Type</strong>
@@ -90,7 +90,7 @@
                 {
                     <tr>
                         <td>
-                            @item.Name
+                           <span class="container text-info">@item.Name</span> 
                         </td>
                         <td>
                             @item.UploadDate.ToShortDateString()
@@ -116,14 +116,14 @@
                                 string trafficIncomeNet = item.TrafficIncomeNetwork.HasValue ? item.TrafficIncomeNetwork.Value.ToString("0.00") : "-";
                             }
 
-                            @trafficIncomeNet
+                            @trafficIncomeNet €
                         </td>
                         <td>
                             @{
                                 string trafficIncomeTot = item.TrafficIncomeTotal.HasValue ? item.TrafficIncomeTotal.Value.ToString("0.00") : "-";
                             }
 
-                            @trafficIncomeTot
+                            @trafficIncomeTot €
                         </td>
                         <td>
                             @{
@@ -150,7 +150,7 @@
                             @procType
                         </td>
                     </tr>
-                                }
+                }
             </tbody>
         </table>
         <hr/>

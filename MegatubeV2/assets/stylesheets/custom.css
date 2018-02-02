@@ -62,6 +62,21 @@ table#userTable td { /* stesso ide della tabella users*/
     cursor: default !important;
 }
 
+/*--------------------  Table CSV  ----------------------------*/
+
+table#csvTable td {
+    padding-top: 35px;
+    position: relative;
+}
+table#csvTable td span{
+    position: absolute;
+    top: 0;
+    display: block;
+    padding: 5px 0 5px 5px;
+    margin-left: -5px;
+    border-bottom: 1px solid #212121;
+}
+
 /*--------------------  Table Pagination  ----------------------------*/
 
 .dataTablePagination {
