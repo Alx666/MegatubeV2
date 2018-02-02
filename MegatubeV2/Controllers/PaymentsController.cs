@@ -197,9 +197,9 @@ namespace MegatubeV2.Controllers
                 Receipt r = p.Receipt;
 
                 if (p.UserId != Session.GetUser().Id && !Session.GetUser().IsManager)
-                    throw new Exception("Unauthorized");
+                    return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
-                
+
                 return File(r.Data, "application/pdf", $"{p.User.Name}{p.User.LastName}_{p.ReceiptCount}{DateTime.Now.Year}.pdf");                                
             }
             catch (Exception e)
