@@ -20,7 +20,6 @@ namespace MegatubeV2
             this.Accreditations = new HashSet<Accreditation>();
             this.OwnedChannels = new HashSet<Channel>();
             this.RecruitedChannels = new HashSet<Channel>();
-            this.Contracts = new HashSet<Contract>();
             this.NotesCreated = new HashSet<Note>();
             this.NotesReceived = new HashSet<Note>();
             this.Payments = new HashSet<Payment>();
@@ -28,6 +27,7 @@ namespace MegatubeV2
             this.AdministratorOf = new HashSet<User>();
             this.EventLogs = new HashSet<EventLog>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
+            this.Contracts = new HashSet<Contract>();
         }
     
         public int Id { get; set; }
@@ -59,8 +59,6 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> RecruitedChannels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contract> Contracts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> NotesCreated { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> NotesReceived { get; set; }
@@ -77,5 +75,7 @@ namespace MegatubeV2
         public virtual ICollection<EventLog> EventLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }

@@ -15,39 +15,26 @@ namespace MegatubeV2.Controllers
     {
         private MegatubeV2Entities db = new MegatubeV2Entities();
 
-        // GET: Contracts
-        public ActionResult Index()
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
+        public ActionResult Index(int? userId)
         {
             try
             {
+                if(userId == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                User contractOwner = db.Users.Find(userId);
+                
+                if((Session.GetUser().IsStandard && Session.GetUser().Id != userId) || (Session.GetUser().IsManager && Session.GetUser().NetworkId != contractOwner.NetworkId))
+                    return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
                 int networkId = Session.GetUser().NetworkId;
-                var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId);
+
+                var contracts = db.Contracts.Include(c => c.User).Where(x => x.User.NetworkId == networkId && x.UserId == userId);
+
                 return View(contracts.ToList());
             }
-            catch(Exception e)
-            {
-                ViewBag.Exception = e;
-                return View("Error");
-            }
-        }
-
-        // GET: Contracts/Details/5
-        public ActionResult Details(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Contract contract = db.Contracts.Find(id);
-                if (contract == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(contract);
-            }
             catch (Exception e)
             {
                 ViewBag.Exception = e;
@@ -55,100 +42,34 @@ namespace MegatubeV2.Controllers
             }
         }
 
-        // GET: Contracts/Create
-        public ActionResult Create()
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        public ActionResult Upload(HttpPostedFileBase file, int userId, DateTime? expireDate)
         {
             try
             {
-                ViewBag.UserId = new SelectList(db.Users.ToList().Select(x => new { Id = x.Id, Name = $"{x.Name} {x.LastName}" }), "Id", "Name");
-                return View();
-
-            }
-            catch (Exception e)
-            {
-                ViewBag.Exception = e;
-                return View("Error");
-            }            
-        }
-
-        [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file, DateTime expireDate, int userId)
-        {
-            try
-            {
-                string path = Server.MapPath("~\\ArchivioContratti");
-                if (!Directory.Exists(path))
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    Directory.CreateDirectory(path);
-                }
-                int fileName = file.FileName.GetHashCode();
-                if (System.IO.File.Exists($"{path}\\{fileName}.pdf"))
-                {
-                    throw new Exception("Contract already exist");
-                }
-                file.SaveAs($"{path}\\{fileName}.pdf");
-                Contract contract = new Contract()
-                {
-                    ExpireDate = expireDate,
-                    FilenName = fileName.ToString(),
-                    UserId = userId
-                };
-                db.Contracts.Add(contract);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Contracts");
-            }
-            catch(Exception e)
-            {
-                ViewBag.Exception = e;
-                return View("Error");
-            }
-        }
+                    file.InputStream.CopyTo(ms);
+                    byte[] data = ms.GetBuffer();
 
-        // GET: Contracts/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                    BinaryData binaryRecord = new BinaryData();
+                    binaryRecord.Data = data;
 
-                Contract contract = db.Contracts.Find(id);
+                    Contract contract = new Contract();
+                    contract.UserId = userId;
+                    contract.UploadDate = DateTime.Now;
+                    contract.FilenName = file.FileName;
+                    contract.BinaryData = binaryRecord;
+                    contract.ExpireDate = expireDate;
 
-                if (contract == null)
-                {
-                    return HttpNotFound();
-                }
-
-                ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
-                return View(contract);
-            }
-            catch (Exception e)
-            {
-                ViewBag.Exception = e;
-                return View("Error");
-            }
-        }
-
-        // POST: Contracts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,FilenName,UploadDate,ExpireDate")] Contract contract)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(contract).State = EntityState.Modified;
+                    db.Contracts.Add(contract);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    return Redirect(Request.UrlReferrer.ToString());
                 }
 
-                ViewBag.UserId = new SelectList(db.Users, "Id", "Name", contract.UserId);
-                return View(contract);
             }
             catch (Exception e)
             {
@@ -157,21 +78,24 @@ namespace MegatubeV2.Controllers
             }
         }
 
-        // GET: Contracts/Delete/5
-        public ActionResult Delete(int? id)
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager | RoleType.Standard, Order = 2)]
+        public ActionResult Download(int? contractId)
         {
             try
             {
-                if (id == null)
-                {
+                if (contractId == null)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Contract contract = db.Contracts.Find(id);
-                if (contract == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(contract);
+
+                Contract contract = db.Contracts.Find(contractId);
+
+                if((Session.GetUser().IsStandard && contract.UserId != this.Session.GetUser().Id) || (Session.GetUser().IsManager && contract.User.NetworkId != Session.GetUser().NetworkId))
+                    return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+                BinaryData data = db.BinaryDatas.Find(contract.DataId);
+
+                return File(data.Data, "application/octet-stream", contract.FilenName);
             }
             catch (Exception e)
             {
@@ -180,23 +104,26 @@ namespace MegatubeV2.Controllers
             }
         }
 
-        // POST: Contracts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        public ActionResult Delete(int? contractId)
         {
             try
             {
-                string path = Server.MapPath($"~\\ArchivioContratti\\{db.Contracts.First(x => x.Id == id).FilenName}.pdf");
-                if (!System.IO.File.Exists(path))
-                {
-                    throw new FileNotFoundException("File not exist");
-                }
-                System.IO.File.Delete(path);
-                Contract contract = db.Contracts.Find(id);
-                db.Contracts.Remove(contract);
+                Contract c = db.Contracts.Find(contractId);
+
+                if(c == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if(!Session.GetUser().IsManager || c.User.NetworkId != Session.GetUser().NetworkId)
+                    return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+                db.Contracts.Remove(c);
+                db.BinaryDatas.Remove(c.BinaryData);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Redirect(Request.UrlReferrer.ToString());
             }
             catch (Exception e)
             {
@@ -204,6 +131,7 @@ namespace MegatubeV2.Controllers
                 return View("Error");
             }
         }
+
 
         protected override void Dispose(bool disposing)
         {

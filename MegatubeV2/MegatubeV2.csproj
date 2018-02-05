@@ -144,6 +144,9 @@
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AccreditationPerMonth.cs" />
+    <Compile Include="BinaryData.cs">
+      <DependentUpon>MegatubeV2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contract.cs">
       <DependentUpon>MegatubeV2Model.tt</DependentUpon>
     </Compile>
@@ -170,6 +173,7 @@
     <Compile Include="Models\Accreditation.cs" />
     <Compile Include="Models\BalanceData.cs" />
     <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\Contract.cs" />
     <Compile Include="Models\DataFile.cs" />
     <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Payment.cs" />

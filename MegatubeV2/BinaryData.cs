@@ -12,16 +12,18 @@ namespace MegatubeV2
     using System;
     using System.Collections.Generic;
     
-    public partial class Contract
+    public partial class BinaryData
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public string FilenName { get; set; }
-        public System.DateTime UploadDate { get; set; }
-        public Nullable<System.DateTime> ExpireDate { get; set; }
-        public int DataId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BinaryData()
+        {
+            this.Contracts = new HashSet<Contract>();
+        }
     
-        public virtual BinaryData BinaryData { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public byte[] Data { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }

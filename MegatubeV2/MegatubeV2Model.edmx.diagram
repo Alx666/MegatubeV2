@@ -7,9 +7,8 @@
       <Diagram DiagramId="099f9d0b10db4159ab4ae2ee9f5cd9cc" Name="Diagram1">
         <EntityTypeShape EntityType="MegatubeV2Model.Accreditation" Width="1.5" PointX="13.125" PointY="10" />
         <EntityTypeShape EntityType="MegatubeV2Model.Channel" Width="1.5" PointX="5.125" PointY="12.875" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="15.5" PointY="5.125" />
         <EntityTypeShape EntityType="MegatubeV2Model.DataFile" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="8.875" PointY="1.375" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="9" PointY="0.5" />
         <EntityTypeShape EntityType="MegatubeV2Model.Note" Width="1.5" PointX="5.25" PointY="7.375" />
         <EntityTypeShape EntityType="MegatubeV2Model.Payment" Width="1.5" PointX="7" PointY="18.5" />
         <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="3.375" PointY="10.75" />
@@ -20,7 +19,6 @@
         <AssociationConnector Association="MegatubeV2Model.FK_Accreditation_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelOwner_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelRecruiter_ToUser" />
-        <AssociationConnector Association="MegatubeV2Model.FK_Table_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserAuthor" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserSubject" />
         <AssociationConnector Association="MegatubeV2Model.FK_Payment_ToUser" />
@@ -41,6 +39,10 @@
         <AssociationConnector Association="MegatubeV2Model.FK_PaymentAlert_ToUser" />
         <EntityTypeShape EntityType="MegatubeV2Model.ViewChannelBalance" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="MegatubeV2Model.ViewFullUserBalance" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MegatubeV2Model.BinaryData" Width="1.5" PointX="15.625" PointY="8.875" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Contract" Width="1.5" PointX="13.75" PointY="4.25" />
+        <AssociationConnector Association="MegatubeV2Model.FK_Contract_ToBinaryData" />
+        <AssociationConnector Association="MegatubeV2Model.FK_Contract_ToUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
