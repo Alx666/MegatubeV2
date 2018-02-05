@@ -36,9 +36,9 @@ namespace MegatubeV2
             }
         }
 
-        public static void SetUser(this HttpSessionStateBase b, User u)
+        public static void SetUser(this HttpSessionStateBase session, User u)
         {
-            b["User"] = u;
+            session["User"] = u;                        
         }
 
         public static User GetUser(this HttpSessionStateBase b)

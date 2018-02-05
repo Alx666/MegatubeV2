@@ -160,6 +160,7 @@
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ViewChannelsController.cs" />
+    <Compile Include="Cookie.cs" />
     <Compile Include="CsvPaidFeatures.cs" />
     <Compile Include="CsvVideo.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />

@@ -22,12 +22,6 @@ namespace MegatubeV2.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password, string network)
         {
-//#if DEBUG
-//            username = "alxeyesoul@live.com";
-//            password = "lamalama";
-//            network  = "growup";
-//#endif            
-
             try
             {
                 Network net = db.Networks.Where(x => x.Name == network).Single();
@@ -45,6 +39,11 @@ namespace MegatubeV2.Controllers
                 }
 
                 Session.SetUser(user);
+
+                string data = new Cookie(user.EMail, user.Password, user.NetworkId).ToString();
+                HttpCookie cookie = new HttpCookie(Cookie.SysCookieName, data);
+                cookie.Expires = new DateTime(9999, 12, 1);
+                Response.SetCookie(cookie);
 
                 EventLog.Log(db, user, EventLogType.LoginSuccess, "Login Success", true);
 
