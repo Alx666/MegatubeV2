@@ -12,7 +12,8 @@ namespace MegatubeV2
         {                                    
             if (HttpContext.Current.Session["User"] == null)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies[Cookie.SysCookieName].Value))
+                //if session expired try to create another from cookie... -.-''
+                try
                 {
                     Cookie c = new Cookie(HttpContext.Current.Request.Cookies[Cookie.SysCookieName].Value);
 
@@ -29,14 +30,14 @@ namespace MegatubeV2
                         }
                         else
                         {
-                            filterContext.Result = new RedirectResult("~/Account/Index");
+                            throw new Exception();
                         }
                     }
                 }
-                else
+                catch (Exception)
                 {
                     filterContext.Result = new RedirectResult("~/Account/Index");
-                }                
+                }             
             }
         }
     }
