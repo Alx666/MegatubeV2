@@ -4,7 +4,34 @@
     ViewBag.Title = "Index";
 }
 
+
+
+@using (Html.BeginForm("Upload", "Contracts", FormMethod.Post, new { @class = "m-t-3", id = "uploadForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <div class="col-lg-3">
+            <input class="form-control" type="file" name="file" size="40" placeholder="load Pdf" />
+        </div>
+        <div class="col-lg-3">
+            <input class="form-control" type="text" name="userId" size="40" placeholder="User Id" />
+        </div>
+        <div class="col-lg-3">
+            <input class="form-control" type="date" name="expireDate" size="40" placeholder="select expire date" />
+        </div>
+        <div class="col-lg-3">
+            <a href="javasctipt:{}" onclick="document.getElementById('uploadForm').submit(); return false;" role="button" class="btn btn-block m-b-2 btn-primary">Upload</a>
+        </div>
+    </div>
+}
+
+
+
+
+
+
 <h2>Index</h2>
+
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -26,7 +53,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FilenName)
@@ -41,9 +69,7 @@
             @Html.DisplayFor(modelItem => item.User.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="Download?contractId=@item.Id">Download</a>
         </td>
     </tr>
 }

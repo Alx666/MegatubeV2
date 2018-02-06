@@ -56,6 +56,9 @@
     <Compile Include="ModelNew\Accreditation.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelNew\BinaryData.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelNew\Channel.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
@@ -63,6 +66,9 @@
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelNew\DataFile.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\EventLog.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelNew\ModelNew.Context.cs">
@@ -79,6 +85,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelNew.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModelNew\Network.cs">
+      <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelNew\Note.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
@@ -103,12 +112,6 @@
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelNew\User.cs">
-      <DependentUpon>ModelNew.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelNew\ViewChannel.cs">
-      <DependentUpon>ModelNew.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelNew\ViewNote.cs">
       <DependentUpon>ModelNew.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelOld\Accreditation.cs">

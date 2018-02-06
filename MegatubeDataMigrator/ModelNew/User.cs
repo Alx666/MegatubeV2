@@ -18,15 +18,16 @@ namespace MegatubeDataMigrator.ModelNew
         public User()
         {
             this.Accreditations = new HashSet<Accreditation>();
-            this.ChannelsOwned = new HashSet<Channel>();
-            this.ChannelsRecruited = new HashSet<Channel>();
+            this.Channels = new HashSet<Channel>();
+            this.Channels1 = new HashSet<Channel>();
             this.Contracts = new HashSet<Contract>();
+            this.EventLogs = new HashSet<EventLog>();
             this.Notes = new HashSet<Note>();
-            this.NotesReceived = new HashSet<Note>();
+            this.Notes1 = new HashSet<Note>();
             this.Payments = new HashSet<Payment>();
             this.Payments1 = new HashSet<Payment>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
-            this.AdministrratorOf = new HashSet<User>();
+            this.AdministratorOf = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -54,24 +55,27 @@ namespace MegatubeDataMigrator.ModelNew
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> ChannelsOwned { get; set; }
+        public virtual ICollection<Channel> Channels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Channel> ChannelsRecruited { get; set; }
+        public virtual ICollection<Channel> Channels1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contract> Contracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventLog> EventLogs { get; set; }
+        public virtual Network Network { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> Notes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> NotesReceived { get; set; }
+        public virtual ICollection<Note> Notes1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> AdministrratorOf { get; set; }
-        public virtual User FiscalAdministrator { get; set; }
         public virtual Role Role1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> AdministratorOf { get; set; }
+        public virtual User FiscalAdministrator { get; set; }
     }
 }

@@ -49,10 +49,11 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                using (MemoryStream ms = new MemoryStream())
+                byte[] data = new byte[file.InputStream.Length];
+
+                using (MemoryStream ms = new MemoryStream(data))
                 {
-                    file.InputStream.CopyTo(ms);
-                    byte[] data = ms.GetBuffer();
+                    file.InputStream.CopyTo(ms);                    
 
                     BinaryData binaryRecord = new BinaryData();
                     binaryRecord.Data = data;

@@ -34,6 +34,7 @@ namespace MegatubeDataMigrator.ModelNew
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accreditation> Accreditations { get; set; }
+        public virtual Network Network { get; set; }
         public virtual User Owner { get; set; }
         public virtual User Recruiter { get; set; }
     }

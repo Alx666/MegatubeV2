@@ -28,17 +28,18 @@ namespace MegatubeDataMigrator.ModelNew
         }
     
         public virtual DbSet<Accreditation> Accreditations { get; set; }
+        public virtual DbSet<BinaryData> BinaryDatas { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<DataFile> DataFiles { get; set; }
+        public virtual DbSet<EventLog> EventLogs { get; set; }
+        public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<PaymentAlert> PaymentAlerts { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ViewChannel> ViewChannels { get; set; }
-        public virtual DbSet<ViewNote> ViewNotes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

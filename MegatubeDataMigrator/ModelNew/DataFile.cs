@@ -25,5 +25,7 @@ namespace MegatubeDataMigrator.ModelNew
         public Nullable<int> TotalChannels { get; set; }
         public Nullable<double> DollarToEuroConv { get; set; }
         public int NetworkId { get; set; }
+    
+        public virtual Network Network { get; set; }
     }
 }

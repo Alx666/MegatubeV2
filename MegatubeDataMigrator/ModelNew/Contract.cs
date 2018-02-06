@@ -18,8 +18,10 @@ namespace MegatubeDataMigrator.ModelNew
         public int UserId { get; set; }
         public string FilenName { get; set; }
         public System.DateTime UploadDate { get; set; }
-        public System.DateTime ExpireDate { get; set; }
+        public Nullable<System.DateTime> ExpireDate { get; set; }
+        public int DataId { get; set; }
     
+        public virtual BinaryData BinaryData { get; set; }
         public virtual User User { get; set; }
     }
 }

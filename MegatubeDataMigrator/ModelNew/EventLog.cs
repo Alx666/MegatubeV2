@@ -12,22 +12,14 @@ namespace MegatubeDataMigrator.ModelNew
     using System;
     using System.Collections.Generic;
     
-    public partial class Accreditation
+    public partial class EventLog
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public string ChannelId { get; set; }
-        public Nullable<int> PaymentId { get; set; }
-        public decimal GrossAmmount { get; set; }
-        public System.DateTime DateFrom { get; set; }
-        public System.DateTime DateTo { get; set; }
-        public byte Type { get; set; }
-        public byte SubType { get; set; }
-        public int NetworkId { get; set; }
+        public short Type { get; set; }
+        public System.DateTime Date { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string Description { get; set; }
     
-        public virtual Channel Channel { get; set; }
-        public virtual Network Network { get; set; }
-        public virtual Payment Payment { get; set; }
         public virtual User User { get; set; }
     }
 }

@@ -296,6 +296,15 @@ namespace MegatubeDataMigrator
 
         #endregion
 
+        #region Contracts
+
+        [ConsoleUIMethod]
+        public void DropContracts()
+        {
+        }
+
+        #endregion
+
         #region Users
 
         [ConsoleUIMethod]
@@ -333,7 +342,7 @@ namespace MegatubeDataMigrator
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
                 ModelNew.User u = db.Users.Find(id);
-                u.AdministrratorOf.Clear();
+                u.AdministratorOf.Clear();
                 db.Users.Remove(u);
                 db.SaveChanges();
             }
