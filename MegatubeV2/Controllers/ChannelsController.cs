@@ -68,6 +68,13 @@ namespace MegatubeV2.Controllers
             channel.PercentOwner        *= 100;
             channel.PercentRecruiter    *= 100;
 
+            if (channel.Accreditations.Any())
+            {
+                var accr = (from a in db.Accreditations where a.ChannelId == channel.Id group a by a.DateFrom into g select new { Date = g.Key, Amount = g.Sum(x => x.GrossAmmount) }).OrderByDescending(x => x.Date).Take(12).ToList();
+                channel.CreditHistory = accr.Select(x => new AccreditationsPerMonth(x.Date, x.Amount)).ToList();
+                channel.CreditHistory.Reverse();
+            }
+
             if (current.Id == channel.OwnerId || current.Id == channel.RecruiterId || current.IsManager)
             {
                 var users = db.Users.ToList().Select(t => new { Id = t.Id, Name = t.ToString() });

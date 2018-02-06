@@ -63,7 +63,7 @@ namespace MegatubeV2
             p.DateFrom                           = accreditations.Min(x => x.DateFrom);
             p.DateTo                             = accreditations.Max(x => x.DateTo);
             p.Gross                              = accreditations.Sum(x => x.GrossAmmount);
-            p.Net                                = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Net);
+            p.Net                                = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ComputeNet(p.Gross);
             p.UserId                             = toPay.Id;
             p.PaymentType                        = (byte)admin.PaymentMethod;
             p.Date                               = DateTime.Now;
