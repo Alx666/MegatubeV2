@@ -30,6 +30,7 @@
                         <th class="small text-muted text-uppercase">
                             <strong>Net</strong>
                         </th>
+                        <th class="no-sort"> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +45,12 @@
                                     </span>
                                 </td>
                                 <td class="v-a-m"><span>@item.Gross.ToString("C", ci_IT)</span></td>
-                                <td class="v-a-m"><i class="fa fa-circle text-success m-r-1"></i>@item.Net.ToString("C", ci_IT)</td>
+                                <td class="v-a-m">@item.Net.ToString("C", ci_IT)</td>
+                                <td class="v-a-m">
+                                    <a href="/Payments/DownloadReceipt/@item.Id" role="button" class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-download-alt"></span> Download
+                                    </a>
+                                </td>
                             </tr>
                         }
                     }
@@ -66,7 +72,11 @@
                             next: '&raquo;',
                             previous: '&laquo;'
                         }
-                    }
+                    },
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    }]
                 });
             });
         </script>
