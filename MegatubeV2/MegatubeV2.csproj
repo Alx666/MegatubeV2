@@ -447,10 +447,6 @@
     <Content Include="Views\Channels\Edit.cshtml" />
     <Content Include="Views\PaymentAlerts\Index.cshtml" />
     <Content Include="Views\Payments\Create.cshtml" />
-    <Content Include="Views\Contracts\Create.cshtml" />
-    <Content Include="Views\Contracts\Delete.cshtml" />
-    <Content Include="Views\Contracts\Details.cshtml" />
-    <Content Include="Views\Contracts\Edit.cshtml" />
     <Content Include="Views\Contracts\Index.cshtml" />
     <Content Include="Views\_PartialUserChannels.cshtml" />
     <Content Include="Views\_PartialUserRecChannels.cshtml" />
