@@ -11,6 +11,7 @@ using System.Text;
 
 namespace MegatubeV2
 {
+    #pragma warning disable CS0612
     public class Receipt
     {
         public byte[] Data { get; private set; }
@@ -121,7 +122,9 @@ namespace MegatubeV2
                         hDocument.Add(hImage);
 
 
-                        List<IElement> hElements = HTMLWorker.ParseToList(new StringReader(sReceiptForm), null);
+                        List<IElement> hElements = HTMLWorker.ParseToList(new StringReader(sReceiptForm), null);                        
+
+
                         for (int i = 0; i < hElements.Count; i++)
                         {
                             hDocument.Add(hElements[i]);
