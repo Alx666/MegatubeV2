@@ -11,7 +11,7 @@ using System.Text;
 
 namespace MegatubeV2
 {
-    #pragma warning disable CS0612
+    #pragma warning disable CS0612 //receipt gneration based on now deprecated class, don't want to rewrite..
     public class Receipt
     {
         public byte[] Data { get; private set; }
