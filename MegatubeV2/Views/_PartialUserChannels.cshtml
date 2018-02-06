@@ -16,6 +16,9 @@
                 <th class="small text-muted text-uppercase">
                     Registration Date
                 </th>
+                <th class="small text-muted text-uppercase no-sort">
+                    View
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +47,15 @@
                         <td class="v-a-m">
                             <span class="text-white">@item.RegistrationDate.ToShortDateString()</span>
                         </td>
+                        <td class="v-a-m">
+                            @{ 
+                                string YTurl = "https://www.youtube.com/channel/UC" + item.Id;
+                            }
+                            <a href="@YTurl" role="button" target="_blank" class="btn btn-default">
+                                <i class="fa fa-youtube" aria-hidden="true" style="font-size:28px;color:#ff0000"></i>
+                            </a>
+                        </td>
+
                     </tr>
                 }
             }
