@@ -46,6 +46,8 @@ namespace MegatubeV2.Controllers
         {
             try
             {
+                Network current = db.Networks.Find(Session.GetUser().NetworkId);
+
                 PaymentAlert[] toPay = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Sepa));
@@ -68,7 +70,10 @@ namespace MegatubeV2.Controllers
                         db.SaveChanges();
                     }
 
-                    return File(data, "application/xml", "sepa.xml");
+                    string filename = $"sepa_{current.Name}_{DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.xml";
+
+
+                    return File(data, "application/xml", filename);
                 }
             }
             catch (Exception e)

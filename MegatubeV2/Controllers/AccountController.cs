@@ -62,7 +62,6 @@ namespace MegatubeV2.Controllers
                 EventLog.Log(db, null, EventLogType.LoginFailed, $"Login Failed: \"{Request.UserHostAddress}\" on (\"{username}\",\"{password}\", \"{network}\",)", true);
                 return RedirectToAction("Index", "Account");
             }     
-
         }
 
         [AllowAnonymous]

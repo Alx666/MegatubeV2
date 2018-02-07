@@ -25,7 +25,7 @@ namespace MegatubeV2
                     using (PdfWriter writer = PdfWriter.GetInstance(hDocument, hOutput))
                     {
                         hDocument.Open();
-
+                        
                         User receiver = payment.Administrator ?? payment.User;
 
                         IPaymentMethod hPayMethod = PaymentMethodFactory.GetMethodFromDBCode(payment.User.PaymentMethod.Value);
