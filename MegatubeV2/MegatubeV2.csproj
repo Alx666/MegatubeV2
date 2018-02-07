@@ -446,6 +446,7 @@
     <Content Include="Views\Channels\Balance.cshtml" />
     <Content Include="Views\Users\Balance.cshtml" />
     <Content Include="Views\Channels\Details.cshtml" />
+    <Content Include="Views\_PartialUserContracts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
