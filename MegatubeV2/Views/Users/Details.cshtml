@@ -481,90 +481,13 @@
         </div>
 
         @{
-            //Html.RenderPartial("~/Views/_PartialUserContracts.cshtml", Model.Contracts);
             Html.RenderPartial("~/Views/_PartialPayments.cshtml", Model.Payments);
         }
 
 
         @{
             Html.RenderPartial("~/Views/_PartialAccreditations.cshtml", Model.Accreditations);
-
-            if (Model.Contracts.Count() > 0)
-            {
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="page-header">
-                                    <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-file-text" aria-hidden="true"></i>Contracts</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <table class="table table-condensed table-hover table-striped" id="userContractsTable">
-                            <thead>
-                                <tr>
-                                    <th class="small text-muted text-uppercase">
-                                        <strong>Filename</strong>
-                                    </th>
-                                    <th class="small text-muted text-uppercase">
-                                        <strong>Upload Date</strong>
-                                    </th>
-                                    <th class="small text-muted text-uppercase">
-                                        <strong>Expire Date</strong>
-                                    </th>
-                                    <th class="no-sort"> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var item in Model.Contracts)
-                                    {
-                                        long uploadTicks = long.MaxValue;
-                                        long expireTicks = long.MaxValue;
-                                        string expireDate = "-";
-
-                                        uploadTicks = item.UploadDate.Ticks;
-                                        string uploadDate = item.UploadDate.ToShortDateString();
-
-                                        if (item.ExpireDate != null)
-                                        {
-                                            expireTicks = ((DateTime)item.ExpireDate).Ticks;
-                                            expireDate = ((DateTime)item.ExpireDate).ToShortDateString();
-                                        }
-                                        <tr>
-                                            <td class="v-a-m"><span>@item.FilenName</span></td>
-                                            <td class="v-a-m">
-                                                <span class='hide'>@uploadTicks</span>
-                                                <span class="media-heading">
-                                                    <span>@uploadDate</span>
-                                                </span>
-                                            </td>
-                                            <td class="v-a-m">
-                                                <span class='hide'>@expireTicks</span>
-                                                <span class="media-heading">
-                                                    <span>@expireDate</span>
-                                                </span>
-                                            </td>
-
-                                            <td class="v-a-m">
-                                                <a href="/Contracts/Download?contractId=@item.Id" role="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-download-alt"></span> Download
-                                                </a>
-
-                                                <a href="/Contracts/#delete#/@item.Id" role="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-trash"></span> Delete
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                        <hr />
-                    </div>
-                </div>
-
-                                    }
+            Html.RenderPartial("~/Views/_PartialUserContracts.cshtml", Model.Contracts);
         }
 
     </div>
