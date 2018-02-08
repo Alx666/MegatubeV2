@@ -112,18 +112,18 @@ namespace MegatubeV2.Controllers
         {
             try
             {
-                Contract c = db.Contracts.Find(contractId);
-
+                Contract c      = db.Contracts.Find(contractId);
+                
                 if(c == null)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
                 if(!Session.GetUser().IsManager || c.User.NetworkId != Session.GetUser().NetworkId)
                     return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
-                db.Contracts.Remove(c);
-                db.BinaryDatas.Remove(c.BinaryData);
-                db.SaveChanges();
 
+                //To avoid entitiy loading..
+                db.Database.ExecuteSqlCommand($"delete [BinaryData] where Id = {c.DataId}");
+                
                 return Redirect(Request.UrlReferrer.ToString());
             }
             catch (Exception e)
