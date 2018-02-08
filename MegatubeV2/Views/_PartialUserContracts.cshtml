@@ -1,82 +1,180 @@
 ﻿@model IEnumerable<MegatubeV2.Contract>
 
-    @{
-        System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
-    }
+@{
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
+}
 
-    @if (Model.Count() > 0)
-    {
+<div class="row">
+    <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="page-header">
-                            <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-file-text" aria-hidden="true"></i>Contracts</h2>
+                <div class="page-header">
+                    <h2 class="m-b-2 m-t-0 f-w-300"><i class="fa fa-file-text" aria-hidden="true"></i>Contracts</h2>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover table-striped" id="userContractsTable">
+            <thead>
+                <tr>
+                    <th class="small text-muted text-uppercase">
+                        <strong>Filename</strong>
+                    </th>
+                    <th class="small text-muted text-uppercase">
+                        <strong>Upload Date</strong>
+                    </th>
+                    <th class="small text-muted text-uppercase">
+                        <strong>Expire Date</strong>
+                    </th>
+                    <th class="no-sort"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        long uploadTicks = long.MaxValue;
+                        long expireTicks = long.MaxValue;
+                        string expireDate = "-";
+
+                        uploadTicks = item.UploadDate.Ticks;
+                        string uploadDate = item.UploadDate.ToShortDateString();
+
+                        if (item.ExpireDate != null)
+                        {
+                            expireTicks = ((DateTime)item.ExpireDate).Ticks;
+                            expireDate = ((DateTime)item.ExpireDate).ToShortDateString();
+                        }
+                        <tr>
+                            <td class="v-a-m"><span id="contractFile_@item.Id">@item.FilenName</span></td>
+                            <td class="v-a-m">
+                                <span class='hide'>@uploadTicks</span>
+                                <span class="media-heading">
+                                    <span>@uploadDate</span>
+                                </span>
+                            </td>
+                            <td class="v-a-m">
+                                <span class='hide'>@expireTicks</span>
+                                <span class="media-heading">
+                                    <span id="contractExpire_@item.Id">@expireDate</span>
+                                </span>
+                            </td>
+
+                            <td class="v-a-m">
+                                <a href="/Contracts/Download?contractId=@item.Id" role="button" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-download-alt"></span> Download
+                                </a>
+                                @if (Session.GetUser().IsManager)
+                                {
+                                    <a href="#" data-contractid="contract_@item.Id" role="button" class="btn btn-default btn-sm deleteContract">
+                                        <span class="glyphicon glyphicon-trash"></span> Delete
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="row text-right">
+            <div class="col-xs-12">
+                <hr />
+                <button id="addContract" type="button" class="btn btn-info">Add a Contract</button>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("Upload", "Contracts", FormMethod.Post, new { id = "uploadForm", enctype = "multipart/form-data" }))
+{
+    <div class="modal fade" id="contractModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#xD7;</span></button>
+                    <h4 class="modal-title" id="contractModalLabel"></h4>
+                </div>
+                <div class="modal-body" style="min-height:140px">
+                    <div class="form-group">
+                        <label for="contractModalText" class="col-sm-3 control-label">File</label>
+                        <div class="col-sm-9">
+                            <input class="form-control editable" type="file" name="file" size="40" placeholder="load Pdf" />
+                            <span class="form-control info" id="fileNameSpan"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contractModalText" class="col-sm-3 control-label">Expire date</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="date" id="expireDateInput" name="expireDate" size="40" placeholder="select expire date" />
                         </div>
                     </div>
                 </div>
-                <table class="table table-condensed table-hover table-striped" id="userContractsTable">
-                    <thead>
-                        <tr>
-                            <th class="small text-muted text-uppercase">
-                                <strong>Filename</strong>
-                            </th>
-                            <th class="small text-muted text-uppercase">
-                                <strong>Upload Date</strong>
-                            </th>
-                            <th class="small text-muted text-uppercase">
-                                <strong>Expire Date</strong>
-                            </th>
-                            <th class="no-sort"> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (var item in Model)
-                            {
-                                long uploadTicks = long.MaxValue;
-                                long expireTicks = long.MaxValue;
-                                string expireDate = "-";
-
-                                uploadTicks = item.UploadDate.Ticks;
-                                string uploadDate = item.UploadDate.ToShortDateString();
-
-                                if (item.ExpireDate != null)
-                                {
-                                    expireTicks = ((DateTime)item.ExpireDate).Ticks;
-                                    expireDate = ((DateTime)item.ExpireDate).ToShortDateString();
-                                }
-                                <tr>
-                                    <td class="v-a-m"><span>@item.FilenName</span></td>
-                                    <td class="v-a-m">
-                                        <span class='hide'>@uploadTicks</span>
-                                        <span class="media-heading">
-                                            <span>@uploadDate</span>
-                                        </span>
-                                    </td>
-                                    <td class="v-a-m">
-                                        <span class='hide'>@expireTicks</span>
-                                        <span class="media-heading">
-                                            <span>@expireDate</span>
-                                        </span>
-                                    </td>
-
-                                    <td class="v-a-m">
-                                        <a href="/Contracts/Download?contractId=@item.Id" role="button" class="btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-download-alt"></span> Download
-                                        </a>
-                                        @if (Session.GetUser().IsManager) {
-                                        <a href="/Contracts/Delete?contractId=@item.Id" role="button" class="btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-trash"></span> Delete
-                                        </a>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-                <hr />
+                <div class="modal-footer">
+                    <input type="hidden" id="contractModalId" name="contractId" value="" />
+                    <input type="hidden" id="contractModalUserId" name="userId" value="@ViewBag.UserId" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="contractModalButSave">Save</button>
+                    <a href="" role="button" class="btn btn-danger" id="contractModalButDelete">Delete contract</a>
+                </div>
             </div>
         </div>
-     }
+    </div>
+}
+
+<script language="javascript">
+
+    function loadModal(buttToShow, buttToHide, editable) {
+        $("#contractModalBut" + buttToShow).show();
+        $("#contractModalBut" + buttToHide).hide();
+        if (editable) {
+            $(".editable").show();
+            $(".info").hide();
+        }
+        else {
+            $(".editable").hide();
+            $(".info").show();
+        }
+        $("#expireDateInput").prop('disabled', !editable);
+    }
+
+    function dateToEn(date) {
+        var dateArr = date.split('/');
+        return dateArr[2] + '-' + dateArr[1] + '-' + dateArr[0];
+    }
+
+    $(document).ready(function () {
+
+        $("#addContract").click(function myfunction() {
+            $("#contractModalId").val("");
+            $("#contractModalLabel").html("Upload a contract");
+            $("#expireDateInput").val("");
+            loadModal("Save", "Delete",true);
+            $('#contractModal').modal('show');
+        });
+
+        /*$(".editcontract").click(function myfunction() {
+            var contractId = $(this).data("contractid").replace("contract_", "");
+            $("#contractModalId").val(contractId);
+            $("#contractModalLabel").html("Edit contract");
+            $("#contractModalText").val($("#txt_" + contractId).html());
+            loadModal("Save", "Delete", false);
+            $('#contractModal').modal('show');
+        });*/
+
+        $(".deleteContract").click(function myfunction() {
+            var contractId = $(this).data("contractid").replace("contract_", "");
+            $("#contractModalButDelete").prop("href", "/Contracts/Delete?contractId=" + contractId);
+            $("#contractModalId").val(contractId);
+            $("#contractModalLabel").html("Are you sure to delete this contract?");
+            $("#fileNameSpan").html($("#contractFile_" + contractId).html());
+            $("#expireDateInput").val(dateToEn($("#contractExpire_" + contractId).html()));
+            loadModal("Delete", "Save",false);
+            $('#contractModal').modal('show');
+        });
+
+        $("#contractModalButDelete").click(function myfunction() {
+
+            $("#contractModalText").val("");
+            $("#contractsForm").submit();
+
+        });
+    });
+</script>
