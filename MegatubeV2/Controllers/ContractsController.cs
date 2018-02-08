@@ -81,7 +81,7 @@ namespace MegatubeV2.Controllers
 
 
         [SessionTimeout(Order = 1)]
-        [CustomAuthorize(RoleType.Manager | RoleType.Standard, Order = 2)]
+        [CustomAuthorize(RoleType.Manager, RoleType.Standard, Order = 2)]
         public ActionResult Download(int? contractId)
         {
             try
