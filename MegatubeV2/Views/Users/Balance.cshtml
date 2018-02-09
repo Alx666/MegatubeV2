@@ -106,9 +106,8 @@
                 @Html.DisplayNameFor(model => model.Dec)
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.TotalPaid)
+                Total
             </th>
-            <th class="no-sort"> </th>
         </tr>
     </thead>
     <tbody>
@@ -116,7 +115,7 @@
          {
             <tr>
                 <td>
-                    <a href="@Url.Action("Details", "Users", new { id = item.UserId })">@(item.Name)</a>                    
+                    <a href="@Url.Action("Details", "Users", new { id = item.UserId })">@(item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Jan)
@@ -157,7 +156,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPaid)
                 </td>
-                <td nowrap="nowrap"></td>
             </tr>
          }
     </tbody>

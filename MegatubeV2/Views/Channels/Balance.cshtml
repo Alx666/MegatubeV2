@@ -65,16 +65,19 @@
 <table class="table table-condensed table-hover table-striped" id="userTable">
     <thead>
         <tr>
+            <th class="no-sort hidden">
+                
+            </th>
             <th class="small text-muted text-uppercase">
                 <strong>
                     @Html.DisplayNameFor(model => model.Name)
                 </strong>
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.OwnerName)
+                Owner Name
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.RecruiterName)
+                Recruiter Name
             </th>
             <th class="small text-muted text-uppercase">
                 @Html.DisplayNameFor(model => model.Jan)
@@ -115,15 +118,23 @@
             <th class="small text-muted text-uppercase">
                 Total
             </th>
-            <th class="no-sort"> </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
+            
+                string YTurl = "https://www.youtube.com/channel/UC" + item.ChannelId;
+            
             <tr>
+                <td class="hidden">
+                    @item.ChannelId
+                </td>
                 <td>
-                    <a href="@Url.Action("Edit", "Channels", new { id = item.ChannelId })">@(item.Name)</a>
+                    <a href="@Url.Action("Edit", "Channels", new { id = item.ChannelId })">@(item.Name)</a><br />
+                    <a href="@YTurl" target="_blank" class="text-muted">
+                        @item.ChannelId
+                    </a>
                 </td>
                 <td>
                     <a href="@Url.Action("Details", "Users", new { id = item.OwnerId })">@(item.OwnerName)</a>
@@ -170,7 +181,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalYearEarnings)
                 </td>
-                <td nowrap="nowrap"></td>
             </tr>
         }
     </tbody>

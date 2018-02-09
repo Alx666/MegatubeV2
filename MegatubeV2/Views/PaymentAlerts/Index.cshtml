@@ -111,7 +111,7 @@
     {
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <a href="javasctipt:{}" onclick="$('#payAlerts').submit(); return false;" role="button" class="btn btn-default">Pay selected</a>
+            <a href="#" id="paySelectedBut" role="button" class="btn btn-default">Pay selected</a>
         </div>
     </div>
      }
@@ -133,6 +133,14 @@
                 "targets": 'no-sort',
                 "orderable": false,
             }]
+        });
+
+        $("#paySelectedBut").click(function myfunction() {
+            $('#payAlerts').submit();
+            //location.reload();
+            setTimeout(function () {
+                location.reload();
+            }, 6000);
         });
     });
 </script>

@@ -121,7 +121,7 @@
 
 <script language="javascript">
 
-    function loadModal(buttToShow, buttToHide, editable) {
+    function loadContractModal(buttToShow, buttToHide, editable) {
         $("#contractModalBut" + buttToShow).show();
         $("#contractModalBut" + buttToHide).hide();
         if (editable) {
@@ -146,7 +146,7 @@
             $("#contractModalId").val("");
             $("#contractModalLabel").html("Upload a contract");
             $("#expireDateInput").val("");
-            loadModal("Save", "Delete",true);
+            loadContractModal("Save", "Delete",true);
             $('#contractModal').modal('show');
         });
 
@@ -155,7 +155,7 @@
             $("#contractModalId").val(contractId);
             $("#contractModalLabel").html("Edit contract");
             $("#contractModalText").val($("#txt_" + contractId).html());
-            loadModal("Save", "Delete", false);
+            loadContractModal("Save", "Delete", false);
             $('#contractModal').modal('show');
         });*/
 
@@ -166,7 +166,7 @@
             $("#contractModalLabel").html("Are you sure to delete this contract?");
             $("#fileNameSpan").html($("#contractFile_" + contractId).html());
             $("#expireDateInput").val(dateToEn($("#contractExpire_" + contractId).html()));
-            loadModal("Delete", "Save",false);
+            loadContractModal("Delete", "Save",false);
             $('#contractModal').modal('show');
         });
 
