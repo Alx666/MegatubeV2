@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
 }
 
 
@@ -16,7 +17,7 @@
                     @Html.DisplayNameFor(model => model.User.Name)
                 </th>
                 <th class="small text-muted text-uppercase">
-                    @Html.DisplayNameFor(model => model.User.PaymentMethod)
+                    Payment Method
                 </th>
                 <th class="small text-muted text-uppercase">
                     @Html.DisplayNameFor(model => model.Gross)
@@ -25,7 +26,7 @@
                     Net
                 </th>
                 <th class="small text-muted text-uppercase">
-                    @Html.DisplayNameFor(model => model.CreationDate)
+                    Creation Date
                 </th>
                 <th class="no-sort"> </th>
             </tr>
@@ -106,13 +107,16 @@
         </tbody>
 
     </table>
+    if (Model.Count() > 0)
+    {
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <a href="javasctipt:{}" onclick="$('#payAlerts').submit(); return false;" role="button" class="btn btn-default">Pay selected</a>
         </div>
     </div>
+     }
 
-                            }
+    }
 <script language="javascript">
 
     $(document).ready(function () {

@@ -7,6 +7,8 @@
     int selectedMonth = ViewBag.SelectedMonth>0? ViewBag.SelectedMonth:currentDate.Month;
     int selectedYear = ViewBag.SelectedYear > 0 ? ViewBag.SelectedYear : currentDate.Year;
 
+    System.Globalization.CultureInfo ci_IT = new System.Globalization.CultureInfo("it-IT");
+
 }
 
 
@@ -84,16 +86,16 @@
                 @Html.DisplayNameFor(model => model.Net)
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.PaymentType)
+                Payment type
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.DateFrom)
+                From
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.DateTo)
+                To
             </th>
             <th class="small text-muted text-uppercase">
-                @Html.DisplayNameFor(model => model.ReceiptCount)
+                Receipt
             </th>
             <th class="no-sort"> </th>
             <th class="no-sort"> </th>
@@ -114,10 +116,10 @@
                     <a href="@Url.Action("Details", "Users", new { id = item.UserId })">@name</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Gross)
+                    @item.Gross
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Net)
+                    @item.Net
                 </td>
                 <td>
                     @{
@@ -127,9 +129,11 @@
                     @paymentType
                 </td>
                 <td>
+                    <span class='hide'>@item.DateFrom.Ticks</span>
                     @item.DateFrom.ToShortDateString()
                 </td>
                 <td>
+                    <span class='hide'>@item.DateTo.Ticks</span>
                     @item.DateTo.ToShortDateString()
                 </td>
                 <td>
@@ -172,7 +176,7 @@
             },
             "columnDefs": [{
                 "targets": 'no-sort',
-                "orderable": false,
+                "orderable": false
             }]
         });
 
