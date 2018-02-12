@@ -52,10 +52,22 @@ namespace MegatubeV2
             }
         }
 
-        public Payment CreatePayment(MegatubeV2Entities db, int networkId, out PaymentAlert toRemove)
+        public Payment CreatePayment(MegatubeV2Entities db, int networkId, int? receiptCount, out PaymentAlert toRemove)
         {
             User toPay                           = this;
             User admin                           = toPay.Administrator ?? toPay;
+
+            if (receiptCount == null)
+            {
+                int year = DateTime.Now.Year;
+
+                Payment mostRecent = (from x in db.Payments
+                                      where x.Date.Year == year && x.UserId == admin.Id
+                                      orderby x.ReceiptCount descending
+                                      select x).FirstOrDefault();
+
+                receiptCount = mostRecent != null ? mostRecent.ReceiptCount + 1 : 1;
+            }
 
             List<Accreditation> accreditations   = (from a in db.Accreditations where a.UserId == toPay.Id && !a.PaymentId.HasValue select a).ToList();
 
@@ -68,6 +80,7 @@ namespace MegatubeV2
             p.PaymentType                        = (byte)admin.PaymentMethod;
             p.Date                               = DateTime.Now;
             p.NetworkId                          = networkId;
+            p.ReceiptCount                       = receiptCount.Value;
 
             if (toPay.Administrator != null)
                 p.AdministratorId                = toPay.Administrator.Id;

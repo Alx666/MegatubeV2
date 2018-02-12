@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MegatubeV2;
 using MegatubeV2.Models;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace MegatubeV2.Controllers
 {
@@ -142,7 +144,7 @@ namespace MegatubeV2.Controllers
             try
             {
                 User toPay          = db.Users.Find(userId);
-                Payment p = toPay.CreatePayment(db, Session.GetUser().NetworkId, out PaymentAlert toRemove);
+                Payment p = toPay.CreatePayment(db, Session.GetUser().NetworkId, receiptCounter, out PaymentAlert toRemove);
 
                 db.Payments.Add(p);
                 db.PaymentAlerts.Remove(toRemove);
@@ -158,6 +160,46 @@ namespace MegatubeV2.Controllers
                 return View("Error");
             }
         }
+
+        [HttpPost]
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Manager, Order = 2)]
+        public ActionResult GenerateSepa(int[] ids)
+        {
+            try
+            {
+                Network current          = db.Networks.Find(Session.GetUser().NetworkId);
+                PaymentAlert[] toPay     = db.PaymentAlerts.Where(x => ids.Contains(x.User.Id)).ToArray();
+                XmlSerializer serializer = new XmlSerializer(typeof(Sepa));
+                Sepa document            = new Sepa("GROWUP", "Grow Up Network SRL", "IT", DateTime.Now, "SIAB8VPN", "IT45G0306901798100000005467", toPay, "Pagamento Traffico Growup");
+
+                byte[] data;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    serializer.Serialize(ms, document);
+                    data = new byte[ms.GetBuffer().Length];
+                    Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
+
+                    for (int i = 0; i < toPay.Length; i++)
+                    {
+                        Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, null, out PaymentAlert toRemove);
+                        db.Payments.Add(p);
+                        db.PaymentAlerts.Remove(toRemove);
+                        db.SaveChanges();
+                    }
+
+                    string filename = $"sepa_{current.Name}_{DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.xml";
+                    return File(data, "application/xml", filename);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e;
+                return View("Error");
+            }
+        }
+
 
 
         // GET: Payments/Delete/5
