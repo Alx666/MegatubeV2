@@ -15,7 +15,7 @@ namespace MegatubeV2
     public partial class Accreditation
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string ChannelId { get; set; }
         public Nullable<int> PaymentId { get; set; }
         public decimal GrossAmmount { get; set; }
@@ -26,8 +26,8 @@ namespace MegatubeV2
         public int NetworkId { get; set; }
     
         public virtual Channel Channel { get; set; }
+        public virtual Network Network { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual User User { get; set; }
-        public virtual Network Network { get; set; }
     }
 }

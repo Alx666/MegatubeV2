@@ -32,10 +32,10 @@ namespace MegatubeV2
         public Nullable<int> AdministratorId { get; set; }
         public int NetworkId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accreditation> Accreditations { get; set; }
         public virtual User User { get; set; }
         public virtual User Administrator { get; set; }
         public virtual Network Network { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accreditation> Accreditations { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Accreditations = new HashSet<Accreditation>();
             this.OwnedChannels = new HashSet<Channel>();
             this.RecruitedChannels = new HashSet<Channel>();
             this.NotesCreated = new HashSet<Note>();
@@ -28,6 +27,7 @@ namespace MegatubeV2
             this.EventLogs = new HashSet<EventLog>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
             this.Contracts = new HashSet<Contract>();
+            this.Accreditations = new HashSet<Accreditation>();
         }
     
         public int Id { get; set; }
@@ -53,8 +53,6 @@ namespace MegatubeV2
         public int NetworkId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accreditation> Accreditations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> OwnedChannels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> RecruitedChannels { get; set; }
@@ -77,5 +75,7 @@ namespace MegatubeV2
         public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contract> Contracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accreditation> Accreditations { get; set; }
     }
 }

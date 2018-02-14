@@ -36,29 +36,26 @@ namespace MegatubeV2
 
         public override string ToString() => this.Channel.Name;
 
-        public static IEnumerable<Accreditation> Create(IGrouping<string, CsvVideo> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType, int networkId)
+        public static IEnumerable<Accreditation> Create<T>(IGrouping<string, T> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType, int networkId, Func<T,decimal> selector)
         {
-            throw new NotImplementedException("Su Db accrediti arrivano con subtype sbagliato... tutto a 0");
+            yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileEndDate, g.Sum(x => selector.Invoke(x) * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership, networkId);
 
-            //yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerRevenue * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership, networkId);
+            if(c.RecruiterId != null)
+                yield return new Accreditation(c.Id, c.RecruiterId.Value, fileStartDate, fileEndDate, g.Sum(x => selector.Invoke(x) * (decimal)c.PercentRecruiter * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Recruiting, networkId);
 
-            //if(c.RecruiterId != null)
-            //    yield return new Accreditation(c.Id, c.RecruiterId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerRevenue * (decimal)c.PercentRecruiter * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Recruiting, networkId);
-
-
-            //yield return new Accreditation(c.Id, fileStartDate, fileEndDate, g.Sum(x => x.PartnerRevenue * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance, networkId);
+            yield return new Accreditation(c.Id, fileStartDate, fileEndDate, g.Sum(x => selector.Invoke(x) * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance, networkId);
         }
 
-        public static IEnumerable<Accreditation> Create(IGrouping<string, CsvPaidFeatures> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType, int networkId)
-        {
-            yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership, networkId);
+        //public static IEnumerable<Accreditation> Create(IGrouping<string, CsvPaidFeatures> g, Channel c, decimal dollarToEuro, DateTime fileStartDate, DateTime fileEndDate, AccreditationMainType eType, int networkId)
+        //{
+        //    yield return new Accreditation(c.Id, c.OwnerId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentOwner * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Ownership, networkId);
 
-            if (c.RecruiterId != null)
-                yield return new Accreditation(c.Id, c.RecruiterId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentRecruiter * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Recruiting, networkId);
+        //    if (c.RecruiterId != null)
+        //        yield return new Accreditation(c.Id, c.RecruiterId.Value, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentRecruiter * dollarToEuro), (byte)eType, (byte)AccreditationSubType.Recruiting, networkId);
 
 
-            yield return new Accreditation(c.Id, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance, networkId);
-        }
+        //    yield return new Accreditation(c.Id, fileStartDate, fileEndDate, g.Sum(x => x.PartnerEarningsFraction * (decimal)c.PercentMegatube * dollarToEuro), (byte)eType, (byte)AccreditationSubType.NetworkPerformance, networkId);
+        //}
 
         public enum AccreditationMainType : byte
         {

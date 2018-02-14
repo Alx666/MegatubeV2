@@ -19,10 +19,10 @@ namespace MegatubeV2
         {
             this.Users = new HashSet<User>();
             this.Channels = new HashSet<Channel>();
-            this.Accreditations = new HashSet<Accreditation>();
             this.DataFiles = new HashSet<DataFile>();
             this.Payments = new HashSet<Payment>();
             this.PaymentAlerts = new HashSet<PaymentAlert>();
+            this.Accreditations = new HashSet<Accreditation>();
         }
     
         public int Id { get; set; }
@@ -33,12 +33,12 @@ namespace MegatubeV2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> Channels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accreditation> Accreditations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataFile> DataFiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentAlert> PaymentAlerts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accreditation> Accreditations { get; set; }
     }
 }

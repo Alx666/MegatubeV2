@@ -51,7 +51,7 @@ namespace MegatubeV2
             db.PaymentAlerts.RemoveRange(db.PaymentAlerts.Where(x => x.NetworkId == netId));
 
             var credits = (from a in db.Accreditations
-                           where a.PaymentId == null && a.NetworkId == netId
+                           where a.PaymentId == null && a.NetworkId == netId && a.UserId != null
                            group a by a.User into g
                            select new { User = g.Key, Gross = g.Sum(x => x.GrossAmmount) }).ToList();
 

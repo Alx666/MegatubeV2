@@ -305,6 +305,7 @@
     <Content Include="assets\images\logo-warning-color-white2X.png" />
     <Content Include="assets\images\logo-warning-white2X.png" />
     <Content Include="assets\images\MTReceiptBottom.png" />
+    <Content Include="assets\images\MTReceiptTop.png" />
     <Content Include="assets\images\spin-favicon.png" />
     <Content Include="assets\images\spin-logo-big-inverse-2X.png" />
     <Content Include="assets\images\spin-logo-big-inverse.png" />

@@ -132,16 +132,16 @@ namespace MegatubeDataMigrator
                     MigrateTable(oldDb.Payments, newDb.Payments, t =>
                     {
                         ModelNew.Payment record = new ModelNew.Payment();
-                        record.Id = t.Id;
-                        record.DateFrom = t.DateFrom;
-                        record.DateTo = t.DateTo;
-                        record.Date = t.Date;
-                        record.Gross = t.Amount;
-                        record.Net = PaymentMethodFactory.GetNetFromGrossF((short)t.PaymentType, record.Gross);
-                        record.PaymentType = t.PaymentType;
-                        record.ReceiptCount = 0;
-                        record.UserId = t.UserId;
-                        record.AdministratorId = newDb.Users.Find(record.UserId).FiscalAdministratorId;
+                        record.Id               = t.Id;
+                        record.DateFrom         = t.DateFrom;
+                        record.DateTo           = t.DateTo;
+                        record.Date             = t.Date;
+                        record.Gross            = t.Amount;
+                        record.Net              = PaymentMethodFactory.GetNetFromGrossF((short)t.PaymentType, record.Gross);
+                        record.PaymentType      = t.PaymentType;
+                        record.ReceiptCount     = 0;
+                        record.UserId           = t.UserId;
+                        record.AdministratorId  = newDb.Users.Find(record.UserId).FiscalAdministratorId;
                         
                         
                         return record;
