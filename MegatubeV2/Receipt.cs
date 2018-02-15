@@ -118,6 +118,15 @@ namespace MegatubeV2
                         }
 
                         iTextSharp.text.Image hImage = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath("~/assets/images/MTReceiptTop.png"));
+
+                        //hImage.SetAbsolutePosition((PageSize.A4.Width - hImage.ScaledWidth) / 2, 354f);
+                        ////hImage.Alignment = 
+                        ////float fScale = 20f;
+                        ////float fRight = 1484f;
+                        ////float fTop = 354f;
+
+                        ////hImage.Right = fRight;
+                        ////hImage.Top = fTop;
                         hImage.ScalePercent(20f);
                         hDocument.Add(hImage);
 

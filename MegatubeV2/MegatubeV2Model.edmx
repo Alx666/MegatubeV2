@@ -112,6 +112,12 @@
           <Property Name="ReceiptCount" Type="int" Nullable="false" />
           <Property Name="AdministratorId" Type="int" />
           <Property Name="NetworkId" Type="int" Nullable="false" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReceiverLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReceiverFullAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReceiverBirthPlace" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReceiverPIVAorVAT" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReceiverCAP" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentAlert">
           <Key>
@@ -923,6 +929,12 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <Property Name="NetworkId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Network" Relationship="MegatubeV2Model.FK_Payment_ToNetworkId" FromRole="Payment" ToRole="Network" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToPayment" FromRole="Payment" ToRole="Accreditation" />
+          <Property Name="ReceiverName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverFullAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverBirthPlace" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverPIVAorVAT" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverCAP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1492,6 +1504,12 @@ warning 6002: The table/view 'MegatubeV2.dbo.ViewNotes' does not have a primary 
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="MegatubeV2Model.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="ReceiverCAP" ColumnName="ReceiverCAP" />
+                <ScalarProperty Name="ReceiverPIVAorVAT" ColumnName="ReceiverPIVAorVAT" />
+                <ScalarProperty Name="ReceiverBirthPlace" ColumnName="ReceiverBirthPlace" />
+                <ScalarProperty Name="ReceiverFullAddress" ColumnName="ReceiverFullAddress" />
+                <ScalarProperty Name="ReceiverLastName" ColumnName="ReceiverLastName" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
                 <ScalarProperty Name="NetworkId" ColumnName="NetworkId" />
                 <ScalarProperty Name="AdministratorId" ColumnName="AdministratorId" />
                 <ScalarProperty Name="ReceiptCount" ColumnName="ReceiptCount" />

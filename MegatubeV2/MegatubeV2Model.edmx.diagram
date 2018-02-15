@@ -7,12 +7,12 @@
       <Diagram DiagramId="099f9d0b10db4159ab4ae2ee9f5cd9cc" Name="Diagram1">
         <EntityTypeShape EntityType="MegatubeV2Model.Channel" Width="1.5" PointX="3.625" PointY="13.375" />
         <EntityTypeShape EntityType="MegatubeV2Model.DataFile" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="9" PointY="0.5" />
+        <EntityTypeShape EntityType="MegatubeV2Model.Network" Width="1.5" PointX="8.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MegatubeV2Model.Note" Width="1.5" PointX="5.25" PointY="7.375" />
         <EntityTypeShape EntityType="MegatubeV2Model.Payment" Width="1.5" PointX="7" PointY="18.5" />
         <EntityTypeShape EntityType="MegatubeV2Model.Role" Width="1.5" PointX="3.375" PointY="10.75" />
         <EntityTypeShape EntityType="MegatubeV2Model.sysdiagram" Width="1.5" PointX="13.875" PointY="0.875" />
-        <EntityTypeShape EntityType="MegatubeV2Model.User" Width="2.125" PointX="10.875" PointY="1.625" />
+        <EntityTypeShape EntityType="MegatubeV2Model.User" Width="2.125" PointX="11.125" PointY="2" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelOwner_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_ChannelRecruiter_ToUser" />
         <AssociationConnector Association="MegatubeV2Model.FK_Note_ToUserAuthor" />

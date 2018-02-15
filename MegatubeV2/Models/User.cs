@@ -81,6 +81,12 @@ namespace MegatubeV2
             p.Date                               = DateTime.Now;
             p.NetworkId                          = networkId;
             p.ReceiptCount                       = receiptCount.Value;
+            p.ReceiverName                       = admin.Name;
+            p.ReceiverLastName                   = admin.LastName;
+            p.ReceiverFullAddress                = admin.FullAddress;
+            p.ReceiverBirthPlace                 = admin.BirthPlace;
+            p.ReceiverPIVAorVAT                  = admin.PIVAorVAT;
+            p.ReceiverCAP                        = admin.PostalCode;
 
             if (toPay.Administrator != null)
                 p.AdministratorId                = toPay.Administrator.Id;

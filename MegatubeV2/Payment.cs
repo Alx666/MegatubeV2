@@ -31,6 +31,12 @@ namespace MegatubeV2
         public int ReceiptCount { get; set; }
         public Nullable<int> AdministratorId { get; set; }
         public int NetworkId { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverLastName { get; set; }
+        public string ReceiverFullAddress { get; set; }
+        public string ReceiverBirthPlace { get; set; }
+        public string ReceiverPIVAorVAT { get; set; }
+        public string ReceiverCAP { get; set; }
     
         public virtual User User { get; set; }
         public virtual User Administrator { get; set; }
