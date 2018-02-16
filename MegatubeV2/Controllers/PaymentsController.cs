@@ -10,6 +10,7 @@ using MegatubeV2;
 using MegatubeV2.Models;
 using System.Xml.Serialization;
 using System.IO;
+using System.Xml;
 
 namespace MegatubeV2.Controllers
 {
@@ -175,22 +176,25 @@ namespace MegatubeV2.Controllers
 
                 byte[] data;
 
-                using (MemoryStream ms = new MemoryStream())
+                using (MemoryStream ms = new MemoryStream()) //write on disk and send to avoid invalid characters?
                 {
-                    serializer.Serialize(ms, document);
-                    data = new byte[ms.GetBuffer().Length];
-                    Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
-
-                    for (int i = 0; i < toPay.Length; i++)
+                    using (XmlTextWriter x = new XmlTextWriter(ms, System.Text.Encoding.UTF8))
                     {
-                        Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, null, out PaymentAlert toRemove);
-                        db.Payments.Add(p);
-                        db.PaymentAlerts.Remove(toRemove);
-                        db.SaveChanges();
-                    }
+                        serializer.Serialize(ms, document);
+                        data = new byte[ms.GetBuffer().Length];
+                        Buffer.BlockCopy(ms.GetBuffer(), 0, data, 0, ms.GetBuffer().Length);
 
-                    string filename = $"sepa_{current.Name}_{DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.xml";
-                    return File(data, "application/xml", filename);
+                        for (int i = 0; i < toPay.Length; i++)
+                        {
+                            Payment p = toPay[i].User.CreatePayment(db, Session.GetUser().NetworkId, null, out PaymentAlert toRemove);
+                            db.Payments.Add(p);
+                            db.PaymentAlerts.Remove(toRemove);
+                            db.SaveChanges();
+                        }
+
+                        string filename = $"sepa_{current.Name}_{DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.xml";
+                        return File(data, "application/xml", filename);
+                    }
                 }
             }
             catch (Exception e)

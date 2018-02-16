@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegatubeV2", "MegatubeV2\MegatubeV2.csproj", "{5178993B-1F4D-4183-99C2-CE35664C1026}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvProcessing", "CsvProcessing\CsvProcessing.csproj", "{0FA135E8-C80D-46F6-927E-D768CE2EB05E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegatubeDataMigrator", "MegatubeDataMigrator\MegatubeDataMigrator.csproj", "{DD4379B6-168F-4AEB-B801-F3F5A51E364B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegatubeCsvProcessing", "MegatubeCsvProcessing\MegatubeCsvProcessing.csproj", "{46C56A5C-0A63-462C-BE1E-8B224022CACF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5178993B-1F4D-4183-99C2-CE35664C1026}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FA135E8-C80D-46F6-927E-D768CE2EB05E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD4379B6-168F-4AEB-B801-F3F5A51E364B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD4379B6-168F-4AEB-B801-F3F5A51E364B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD4379B6-168F-4AEB-B801-F3F5A51E364B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD4379B6-168F-4AEB-B801-F3F5A51E364B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46C56A5C-0A63-462C-BE1E-8B224022CACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46C56A5C-0A63-462C-BE1E-8B224022CACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46C56A5C-0A63-462C-BE1E-8B224022CACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46C56A5C-0A63-462C-BE1E-8B224022CACF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
