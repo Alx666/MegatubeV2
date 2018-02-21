@@ -329,6 +329,63 @@ namespace MegatubeV2.Controllers
             }
         }
 
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Developer, Order = 2)]
+        public ActionResult AddCredit(int? userId, decimal amount)
+        {
+            try
+            {
+                if(!userId.HasValue)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                User receiver = db.Users.Find(userId);
+
+                Accreditation credit    = new Accreditation();
+                credit.UserId           = receiver.Id;
+                credit.Type             = (byte)Accreditation.AccreditationMainType.Extra;
+                credit.SubType          = (byte)Accreditation.AccreditationSubType.Manual;
+                credit.NetworkId        = receiver.NetworkId;
+                credit.GrossAmmount     = amount;
+                credit.DateFrom         = DateTime.Now;
+                credit.DateTo           = DateTime.Now;
+
+                db.Accreditations.Add(credit);
+
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e;
+                return View("Error");
+            }            
+        }
+
+        [SessionTimeout(Order = 1)]
+        [CustomAuthorize(RoleType.Developer, Order = 2)]
+        public ActionResult RemoveCredit(int? userId, int? accreditationId)
+        {
+            try
+            {
+                if (!userId.HasValue || !accreditationId.HasValue)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                User receiver           = db.Users.Find(userId);
+                Accreditation credit    = receiver.Accreditations.Where(x => x.Id == accreditationId.Value).First();
+
+                if (credit.PaymentId != null)
+                    throw new Exception("This accreditation has already been payed");
+
+                db.Accreditations.Remove(credit);
+
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e;
+                return View("Error");
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

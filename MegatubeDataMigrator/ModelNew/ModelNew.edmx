@@ -887,8 +887,8 @@
           <Property Name="Role" Type="Int32" Nullable="false" />
           <Property Name="NetworkId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Accreditations" Relationship="MegatubeV2Model.FK_Accreditation_ToUser" FromRole="User" ToRole="Accreditation" />
-          <NavigationProperty Name="Channels" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty Name="Channels1" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="OwnedChannels" Relationship="MegatubeV2Model.FK_ChannelOwner_ToUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="RecruitedChannels" Relationship="MegatubeV2Model.FK_ChannelRecruiter_ToUser" FromRole="User" ToRole="Channel" />
           <NavigationProperty Name="Contracts" Relationship="MegatubeV2Model.FK_Contract_ToUser" FromRole="User" ToRole="Contract" />
           <NavigationProperty Name="EventLogs" Relationship="MegatubeV2Model.FK_Event_ToUser" FromRole="User" ToRole="EventLog" />
           <NavigationProperty Name="Network" Relationship="MegatubeV2Model.FK_User_ToNetwork" FromRole="User" ToRole="Network" />

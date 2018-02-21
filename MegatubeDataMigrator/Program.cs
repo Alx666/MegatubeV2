@@ -308,6 +308,166 @@ namespace MegatubeDataMigrator
         #region Users
 
         [ConsoleUIMethod]
+        public void CheckChannels()
+        {
+            List<string> messages = new List<string>();
+
+            using (MegatubeEntitiesOld oldDb = new MegatubeEntitiesOld())
+            {
+                using (MegatubeV2Entities newDb = new MegatubeV2Entities())
+                {
+                    //Utenze da controllare
+                    List<ModelNew.User> newUsers    = newDb.Users.ToList();                    
+
+                    foreach (var newUser in newUsers)
+                    {
+                        Console.WriteLine($"Checking {newUser.LastName} {newUser.Name}");
+
+                        List<ModelNew.Channel> ownedChannels          = newUser.OwnedChannels.ToList();
+                        List<ModelNew.Channel> recruitedChannels      = newUser.RecruitedChannels.ToList();
+
+                        ModelOld.User oldUser = oldDb.Users.Where(x => x.Id == newUser.Id).SingleOrDefault();
+
+                        Partner     oldPartnership = null;
+                        Recruiter   oldRecruiting  = null;
+
+                        if (ownedChannels.Count() > 0)
+                        {
+                            oldPartnership = oldUser.Partner;
+
+                            if (oldPartnership == null)
+                            {
+                                string mex = $"{newUser.LastName} {newUser.Name}: Ha canali associati (Partnership) ma non risulta partner sul vecchio database";
+                                Console.WriteLine(mex);
+                                messages.Add(mex);
+                            }
+                        }
+
+                        if(oldPartnership != null)
+                        {
+                            var oldChannels = oldPartnership.ChannelOwnerships;
+
+                            int newOwnedChannelsCount = ownedChannels.Count();
+                            int oldOwnedChannelsCount = oldChannels.Count();
+
+                            if (newOwnedChannelsCount != oldOwnedChannelsCount)
+                            {                                
+                                string mex = $"{newUser.LastName} {newUser.Name}: ha una discrepanza sul numero canali (Partnership) {newOwnedChannelsCount}/{oldOwnedChannelsCount} (nuovi/vecchi)";
+                                Console.WriteLine(mex);
+                                messages.Add(mex);
+                            }
+
+                            foreach (var channel in oldChannels)
+                            {                               
+                                if (ownedChannels.Where(x => x.Id == channel.ChannelId).SingleOrDefault() == null)
+                                {
+                                    string mex = $"{newUser.LastName} {newUser.Name}: Canale mancante {channel.ChannelId} => {channel.Channel.Name}";
+                                    Console.WriteLine(mex);
+                                    messages.Add(mex);
+                                }
+                            }
+
+                            foreach (var channel in ownedChannels)
+                            {
+                                if (oldChannels.Where(x => x.ChannelId == channel.Id).SingleOrDefault() == null)
+                                {
+                                    string mex = $"{newUser.LastName} {newUser.Name}: Canale erroneamente associato? {channel.Id} => {channel.Name}";
+                                    Console.WriteLine(mex);
+                                    messages.Add(mex);
+                                }
+                            }
+                        }
+
+
+                        if (recruitedChannels.Count() > 0)
+                        {
+                            oldRecruiting = oldUser.Recruiter;
+
+                            if (oldRecruiting == null)
+                            {
+                                string mex = $"{newUser.LastName} {newUser.Name}: Ha canali associati (Recruiting) ma non risulta Recruiter sul vecchio database";
+                                Console.WriteLine(mex);
+                                messages.Add(mex);
+                            }
+                        }
+
+                        if (oldRecruiting != null)
+                        {
+                            var oldChannels = oldRecruiting.ChannelRecruitings;
+
+                            int newRecruitedChannelsCount = recruitedChannels.Count();
+                            int oldRecruitedChannelsCount = oldChannels.Count();
+
+                            if (newRecruitedChannelsCount != oldRecruitedChannelsCount)
+                            {
+                                string mex = $"{newUser.LastName} {newUser.Name}: ha una discrepanza sul numero canali (Recruiting) {newRecruitedChannelsCount}/{oldRecruitedChannelsCount} (nuovi/vecchi)";
+                                Console.WriteLine(mex);
+                                messages.Add(mex);
+                            }
+
+                            foreach (var channel in oldChannels)
+                            {
+                                if (recruitedChannels.Where(x => x.Id == channel.ChannelId).SingleOrDefault() == null)
+                                {
+                                    string mex = $"{newUser.LastName} {newUser.Name}: Canale mancante {channel.ChannelId} => {channel.Channel.Name}";
+                                    Console.WriteLine(mex);
+                                    messages.Add(mex);
+                                }
+                            }
+
+                            foreach (var channel in recruitedChannels)
+                            {
+                                if (oldChannels.Where(x => x.ChannelId == channel.Id).SingleOrDefault() == null)
+                                {
+                                    string mex = $"{newUser.LastName} {newUser.Name}: Canale erroneamente associato? {channel.Id} => {channel.Name}";
+                                    Console.WriteLine(mex);
+                                    messages.Add(mex);
+                                }
+                            }
+                        }
+
+
+                        #region Comments
+
+                        //Recruiter recruiting = oldUser.Recruiter;
+                        //if (newUserRecruitedChannels.Count > 0 && recruiting == null)
+                        //{
+                        //    string message = $"{newUser.LastName} {newUser.Name}: Discrepanza accesso con vecchio DB (Recruiting)";
+                        //    messages.Add(message);
+                        //    continue;
+                        //}
+
+
+                        //List<ModelOld.ChannelRecruiting> oldUserRecruitedChannels = recruiting.ChannelRecruitings.ToList();
+
+                        //if (newUserRecruitedChannels.Count() != oldUserRecruitedChannels.Count())
+                        //{
+                        //    string message = $"{newUser.LastName} {newUser.Name}: Discrepanza Conteggio Canali Reclutati";
+                        //    messages.Add(message);
+                        //}
+                        //else
+                        //{
+                        //    List<string> newChannelIds = newUserRecruitedChannels.Select(x => x.Id).ToList();
+                        //    List<string> oldChannelIds = oldUserRecruitedChannels.Select(x => x.ChannelId).ToList();
+
+                        //    oldChannelIds.All(x => newChannelIds.Contains(x));
+
+                        //    string message = $"{newUser.LastName} {newUser.Name}: canali errati (Recruiting)";
+                        //    messages.Add(message);
+                        //}
+
+                        #endregion
+
+                        File.WriteAllLines("output.txt", messages.ToArray());
+
+                    }                    
+                }
+            }
+        }
+
+
+
+        [ConsoleUIMethod]
         public void NormalizeNames()
         {
             using (MegatubeV2Entities db = new MegatubeV2Entities())
@@ -482,6 +642,8 @@ namespace MegatubeDataMigrator
             }
         }
         #endregion
+
+
 
         //var item = (Mixer.GetType().GetProperty("exposedParameters").GetValue(Mixer, null) as IEnumerable<object>).Select(x => new Parameter(x.GetType().GetField("name").GetValue(x) as string, Mixer))
 
