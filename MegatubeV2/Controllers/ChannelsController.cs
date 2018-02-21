@@ -105,14 +105,16 @@ namespace MegatubeV2.Controllers
                 {
                     Channel c = db.Channels.Find(channel.Id);
 
+                    Tuple<double, double, double, double, double, double> values = new Tuple<double, double, double, double, double, double>(c.PercentMegatube, c.PercentOwner, c.PercentRecruiter, channel.PercentMegatube / 100d, channel.PercentOwner / 100d, channel.PercentRecruiter / 100d);
+
                     c.PercentMegatube  = channel.PercentMegatube    / 100d;
                     c.PercentOwner     = channel.PercentOwner       / 100d;
                     c.PercentRecruiter = channel.PercentRecruiter   / 100d;
                     c.RecruiterId      = channel.RecruiterId;
                     c.OwnerId          = channel.OwnerId;
-
-                    EventLog.Log(db, db.Users.Find(current.Id), EventLogType.UserChanged, $"{current.LastName} {current.Name} Changed Channel Record {c.Id} {c.Name}");
                     db.SaveChanges();
+
+                    EventLog.Log(db, db.Users.Find(current.Id), EventLogType.ChannelEdited, $"{current.LastName} {current.Name} Changed Channel Record {c.Id} {c.Name} {values.Item1} {values.Item2} {values.Item3} => {values.Item4} {values.Item5} {values.Item6}");
                     return RedirectToAction("Index", "ViewChannels");
                 }
 

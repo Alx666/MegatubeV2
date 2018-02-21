@@ -42,15 +42,19 @@ namespace MegatubeV2
 
     public enum EventLogType : short
     {
-        LoginSuccess = 0,
-        LoginFailed = 1,
-
-        UserChanged = 2,
-        PaymentCreated = 3,
-        FileUploaded = 4,
-        NoteEdited = 5,
-        NoteDeleted = 6,
-        ApplicationError = 666, //никогда не забывайте
-        AddCredit = 667,
+        LoginSuccess             = 0,
+        LoginFailed              = 1,
+        UserCreated              = 2,
+        UserChanged              = 3,
+        ChannelEdited            = 4,
+        PaymentCreated           = 5,
+        PaymentReverted          = 6,
+        FileUploaded             = 7,
+        NoteEdited               = 8,
+        NoteDeleted              = 9,
+        ContractUpload           = 10,
+        AddCredit                = 11,
+        RemoveCredit             = 12, 
+        ApplicationError         = 666, //никогда не забывайте                
     }
 }

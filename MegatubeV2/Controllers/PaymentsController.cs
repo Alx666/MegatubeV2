@@ -123,7 +123,6 @@ namespace MegatubeV2.Controllers
                 p.To                = accreditations.Max(x => x.DateTo);
                 p.PaymentMode       = PaymentMethodFactory.GetMethodFromDBCode(admin.PaymentMethod.Value).ToString();
                 p.ReceiptCount      = count;                
-
                 return View(p);
             }
             catch (Exception e)
@@ -190,6 +189,7 @@ namespace MegatubeV2.Controllers
                             db.Payments.Add(p);
                             db.PaymentAlerts.Remove(toRemove);
                             db.SaveChanges();
+                            EventLog.Log(db, Session.GetUser(), EventLogType.PaymentCreated, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Payment Created via SEPA for {p.User.EMail}");
                         }
 
                         string filename = $"sepa_{current.Name}_{DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.xml";
@@ -220,7 +220,7 @@ namespace MegatubeV2.Controllers
 
                 db.Payments.Remove(p);
                 db.PaymentAlerts.Add(alert);
-                EventLog.Log(db, Session.GetUser(), EventLogType.PaymentCreated, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Payment Reverted for {p.UserId}");
+                EventLog.Log(db, Session.GetUser(), EventLogType.PaymentReverted, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Payment Reverted for {p.User.EMail}");
                 db.SaveChanges();
 
                 return RedirectToAction("index", "Payments");

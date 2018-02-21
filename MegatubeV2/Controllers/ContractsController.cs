@@ -68,6 +68,9 @@ namespace MegatubeV2.Controllers
                     db.Contracts.Add(contract);
                     db.SaveChanges();
 
+                    User receiver = db.Users.Find(userId);
+                    EventLog.Log(db, Session.GetUser(), EventLogType.ContractUpload, $"{Session.GetUser().LastName} {Session.GetUser().Name} Uploaded Contract {file.FileName} for {receiver.LastName} {receiver.Name}");
+
                     return Redirect(Request.UrlReferrer.ToString());
                 }
 

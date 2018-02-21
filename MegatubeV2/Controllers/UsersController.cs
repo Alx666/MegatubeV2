@@ -167,7 +167,7 @@ namespace MegatubeV2.Controllers
                     user.NetworkId = Session.GetUser().NetworkId;
                     db.Users.Add(user);
 
-                    EventLog.Log(db, Session.GetUser(), EventLogType.UserChanged, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Created User Record for {user.EMail}");
+                    EventLog.Log(db, Session.GetUser(), EventLogType.UserCreated, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} Created User Record for {user.EMail}");
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -387,7 +387,7 @@ namespace MegatubeV2.Controllers
                 db.UpdatePaymentAlerts(receiver.NetworkId);
                 db.SaveChanges();
 
-                EventLog.Log(db, Session.GetUser(), EventLogType.AddCredit, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} removecd {credit.GrossAmmount} to {receiver.Id} {receiver.LastName} {receiver.Name}", true);
+                EventLog.Log(db, Session.GetUser(), EventLogType.RemoveCredit, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} removed {credit.GrossAmmount} to {receiver.Id} {receiver.LastName} {receiver.Name}", true);
                 return Redirect(Request.UrlReferrer.ToString());
             }
             catch (Exception e)
