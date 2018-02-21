@@ -207,7 +207,11 @@ namespace MegatubeV2.Controllers
 
                 var userSelection = db.Users.ToList().Select(x => new { Id = x.Id, Name = x.ToString()  }).OrderBy(x => x.Name);
 
-                ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
+                if(!Session.GetUser().IsDeveloper)
+                    ViewBag.RoleId = new SelectList(db.Roles.Where(x => x.Id > 0), "Id", "Name", user.RoleId);
+                else
+                    ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", user.RoleId);
+
                 ViewBag.FiscalAdministratorId = new SelectList(userSelection, "Id", "Name", user.FiscalAdministratorId);
                 return View(user);
             }
@@ -250,7 +254,7 @@ namespace MegatubeV2.Controllers
                     toEdit.BICSWIFT              = user.BICSWIFT;
                     toEdit.FiscalAdministratorId = user.FiscalAdministratorId;
 
-                    if(toEdit.RoleId != 0)
+                    if(toEdit.RoleId != 0 || Session.GetUser().IsDeveloper)
                         toEdit.RoleId            = user.RoleId;
 
                     if (user.PaymentMethod != 0)

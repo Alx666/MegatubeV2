@@ -25,7 +25,7 @@ namespace MegatubeV2
 
             using (MegatubeV2Entities db = new MegatubeV2Entities())
             {
-                EventLog.Log(db, null, EventLogType.ApplicationError, exception.ToString(), true);
+                EventLog.Log(db, null, EventLogType.ОшибкаПриложения, exception.ToString(), true);
             }
 
             try

@@ -54,7 +54,7 @@ namespace MegatubeV2
         NoteDeleted              = 9,
         ContractUpload           = 10,
         AddCredit                = 11,
-        RemoveCredit             = 12, 
-        ApplicationError         = 666, //никогда не забывайте                
+        RemoveCredit             = 12,
+        ОшибкаПриложения         = 666, //никогда не забывайте                
     }
 }
