@@ -85,27 +85,26 @@ namespace MegatubeV2
                         
                         //Load the form as a string
                         string sReceiptForm = File.ReadAllText(HttpContext.Current.Server.MapPath("~/ReceiptForm.htm"));
-                        sReceiptForm = sReceiptForm.Replace("[Ricevuta]", isFiscal ? "Ricevuta" : "Ricevuta non fiscale (solo a fini reportistici)");
-                        sReceiptForm = sReceiptForm.Replace("[User.Name]", receiver.Name);
-                        sReceiptForm = sReceiptForm.Replace("[Payment.Date]", payment.Date.ToString(@"dd MM yyyy"));
-                        sReceiptForm = sReceiptForm.Replace("[User.Surname]", receiver.LastName);
-                        sReceiptForm = sReceiptForm.Replace("[Counter]", payment.ReceiptCount.ToString());
+                        sReceiptForm = sReceiptForm.Replace("[Ricevuta]", $"Ricevuta N {payment.ReceiptCount.ToString()} del {payment.Date.ToString(@"dd MM yyyy")}");
+                        sReceiptForm = sReceiptForm.Replace("[User.Name]", receiver.Name);                        
+                        sReceiptForm = sReceiptForm.Replace("[User.Surname]", receiver.LastName);                        
                         sReceiptForm = sReceiptForm.Replace("[User.Residence]", receiver.FullAddress);
+                        sReceiptForm = sReceiptForm.Replace("[User.BirthPlace]", receiver.BirthPlace);
+                        sReceiptForm = sReceiptForm.Replace("[User.BirthDate]", receiver.BirthDate.Value.ToString(@"dd MM yyyy"));
                         sReceiptForm = sReceiptForm.Replace("[User.Cf]", receiver.PIVAorVAT);
+                        sReceiptForm = sReceiptForm.Replace("[User.PostalCode]", receiver.PostalCode);
                         sReceiptForm = sReceiptForm.Replace("[ImportsRows]", hSbTables.ToString());
                         sReceiptForm = sReceiptForm.Replace("[Periodo]", "Revenue periodo " + timeSpan);
                         sReceiptForm = sReceiptForm.Replace("[Imponibile]", "€ " + fTotalGross.ToString("n2"));
                         sReceiptForm = sReceiptForm.Replace("[DescFormulaPagamento]", isFiscal ? hPayMethod.ToString() : " - ");
                         sReceiptForm = sReceiptForm.Replace("[Ritenuta]", "€ " + fTotalTax.ToString("n2"));
                         sReceiptForm = sReceiptForm.Replace("[TotaleEuro]", "€ " + fTotalNet.ToString("n2"));
-                        sReceiptForm = sReceiptForm.Replace("[User.BirthPlace]", receiver.BirthPlace);
-                        sReceiptForm = sReceiptForm.Replace("[User.PostalCode]", receiver.PostalCode);
                         sReceiptForm = sReceiptForm.Replace("[Network.FiscalName]", "GROW UP NETWORK SRL");
                         sReceiptForm = sReceiptForm.Replace("[Street]", isFiscal ? "Via Varese 8 - 20121" : string.Empty);
-                        sReceiptForm = sReceiptForm.Replace("[City]", isFiscal ? "Milano(MI)" : string.Empty);
+                        sReceiptForm = sReceiptForm.Replace("[City]", "Milano(MI)");
                         sReceiptForm = sReceiptForm.Replace("[PIVA]", isFiscal ? "09970930963" : string.Empty);
-                        sReceiptForm = sReceiptForm.Replace("[Law]", isFiscal ? "Non imponibile Iva ex art 3 Dpr 633 / 72" : string.Empty);
-                        sReceiptForm = sReceiptForm.Replace("[User.BirthDate]", receiver.BirthDate.Value.ToString(@"dd MM yyyy"));
+                        sReceiptForm = sReceiptForm.Replace("[Law]", "Operazione non soggetta ad IVA ex out.3 DPR 633/72");
+
                         
 
                         if (receiver.BirthDate.HasValue)
