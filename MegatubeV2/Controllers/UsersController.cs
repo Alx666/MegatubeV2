@@ -375,6 +375,9 @@ namespace MegatubeV2.Controllers
                 User receiver           = db.Users.Find(userId);
                 Accreditation credit    = receiver.Accreditations.Where(x => x.Id == accreditationId.Value).First();
 
+                if((Accreditation.AccreditationMainType)credit.Type != Accreditation.AccreditationMainType.Extra)
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
                 if (credit.PaymentId != null)
                     throw new Exception("This accreditation has already been payed");
 
