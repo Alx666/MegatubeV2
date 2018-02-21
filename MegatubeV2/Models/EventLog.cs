@@ -51,5 +51,6 @@ namespace MegatubeV2
         NoteEdited = 5,
         NoteDeleted = 6,
         ApplicationError = 666, //никогда не забывайте
+        AddCredit = 667,
     }
 }

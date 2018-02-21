@@ -354,6 +354,7 @@ namespace MegatubeV2.Controllers
                 db.UpdatePaymentAlerts(receiver.NetworkId);
                 db.SaveChanges();
 
+                EventLog.Log(db, Session.GetUser(), EventLogType.AddCredit, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} added {amount} to {receiver.Id} {receiver.LastName} {receiver.Name}", true);
                 return Redirect(Request.UrlReferrer.ToString());
             }
             catch (Exception e)
@@ -386,6 +387,7 @@ namespace MegatubeV2.Controllers
                 db.UpdatePaymentAlerts(receiver.NetworkId);
                 db.SaveChanges();
 
+                EventLog.Log(db, Session.GetUser(), EventLogType.AddCredit, $"{Session.GetUser().Id} {Session.GetUser().LastName} {Session.GetUser().Name} removecd {credit.GrossAmmount} to {receiver.Id} {receiver.LastName} {receiver.Name}", true);
                 return Redirect(Request.UrlReferrer.ToString());
             }
             catch (Exception e)
