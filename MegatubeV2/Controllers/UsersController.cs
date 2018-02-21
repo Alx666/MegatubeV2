@@ -350,6 +350,9 @@ namespace MegatubeV2.Controllers
                 credit.DateTo           = DateTime.Now;
 
                 db.Accreditations.Add(credit);
+                db.SaveChanges();
+                db.UpdatePaymentAlerts(receiver.NetworkId);
+                db.SaveChanges();
 
                 return Redirect(Request.UrlReferrer.ToString());
             }
@@ -376,6 +379,9 @@ namespace MegatubeV2.Controllers
                     throw new Exception("This accreditation has already been payed");
 
                 db.Accreditations.Remove(credit);
+                db.SaveChanges();
+                db.UpdatePaymentAlerts(receiver.NetworkId);
+                db.SaveChanges();
 
                 return Redirect(Request.UrlReferrer.ToString());
             }
